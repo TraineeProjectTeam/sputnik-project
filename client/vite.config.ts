@@ -1,4 +1,5 @@
 import { defineConfig, UserConfig, AliasOptions } from 'vite';
+import react from '@vitejs/plugin-react';
 
 const alias: Partial<AliasOptions> = [
   { find: 'pages', replacement: '/src/pages' },
@@ -9,10 +10,9 @@ const alias: Partial<AliasOptions> = [
   { find: 'widgets', replacement: '/src/widgets' },
 ];
 
-export default defineConfig(() => {
-  return {
-    resolve: {
-      alias,
-    },
-  } as UserConfig;
-});
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias,
+  },
+} as UserConfig);

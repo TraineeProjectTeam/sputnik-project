@@ -1,5 +1,5 @@
-import 'antd/dist/reset.css'; // сброс стилей с помощью antd 
-import '../shared/styles/styles.scss' // общие стили для всего приложения
+import 'antd/dist/reset.css'; // сброс стилей с помощью antd
+import 'shared/styles/styles.scss'; // общие стили для всего приложения
 import { Suspense } from 'react';
 import { Router } from 'shared/lib/routes';
 import { pages } from 'pages';
@@ -12,5 +12,5 @@ export const App = () => {
         <Router pages={pages} />
       </Suspense>
     </BrowserRouter>
-  )
-}
+  );
+};
