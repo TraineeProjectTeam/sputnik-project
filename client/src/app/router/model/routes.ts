@@ -1,7 +1,7 @@
 export enum EnumRoutesName {
-  MAIN = "main",
+  MAIN = 'main',
 }
 
 export const routes: Record<EnumRoutesName, string> = {
-  [EnumRoutesName.MAIN]: "/",
-}
+  [EnumRoutesName.MAIN]: '/',
+};

@@ -1,4 +1,4 @@
-import { EnumRoutesName, ICustomRouteProps, routes } from 'shared/lib/routes';
+import { EnumRoutesName, ICustomRouteProps, routes } from 'app/router';
 import { MainPage } from './main';
 
 export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
