@@ -1,16 +1,11 @@
-import { ICustomer, changeCustomerRequest } from "entities/customer";
+import { changeCustomerRequest, useCustomerStore } from "entities/customer";
 import { IUserProfile, ProfileCard } from "shared/ui/profile-card";
 
 export const ProfileCustomer = () => {
-  const user: ICustomer = {
-    id: "1",
-    first_name: "John",
-    last_name: "Doe",
-    email: "john.doe@example.com",
-    phone_number: "+1234567890"
-  };
+  const { user, setUser } = useCustomerStore()
 
   const changeCustomerData = (newData: IUserProfile) => {
+    setUser(newData)
     changeCustomerRequest({
       user: newData,
     })
@@ -18,7 +13,7 @@ export const ProfileCustomer = () => {
 
   return (
     <ProfileCard
-      title="Профиль пользователя"
+      title="Профиль покупателя"
       user={user}
       callback={(newData) => changeCustomerData(newData)}
     />

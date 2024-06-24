@@ -1,5 +1,5 @@
 import { api } from 'shared/api';
-import { IChangeVendorRequest } from '../model/customer.types.ts';
+import { IChangeVendorRequest } from '../model/vendor.types.ts';
 
 const BASE_URL = '/vendors';
 
