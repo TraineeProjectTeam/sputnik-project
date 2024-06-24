@@ -3,7 +3,7 @@ import { IUserProfile, ProfileCard } from "shared/ui/profile-card";
 
 export const ProfileVendor = () => {
   const user: IVendor = {
-    id: 1,
+    id: "1",
     first_name: "John",
     last_name: "Doe",
     email: "john.doe@example.com",
@@ -28,7 +28,7 @@ export const ProfileVendor = () => {
         street_number: newData.address?.street_number || "No street number"
       }
     };
-    changeVendorRequest({ id: user.id, user: vendorData });
+    changeVendorRequest({ user: vendorData });
   }
 
   return (

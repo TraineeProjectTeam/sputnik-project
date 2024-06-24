@@ -22,7 +22,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
   };
 
   return (
-    <Card title={title}>
+    <Card title={title} id={`user_id_${user.id}_card`}>
       <Avatar size={64} style={{ marginBottom: 16 }}>
         {editableUser.first_name[0]}{editableUser.last_name[0]}
       </Avatar>

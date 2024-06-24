@@ -3,7 +3,7 @@ import { IUserProfile, ProfileCard } from "shared/ui/profile-card";
 
 export const ProfileCustomer = () => {
   const user: ICustomer = {
-    id: 1,
+    id: "1",
     first_name: "John",
     last_name: "Doe",
     email: "john.doe@example.com",
@@ -13,7 +13,6 @@ export const ProfileCustomer = () => {
   const changeCustomerData = (newData: IUserProfile) => {
     changeCustomerRequest({
       user: newData,
-      id: user.id
     })
   }
 
