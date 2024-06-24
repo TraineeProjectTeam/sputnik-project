@@ -1,4 +1,4 @@
-package com.mobile
+package com.ozon20
 
 import android.app.Application
 import com.facebook.react.PackageList
