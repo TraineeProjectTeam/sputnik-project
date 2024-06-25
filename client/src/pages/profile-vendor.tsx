@@ -1,4 +1,4 @@
-import { changeVendorRequest, useVendorStore } from "entities/vendor";
+import { useVendorStore } from "entities/vendor";
 import { IUserProfile, ProfileCard } from "shared/ui/profile-card";
 
 export const ProfileVendor = () => {
@@ -16,14 +16,13 @@ export const ProfileVendor = () => {
       }
     };
     setUser(vendorData)
-    changeVendorRequest({ user: vendorData });
   }
 
   return (
     <ProfileCard
       title="Профиль продавца"
       user={user}
-      callback={(newData) => changeVendorData(newData)}
+      callback={changeVendorData}
     />
   )
 };

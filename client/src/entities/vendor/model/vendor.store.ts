@@ -1,6 +1,11 @@
 import { create } from 'zustand';
-import { IVendorStore } from './vendor.types';
 import { IVendor } from '../api/vendor.dto';
+import { changeVendorRequest } from '../api/vendor.api';
+
+export interface IVendorStore {
+  user: IVendor;
+  setUser: (user: IVendor) => void;
+}
 
 export const useVendorStore = create<IVendorStore>((set) => ({
   user: {
@@ -17,5 +22,8 @@ export const useVendorStore = create<IVendorStore>((set) => ({
       street_number: '1234',
     },
   },
-  setUser: (user: IVendor) => set({ user }),
+  setUser: (user: IVendor) => {
+    set({ user });
+    changeVendorRequest({ user });
+  },
 }));

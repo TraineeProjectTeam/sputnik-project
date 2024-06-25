@@ -1,6 +1,11 @@
 import { create } from 'zustand';
-import { ICustomerStore } from './customer.types';
 import { ICustomer } from '../api/cutomer.dto';
+import { changeCustomerRequest } from '../api/customer.api';
+
+export interface ICustomerStore {
+  user: ICustomer;
+  setUser: (user: ICustomer) => void;
+}
 
 export const useCustomerStore = create<ICustomerStore>((set) => ({
   user: {
@@ -10,5 +15,8 @@ export const useCustomerStore = create<ICustomerStore>((set) => ({
     email: 'john.doe@example.com',
     phone_number: '+1234567890',
   },
-  setUser: (user: ICustomer) => set({ user }),
+  setUser: (user: ICustomer) => {
+    set({ user });
+    changeCustomerRequest({ user });
+  },
 }));
