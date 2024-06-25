@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Avatar, Card, Descriptions, Button, Row, Col, Input, Form } from "antd";
 import { IProfileCardProps, IUserProfile } from "../model/profile-card.types";
 import { Rule } from "antd/es/form";
@@ -9,12 +9,12 @@ export const ProfileCard = (props: IProfileCardProps) => {
   const [editableUser, setEditableUser] = useState<IUserProfile>(user);
   const [form] = Form.useForm();
 
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEditableUser({ ...editableUser, [name]: value });
-  }, [editableUser]);
+  };
 
-  const handleInputAddressChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (editableUser.address) {
       setEditableUser({
@@ -25,18 +25,18 @@ export const ProfileCard = (props: IProfileCardProps) => {
         }
       });
     }
-  }, [editableUser]);
+  }
 
-  const toggleEditMode = useCallback(() => {
+  const toggleEditMode = () => {
     setIsEditing((prevIsEditing) => {
       if (prevIsEditing) {
         setEditableUser(user);
       }
       return !prevIsEditing;
     });
-  }, [user, setIsEditing, setEditableUser]);
+  };
 
-  const saveChanges = useCallback(() => {
+  const saveChanges = () => {
     form.validateFields()
       .then(() => {
         callback(editableUser);
@@ -45,7 +45,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
       .catch((errorInfo) => {
         console.log('Validation Failed:', errorInfo);
       });
-  }, [callback, editableUser, setIsEditing, form]);
+  };
 
   const fields: { label: string, name: string, value: string | undefined, rules: Rule[] }[] = [
     {
