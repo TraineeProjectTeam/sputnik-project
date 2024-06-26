@@ -8,5 +8,5 @@ export interface ICustomRouteProps {
 }
 
 export interface IRouterProps {
-  pages: Record<EnumRoutesName, ICustomRouteProps>
+  pages: Record<EnumRoutesName, ICustomRouteProps>;
 }
