@@ -1,13 +1,14 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Screens, Stacks } from '../navigationEnum';
-import { CatalogStackNavigator } from './CatalogStack';
-import { ProfileStackNavigator } from './AccountStack';
 import { AccountIcon, CartIcon, HomeIcon } from '@/shared/libs/icons';
 import { Colors } from '@/shared/libs/colors';
 
 import { MainPage } from '@/screens';
+
+import { Screens, Stacks } from '../navigationEnum';
+import { CatalogStackNavigator } from './CatalogStack';
+import { ProfileStackNavigator } from './AccountStack';
 
 export const MainTabsNavigator = () => {
   const MainTabsStack = createBottomTabNavigator();
@@ -43,6 +44,7 @@ export const MainTabsNavigator = () => {
           tabBarIcon: ({ focused }) => (
             <AccountIcon color={focused ? Colors.Basic800 : Colors.Basic600} size={30} />
           ),
+          headerShown: false,
         }}
       />
     </MainTabsStack.Navigator>
