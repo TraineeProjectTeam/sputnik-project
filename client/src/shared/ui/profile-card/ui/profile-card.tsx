@@ -47,7 +47,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
       });
   };
 
-  const fields: { label: string, name: string, value: string | undefined, rules: Rule[] }[] = [
+  const fields: { label: string, name: string, value?: string, rules: Rule[] }[] = [
     {
       label: "Имя",
       name: "first_name",
@@ -129,27 +129,28 @@ export const ProfileCard = (props: IProfileCardProps) => {
       <Form form={form}>
         <Descriptions layout="vertical">
           {fields.map((field) => (
-            <Descriptions.Item
-              label={field.label}
-              key={field.name}
-            >
-              {isEditing ?
-                <Form.Item
-                  name={field.name}
-                  initialValue={field.value}
-                  rules={field.rules}
-                  style={{ marginBottom: 8 }}
-                >
-                  <Input
-                    value={field.value}
+            (field.name !== 'company_name' || editableUser.company_name) && (
+              <Descriptions.Item
+                label={field.label}
+                key={field.name}
+              >
+                {isEditing ?
+                  <Form.Item
                     name={field.name}
-                    onChange={handleInputChange}
-                  />
-                </Form.Item> :
-                field.value
-              }
-            </Descriptions.Item>
-          ))}
+                    initialValue={field.value}
+                    rules={field.rules}
+                    style={{ marginBottom: 8 }}
+                  >
+                    <Input
+                      value={field.value}
+                      name={field.name}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Item> :
+                  field.value
+                }
+              </Descriptions.Item>
+            )))}
           {editableUser.address && addressFields.map(field => (
             <Descriptions.Item
               label={field.label}
