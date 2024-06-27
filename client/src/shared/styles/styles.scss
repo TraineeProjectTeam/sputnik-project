@@ -1,5 +1,12 @@
+@import './colors.scss';
+@import './variables.scss';
+
 #root {
-  height: 100vh;
+  height: 100%;
+}
+
+body {
+  color: var(--main-text-color);
 }
 
 ::-webkit-scrollbar {
@@ -12,5 +19,5 @@
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5.5rem;
-  background: rgb(55, 128, 255);
+  background: var(--main-background-color);
 }

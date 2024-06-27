@@ -1,3 +1,4 @@
+import { Layout } from "antd";
 import styled from "styled-components";
 
 export const Footer = () => {
@@ -6,7 +7,6 @@ export const Footer = () => {
   )
 }
 
-const StyledFooter = styled(Footer)`
-  background-color: #000;
-  color: #fff;
+const StyledFooter = styled(Layout.Footer)`
+  background-color: var(--main-background-color);
 `;
