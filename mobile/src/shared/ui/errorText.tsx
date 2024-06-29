@@ -26,7 +26,7 @@ export const ErrorText: React.FC<ErrorTextProps> = ({ error }) => {
   return (
     <>
       {error && (
-        <Text style={[TextStyles.bodyBold.changeColor(Colors.Danger500), { textAlign: 'center' }]}>
+        <Text style={{ ...TextStyles.bodyBold.changeColor(Colors.Danger500), textAlign: 'center' }}>
           {error.message}
         </Text>
       )}

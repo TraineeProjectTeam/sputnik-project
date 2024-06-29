@@ -13,7 +13,7 @@ export const AuthLayout = ({ children }: PropsWithChildren) => {
         flex: 1,
       }}
     >
-      <Text style={[TextStyles.h1.changeColor(Colors.Primary500), { marginBottom: 20 }]}>
+      <Text style={{ ...TextStyles.h1.changeColor(Colors.Primary500), marginBottom: 20 }}>
         Ozon 2.0
       </Text>
       {children}
