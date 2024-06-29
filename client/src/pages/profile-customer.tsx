@@ -12,7 +12,7 @@ export const ProfileCustomer = () => {
 
   return (
     <ProfileCard
-      title={t('profile_customer')}
+      title={t('Профиль покупателя')}
       user={user}
       callback={changeCustomerData}
     />

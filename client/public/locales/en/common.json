@@ -1,6 +1,6 @@
 {
-  "test": "en",
-  "edit": "Edit",
-  "cancel": "Cancel",
-  "save": "Save"
+  "Тест": "English",
+  "Редактирование": "Edit",
+  "Отмена": "Cancel",
+  "Сохранить": "Save"
 }

@@ -3,13 +3,16 @@ import { Avatar, Card, Descriptions, Button, Row, Col, Input, Form } from "antd"
 import { IProfileCardProps, IUserProfile } from "../model/profile-card.types";
 import { Rule } from "antd/es/form";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
+import { routes } from "app/router";
 
 export const ProfileCard = (props: IProfileCardProps) => {
   const { title, user, callback } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [editableUser, setEditableUser] = useState<IUserProfile>(user);
   const [form] = Form.useForm();
-  const { t } = useTranslation(['common', 'errors', 'user']);
+  const location = useLocation()
+  const { t } = useTranslation(['user', 'common', 'errors']);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -51,50 +54,62 @@ export const ProfileCard = (props: IProfileCardProps) => {
 
   const fields: { label: string, name: string, value?: string, rules: Rule[] }[] = [
     {
-      label: t("user:first_name"),
+      label: t("user:Имя"),
       name: "first_name",
       value: editableUser.first_name,
-      rules: [{ required: true, message: t('please_input_first_name') }]
+      rules: [
+        {
+          required: true,
+          message: t('Пожалуйста, введите имя!')
+        }
+      ]
     },
     {
-      label: t("user:last_name"),
+      label: t("user:Фамилия"),
       name: "last_name",
       value: editableUser.last_name,
-      rules: [{ required: true, message: t('please_input_last_name') }]
+      rules: [
+        {
+          required: true,
+          message: t('Пожалуйста, введите фамилию!')
+        }
+      ]
     },
     {
-      label: t("user:email"),
+      label: t("user:Почта"),
       name: "email",
       value: editableUser.email,
-      rules: [{
-        required: true,
-        type: 'email',
-        message: t('please_input_valid_email')
-      }]
+      rules: [
+        {
+          required: true,
+          type: 'email',
+          message: t('Пожалуйста, введите валидную почту!')
+        }
+      ]
     },
     {
-      label: t("user:phone_number"),
+      label: t("Номер телефона"),
       name: "phone_number",
       value: editableUser.phone_number,
       rules: [
         {
           required: true,
-          message: t('please_input_phone_number')
+          message: t('Пожалуйста, введите номер телефона!')
         },
         {
           pattern: /^\+\d{10,15}$/,
-          message: t('phone_number_format')
+          message: t('Номер телефона должен быть в формате +1234567890!')
         }
       ]
     },
     {
-      label: t("user:company_name"),
+      label: t("user:Компания"),
       name: "company_name",
       value: editableUser.company_name,
       rules: [
         {
           required: true,
-          message: t('please_input_company')
+          message: t('Пожалуйста, введите компанию!')
         }
       ]
     },
@@ -102,22 +117,22 @@ export const ProfileCard = (props: IProfileCardProps) => {
 
   const addressFields = [
     {
-      label: t("user:street_name"),
+      label: t("user:Улица"),
       name: "street_name",
       value: editableUser.address?.street_name
     },
     {
-      label: t("user:street_number"),
+      label: t("Номер дома"),
       name: "street_number",
       value: editableUser.address?.street_number,
     },
     {
-      label: t("user:city"),
+      label: t("user:Город"),
       name: "city",
       value: editableUser.address?.city
     },
     {
-      label: t("user:region"),
+      label: t("user:Регион"),
       name: "region",
       value: editableUser.address?.region
     },
@@ -130,8 +145,9 @@ export const ProfileCard = (props: IProfileCardProps) => {
       </Avatar>
       <Form form={form}>
         <Descriptions layout="vertical">
-          {fields.map((field) => (
-            (field.name !== 'company_name' || editableUser.company_name) && (
+          {fields
+            .filter(field => location.pathname === routes.profile_customer ? field.name !== 'company_name' : true)
+            .map((field) => (
               <Descriptions.Item
                 label={field.label}
                 key={field.name}
@@ -152,7 +168,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
                   field.value
                 }
               </Descriptions.Item>
-            )))}
+            ))}
           {editableUser.address && addressFields.map(field => (
             <Descriptions.Item
               label={field.label}
@@ -182,7 +198,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
             type={isEditing ? 'default' : 'primary'}
             onClick={toggleEditMode}
           >
-            {isEditing ? t("common:cancel") : t("common:edit")}
+            {isEditing ? t("Отмена") : t("Редактировать")}
           </Button>
         </Col>
         <Col>
@@ -191,7 +207,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
               type='primary'
               onClick={saveChanges}
             >
-              {t("common:save")}
+              {t("Сохранить")}
             </Button>
           }
         </Col>

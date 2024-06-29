@@ -16,11 +16,11 @@ export const Header = () => {
   return (
     <StyledHeader>
       <Link to={routes.main}>Main</Link>
-      <Link to={routes.profile_customer}>{t('user:profile_customer')}</Link>
-      <Link to={routes.profile_vendor}>{t('user:profile_vendor')}</Link>
+      <Link to={routes.profile_customer}>{t('Профиль покупателя')}</Link>
+      <Link to={routes.profile_vendor}>{t('Профиль продавца')}</Link>
       <div >
         <Button onClick={onClickChangeLanguageHandler}>Change lang</Button>
-        {t('common:test')}
+        {t('common:Тест')}
       </div>
     </StyledHeader>
   )

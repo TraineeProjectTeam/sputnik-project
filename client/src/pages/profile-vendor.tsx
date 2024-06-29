@@ -22,7 +22,7 @@ export const ProfileVendor = () => {
 
   return (
     <ProfileCard
-      title={t('profile_vendor')}
+      title={t('Профиль продавца')}
       user={user}
       callback={changeVendorData}
     />

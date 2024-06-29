@@ -1,13 +1,13 @@
 {
-  "profile_customer": "Customer profile",
-  "profile_vendor": "Vendor profile",
-  "first_name": "First name",
-  "last_name": "Last name",
-  "email": "Email",
-  "phone_number": "Phone number",
-  "company_name": "Company",
-  "street_name": "Street",
-  "street_number": "Street number",
-  "city": "City",
-  "region": "Region"
+  "Профиль покупателя": "Customer profile",
+  "Профиль продавца": "Vendor profile",
+  "Имя": "First name",
+  "Фамилия": "Last name",
+  "Почта": "Email",
+  "Номер телефона": "Phone number",
+  "Компания": "Company",
+  "Улица": "Street",
+  "Номер дома": "House number",
+  "Город": "City",
+  "Регион": "Region"
 }
