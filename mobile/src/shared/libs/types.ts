@@ -60,3 +60,8 @@ export interface IPickupPoint {
   longitude: string;
   latitude: string;
 }
+
+export enum Role {
+  CUSTOMER = 'Customer',
+  VENDOR = 'Vendor',
+}

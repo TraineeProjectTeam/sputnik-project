@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@ui-kitten/components';
@@ -11,12 +12,11 @@ import { useAppNavigation } from '@/shared/libs/useAppNavigation';
 import { Select } from '@/shared/ui/select';
 import { ErrorText } from '@/shared/ui/errorText';
 import { Input } from '@/shared/ui/input';
+import { Role } from '@/shared/libs/types';
 
 import { schema } from '../model/validation';
 import { AuthByPhoneProps } from '../model/types';
-import { AuthByPhone } from '../api';
-
-import Reactotron from 'reactotron-react-native';
+import { AuthByPhone } from '../api/api';
 
 export const AuthByPhoneForm = () => {
   const {
@@ -35,21 +35,19 @@ export const AuthByPhoneForm = () => {
     setUser: state.setUser,
   }));
 
-  const Roles = ['Customer', 'Vendor'];
+  const Roles = [Role.CUSTOMER, Role.VENDOR];
 
   const onPressSend: SubmitHandler<AuthByPhoneProps> = (formData) => {
     AuthByPhone(formData)
       .then((data) => {
         setUser(data.user, data.access_token, formData.role);
-        navigation.navigate('Account', { screen: 'AccountScreen' });
-        Reactotron.log(data);
+        navigation.dispatch(StackActions.replace('AccountScreen'));
       })
       .catch((error) => {
         setError('root', {
           type: 'server',
           message: 'Проверьте правильность введеных данных!',
         });
-        Reactotron.log(error);
       });
   };
 

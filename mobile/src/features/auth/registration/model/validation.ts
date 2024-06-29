@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 import { Regulars } from '@/shared/libs/regEx';
+import { Role } from '@/shared/libs/types';
 
 export const schema = yup.object().shape({
   email: yup
@@ -29,5 +30,5 @@ export const schema = yup.object().shape({
     .string()
     .matches(Regulars.Phone, 'Номер телефона должен быть в формате: +1234567890')
     .required('Это обязательно поле'),
-  role: yup.string().required('Это обязательно поле'),
+  role: yup.mixed<Role>().oneOf(Object.values(Role)).required('Это обязательно поле'),
 });
