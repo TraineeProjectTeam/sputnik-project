@@ -19,6 +19,7 @@ export const useUserStore = create<IUserStore>((set) => ({
   setUser: (user, access_token, role) => {
     set({ user, role });
     storage.set('access_token', access_token);
+    storage.set('userId', user.id);
   },
   reset: () => {
     set({ user: {} as IUser, role: '' as Role });
