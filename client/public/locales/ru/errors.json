@@ -1,0 +1,8 @@
+{
+  "please_input_first_name": "Пожалуйста, введите ваше имя!",
+  "please_input_last_name": "Пожалуйста, введите вашу фамилию!",
+  "please_input_valid_email": "Пожалуйста, введите действительный email!",
+  "please_input_phone_number": "Пожалуйста, введите ваш номер телефона!",
+  "phone_number_format": "Номер телефона должен быть в формате +1234567890",
+  "please_input_company": "Пожалуйста, введите вашу компанию!"
+}

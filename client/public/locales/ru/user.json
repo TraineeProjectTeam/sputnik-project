@@ -1,0 +1,13 @@
+{
+  "profile_customer": "Профиль покупателя",
+  "profile_vendor": "Профиль продавца",
+  "first_name": "Имя",
+  "last_name": "Фамилия",
+  "email": "Почта",
+  "phone_number": "Телефон",
+  "company_name": "Компания",
+  "street_name": "Улица",
+  "street_number": "Номер дома",
+  "city": "Город",
+  "region": "Регион"
+}

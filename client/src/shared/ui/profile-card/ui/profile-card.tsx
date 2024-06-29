@@ -2,12 +2,14 @@ import { ChangeEvent, useState } from "react";
 import { Avatar, Card, Descriptions, Button, Row, Col, Input, Form } from "antd";
 import { IProfileCardProps, IUserProfile } from "../model/profile-card.types";
 import { Rule } from "antd/es/form";
+import { useTranslation } from "react-i18next";
 
 export const ProfileCard = (props: IProfileCardProps) => {
   const { title, user, callback } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [editableUser, setEditableUser] = useState<IUserProfile>(user);
   const [form] = Form.useForm();
+  const { t } = useTranslation(['common', 'errors', 'user']);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,50 +51,50 @@ export const ProfileCard = (props: IProfileCardProps) => {
 
   const fields: { label: string, name: string, value?: string, rules: Rule[] }[] = [
     {
-      label: "Имя",
+      label: t("user:first_name"),
       name: "first_name",
       value: editableUser.first_name,
-      rules: [{ required: true, message: 'Please input your first name!' }]
+      rules: [{ required: true, message: t('please_input_first_name') }]
     },
     {
-      label: "Фамилия",
+      label: t("user:last_name"),
       name: "last_name",
       value: editableUser.last_name,
-      rules: [{ required: true, message: 'Please input your last name!' }]
+      rules: [{ required: true, message: t('please_input_last_name') }]
     },
     {
-      label: "Email",
+      label: t("user:email"),
       name: "email",
       value: editableUser.email,
       rules: [{
         required: true,
         type: 'email',
-        message: 'Please input a valid email!'
+        message: t('please_input_valid_email')
       }]
     },
     {
-      label: "Телефон",
+      label: t("user:phone_number"),
       name: "phone_number",
       value: editableUser.phone_number,
       rules: [
         {
           required: true,
-          message: 'Please input your phone number!'
+          message: t('please_input_phone_number')
         },
         {
           pattern: /^\+\d{10,15}$/,
-          message: 'Phone number must be in the format +1234567890'
+          message: t('phone_number_format')
         }
       ]
     },
     {
-      label: "Компания",
+      label: t("user:company_name"),
       name: "company_name",
       value: editableUser.company_name,
       rules: [
         {
           required: true,
-          message: 'Please input your company!'
+          message: t('please_input_company')
         }
       ]
     },
@@ -100,22 +102,22 @@ export const ProfileCard = (props: IProfileCardProps) => {
 
   const addressFields = [
     {
-      label: "Улица",
+      label: t("user:street_name"),
       name: "street_name",
       value: editableUser.address?.street_name
     },
     {
-      label: "Номер дома",
+      label: t("user:street_number"),
       name: "street_number",
       value: editableUser.address?.street_number,
     },
     {
-      label: "Город",
+      label: t("user:city"),
       name: "city",
       value: editableUser.address?.city
     },
     {
-      label: "Регион",
+      label: t("user:region"),
       name: "region",
       value: editableUser.address?.region
     },
@@ -180,7 +182,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
             type={isEditing ? 'default' : 'primary'}
             onClick={toggleEditMode}
           >
-            {isEditing ? "Cancel" : "Edit"}
+            {isEditing ? t("common:cancel") : t("common:edit")}
           </Button>
         </Col>
         <Col>
@@ -189,7 +191,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
               type='primary'
               onClick={saveChanges}
             >
-              Save
+              {t("common:save")}
             </Button>
           }
         </Col>

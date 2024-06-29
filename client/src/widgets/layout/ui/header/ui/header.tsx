@@ -1,14 +1,27 @@
-import { Layout } from "antd";
+import { Button, Layout } from "antd";
 import { routes } from "app/router";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useCurrentLanguage } from "shared/lib";
 import styled from "styled-components";
 
 export const Header = () => {
+  const { i18n, t } = useTranslation(['user', 'common'])
+  const lang = useCurrentLanguage()
+
+  const onClickChangeLanguageHandler = () => {
+    i18n.changeLanguage(lang === 'ru' ? 'en' : 'ru')
+  }
+
   return (
     <StyledHeader>
       <Link to={routes.main}>Main</Link>
-      <Link to={routes.profile_customer}>Profile customer</Link>
-      <Link to={routes.profile_vendor}>Profile vendor</Link>
+      <Link to={routes.profile_customer}>{t('user:profile_customer')}</Link>
+      <Link to={routes.profile_vendor}>{t('user:profile_vendor')}</Link>
+      <div >
+        <Button onClick={onClickChangeLanguageHandler}>Change lang</Button>
+        {t('common:test')}
+      </div>
     </StyledHeader>
   )
 }

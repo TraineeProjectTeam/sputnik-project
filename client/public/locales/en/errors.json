@@ -1,0 +1,8 @@
+{
+  "please_input_first_name": "Please enter your first name!",
+  "please_input_last_name": "Please enter your last name!",
+  "please_input_valid_email": "Please enter a valid email!",
+  "please_input_phone_number": "Please enter your phone number!",
+  "phone_number_format": "The phone number must be in the format +1234567890",
+  "please_input_company": "Please enter your company!"
+}
