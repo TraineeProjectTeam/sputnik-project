@@ -5,6 +5,7 @@ import { changeVendorRequest } from '../api/vendor.api';
 export interface IVendorStore {
   user: IVendor;
   setUser: (user: IVendor) => void;
+  updateUser: (user: IVendor) => void;
 }
 
 export const useVendorStore = create<IVendorStore>((set) => ({
@@ -23,6 +24,9 @@ export const useVendorStore = create<IVendorStore>((set) => ({
     },
   },
   setUser: (user: IVendor) => {
+    set({ user });
+  },
+  updateUser: (user: IVendor) => {
     set({ user });
     changeVendorRequest({ user });
   },
