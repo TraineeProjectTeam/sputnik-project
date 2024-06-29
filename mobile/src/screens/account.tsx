@@ -6,10 +6,7 @@ import { LogoutButton } from '@/features/auth/logout';
 import { TextStyles } from '@/shared/libs/textStyles';
 
 export const AccountPage = () => {
-  const { user, role } = useUserStore((state) => ({
-    user: state.user,
-    role: state.role,
-  }));
+  const { user, role } = useUserStore();
 
   return (
     <View>

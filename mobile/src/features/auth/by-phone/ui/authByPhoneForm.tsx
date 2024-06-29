@@ -31,9 +31,7 @@ export const AuthByPhoneForm = () => {
 
   const navigation = useAppNavigation();
 
-  const { setUser } = useUserStore((state) => ({
-    setUser: state.setUser,
-  }));
+  const { setUser } = useUserStore();
 
   const Roles = [Role.CUSTOMER, Role.VENDOR];
 

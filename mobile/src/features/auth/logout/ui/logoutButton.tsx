@@ -6,9 +6,7 @@ import { useUserStore } from '@/entities/user';
 import { useAppNavigation } from '@/shared/libs/useAppNavigation';
 
 export const LogoutButton = () => {
-  const { reset } = useUserStore((state) => ({
-    reset: state.reset,
-  }));
+  const { reset } = useUserStore();
 
   const navigation = useAppNavigation();
 
