@@ -9,7 +9,7 @@ export interface IVendorStore {
 
 export const useVendorStore = create<IVendorStore>((set) => ({
   user: {
-    id: '1',
+    _id: '1',
     first_name: 'John',
     last_name: 'Doe',
     email: 'john.doe@example.com',

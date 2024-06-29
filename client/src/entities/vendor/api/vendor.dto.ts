@@ -6,11 +6,11 @@ interface IAdress {
 }
 
 export interface IVendor {
-  readonly id: string;
+  readonly _id: string;
   first_name: string;
   last_name: string;
   email: string;
-  company_name: string;
+  company_name?: string;
   phone_number: string;
-  address: IAdress;
+  address?: IAdress;
 }

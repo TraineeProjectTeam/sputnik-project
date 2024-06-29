@@ -1,5 +1,5 @@
 export interface ICustomer {
-  readonly id: string;
+  readonly _id: string;
   first_name: string;
   last_name: string;
   email: string;
