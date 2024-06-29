@@ -198,7 +198,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
             type={isEditing ? 'default' : 'primary'}
             onClick={toggleEditMode}
           >
-            {isEditing ? t("Отмена") : t("Редактировать")}
+            {isEditing ? t("common:Отмена") : t("common:Редактировать")}
           </Button>
         </Col>
         <Col>
@@ -207,7 +207,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
               type='primary'
               onClick={saveChanges}
             >
-              {t("Сохранить")}
+              {t("common:Сохранить")}
             </Button>
           }
         </Col>
