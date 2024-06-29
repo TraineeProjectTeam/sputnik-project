@@ -10,19 +10,21 @@ import { AuthLayout } from '@/shared/ui/authLayout';
 export const AuthByEmailPage = () => {
   const navigation = useAppNavigation();
 
+  const navigateToLoginByPhone = () => {
+    navigation.dispatch(StackActions.replace('LoginByPhone'));
+  };
+
+  const navigateToRegistration = () => {
+    navigation.dispatch(StackActions.replace('Registration'));
+  };
+
   return (
     <AuthLayout>
       <AuthByEmailForm />
-      <Button
-        onPress={() => navigation.dispatch(StackActions.replace('LoginByPhone'))}
-        appearance="ghost"
-      >
+      <Button onPress={navigateToLoginByPhone} appearance="ghost">
         Войти по номеру телефона
       </Button>
-      <Button
-        onPress={() => navigation.dispatch(StackActions.replace('Registration'))}
-        appearance="ghost"
-      >
+      <Button onPress={navigateToRegistration} appearance="ghost">
         Зарегистрироваться
       </Button>
     </AuthLayout>

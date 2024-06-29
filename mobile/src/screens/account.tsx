@@ -6,12 +6,11 @@ import { LogoutButton } from '@/features/auth/logout';
 import { TextStyles } from '@/shared/libs/textStyles';
 
 export const AccountPage = () => {
-  const { user, role, access_token } = useUserStore((state) => ({
+  const { user, role } = useUserStore((state) => ({
     user: state.user,
     role: state.role,
-    access_token: state.access_token,
   }));
-  console.log(access_token, role);
+
   return (
     <View>
       <Text style={TextStyles.body}>{user.email}</Text>
