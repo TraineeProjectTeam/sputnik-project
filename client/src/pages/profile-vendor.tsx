@@ -9,12 +9,12 @@ export const ProfileVendor = () => {
   const changeVendorData = (newData: IUserProfile) => {
     const vendorData = {
       ...newData,
-      company_name: newData.company_name || "No company name",
+      company_name: newData.company_name || '',
       address: {
-        region: newData.address?.region || "No region",
-        city: newData.address?.city || "No city",
-        street_name: newData.address?.street_name || "No street name",
-        street_number: newData.address?.street_number || "No street number"
+        region: newData.address?.region || '',
+        city: newData.address?.city || '',
+        street_name: newData.address?.street_name || '',
+        street_number: newData.address?.street_number || ''
       }
     };
     setUser(vendorData)

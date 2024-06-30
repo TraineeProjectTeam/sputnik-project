@@ -6,8 +6,11 @@
   "Почта": "Email",
   "Номер телефона": "Phone number",
   "Компания": "Company",
-  "Улица": "Street",
-  "Номер дома": "House number",
-  "Город": "City",
-  "Регион": "Region"
+  "Адрес": {
+    "Улица": "Street",
+    "Номер дома": "House number",
+    "Город": "City",
+    "Регион": "Region"
+  },
+  "Не указан": "{{field}} not specified"
 }

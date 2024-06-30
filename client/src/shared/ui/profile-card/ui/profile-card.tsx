@@ -117,22 +117,22 @@ export const ProfileCard = (props: IProfileCardProps) => {
 
   const addressFields = [
     {
-      label: t("user:Улица"),
+      label: t("user:Адрес.Улица"),
       name: "street_name",
       value: editableUser.address?.street_name
     },
     {
-      label: t("Номер дома"),
+      label: t("Адрес.Номер дома"),
       name: "street_number",
       value: editableUser.address?.street_number,
     },
     {
-      label: t("user:Город"),
+      label: t("user:Адрес.Город"),
       name: "city",
       value: editableUser.address?.city
     },
     {
-      label: t("user:Регион"),
+      label: t("user:Адрес.Регион"),
       name: "region",
       value: editableUser.address?.region
     },
@@ -169,27 +169,28 @@ export const ProfileCard = (props: IProfileCardProps) => {
                 }
               </Descriptions.Item>
             ))}
-          {editableUser.address && addressFields.map(field => (
-            <Descriptions.Item
-              label={field.label}
-              key={field.name}
-            >
-              {isEditing ?
-                <Form.Item
-                  style={{ marginBottom: 8 }}
-                  name={field.name}
-                  initialValue={field.value}
-                >
-                  <Input
-                    value={field.value}
+          {editableUser.address && addressFields
+            .map(field => (
+              <Descriptions.Item
+                label={field.label}
+                key={field.name}
+              >
+                {isEditing ?
+                  <Form.Item
+                    style={{ marginBottom: 8 }}
                     name={field.name}
-                    onChange={handleInputAddressChange}
-                  />
-                </Form.Item> :
-                field.value
-              }
-            </Descriptions.Item>
-          ))}
+                    initialValue={field.value}
+                  >
+                    <Input
+                      value={field.value}
+                      name={field.name}
+                      onChange={handleInputAddressChange}
+                    />
+                  </Form.Item> :
+                  field.value || `${t('Не указан', { field: field.label })}`
+                }
+              </Descriptions.Item>
+            ))}
         </Descriptions>
       </Form>
       <Row gutter={4}>
@@ -198,7 +199,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
             type={isEditing ? 'default' : 'primary'}
             onClick={toggleEditMode}
           >
-            {isEditing ? t("Отмена") : t("Редактировать")}
+            {isEditing ? t("common:Отмена") : t("common:Редактировать")}
           </Button>
         </Col>
         <Col>
@@ -207,7 +208,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
               type='primary'
               onClick={saveChanges}
             >
-              {t("Сохранить")}
+              {t("common:Сохранить")}
             </Button>
           }
         </Col>
