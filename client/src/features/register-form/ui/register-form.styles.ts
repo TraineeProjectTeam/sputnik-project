@@ -11,5 +11,8 @@ export const WrapperStyled = styled.article`
   form {
     width: 100%;
     max-width: 400px;
+    background: #ffffff;
+    padding: 15px 15px 0;
+    border-radius: 8px;
   }
 `;
