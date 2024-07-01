@@ -4,7 +4,7 @@ import { IUserProfile, ProfileCard } from "shared/ui/profile-card";
 
 export const ProfileVendor = () => {
   const { t } = useTranslation('user')
-  const { user, setUser } = useVendorStore()
+  const { user, setVendor } = useVendorStore()
 
   const changeVendorData = (newData: IUserProfile) => {
     const vendorData = {
@@ -17,7 +17,7 @@ export const ProfileVendor = () => {
         street_number: newData.address?.street_number || ''
       }
     };
-    setUser(vendorData)
+    setVendor(vendorData, true)
   }
 
   return (

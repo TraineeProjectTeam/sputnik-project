@@ -24,10 +24,10 @@ const useLoginStore = create<ILoginStore>((set) => ({
       set({ user: data.user });
       switch (loginDetails.role) {
         case 'Customer':
-          useCustomerStore.getState().setUser(data.user);
+          useCustomerStore.getState().setCustomer(data.user, false);
           break;
         case 'Vendor':
-          useVendorStore.getState().setUser(data.user);
+          useVendorStore.getState().setVendor(data.user, false);
           break;
       }
       saveAccessToken(data.access_token);
@@ -46,10 +46,10 @@ const useLoginStore = create<ILoginStore>((set) => ({
       set({ user: data.user });
       switch (loginDetails.role) {
         case 'Customer':
-          useCustomerStore.getState().setUser(data.user);
+          useCustomerStore.getState().setCustomer(data.user, false);
           break;
         case 'Vendor':
-          useVendorStore.getState().setUser(data.user);
+          useVendorStore.getState().setVendor(data.user, false);
           break;
       }
       saveAccessToken(data.access_token);
