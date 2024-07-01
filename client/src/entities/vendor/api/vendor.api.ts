@@ -6,6 +6,6 @@ import { IVendor } from './vendor.dto.ts';
 const BASE_URL = '/vendors';
 
 export const changeVendorRequest = async (params: IChangeVendorRequest): AxiosPromise<IVendor> => {
-  const response = await api.put(`${BASE_URL}/${params.user.id}`, params.user);
+  const response = await api.put(`${BASE_URL}/${params.user._id}`, params.user);
   return response.data;
 };

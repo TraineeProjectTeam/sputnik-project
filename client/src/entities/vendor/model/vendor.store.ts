@@ -4,12 +4,12 @@ import { changeVendorRequest } from '../api/vendor.api';
 
 export interface IVendorStore {
   user: IVendor;
-  setUser: (user: IVendor) => void;
+  setVendor: (user: IVendor, isUpdate: boolean) => void;
 }
 
 export const useVendorStore = create<IVendorStore>((set) => ({
   user: {
-    id: '1',
+    _id: '1',
     first_name: 'John',
     last_name: 'Doe',
     email: 'john.doe@example.com',
@@ -22,8 +22,8 @@ export const useVendorStore = create<IVendorStore>((set) => ({
       street_number: '1234',
     },
   },
-  setUser: (user: IVendor) => {
+  setVendor: (user: IVendor, isUpdate: boolean) => {
     set({ user });
-    changeVendorRequest({ user });
+    isUpdate && changeVendorRequest({ user });
   },
 }));

@@ -8,6 +8,6 @@ const BASE_URL = '/customers';
 export const changeCustomerRequest = async (
   params: IChangeCustomerRequest,
 ): AxiosPromise<ICustomer> => {
-  const response = await api.put(`${BASE_URL}/${params.user.id}`, params.user);
+  const response = await api.put(`${BASE_URL}/${params.user._id}`, params.user);
   return response.data;
 };
