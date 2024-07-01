@@ -1,13 +1,18 @@
-import { ChangeEvent, useState } from 'react';
-import { Avatar, Card, Descriptions, Button, Row, Col, Input, Form } from 'antd';
-import { IProfileCardProps, IUserProfile } from '../model/profile-card.types';
-import { Rule } from 'antd/es/form';
+import { ChangeEvent, useState } from "react";
+import { Avatar, Card, Descriptions, Button, Row, Col, Input, Form } from "antd";
+import { IProfileCardProps, IUserProfile } from "../model/profile-card.types";
+import { Rule } from "antd/es/form";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
+import { routes } from "app/router";
 
 export const ProfileCard = (props: IProfileCardProps) => {
   const { title, user, callback } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [editableUser, setEditableUser] = useState<IUserProfile>(user);
   const [form] = Form.useForm();
+  const location = useLocation()
+  const { t } = useTranslation(['user', 'common', 'errors']);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -48,79 +53,89 @@ export const ProfileCard = (props: IProfileCardProps) => {
       });
   };
 
-  const fields: { label: string; name: string; value: string | undefined; rules: Rule[] }[] = [
+  const fields: { label: string, name: string, value?: string, rules: Rule[] }[] = [
     {
-      label: 'Имя',
-      name: 'first_name',
+      label: t("user:Имя"),
+      name: "first_name",
       value: editableUser.first_name,
-      rules: [{ required: true, message: 'Please input your first name!' }],
+      rules: [
+        {
+          required: true,
+          message: t('Пожалуйста, введите имя!')
+        }
+      ]
     },
     {
-      label: 'Фамилия',
-      name: 'last_name',
+      label: t("user:Фамилия"),
+      name: "last_name",
       value: editableUser.last_name,
-      rules: [{ required: true, message: 'Please input your last name!' }],
+      rules: [
+        {
+          required: true,
+          message: t('Пожалуйста, введите фамилию!')
+        }
+      ]
     },
     {
-      label: 'Email',
-      name: 'email',
+      label: t("user:Почта"),
+      name: "email",
       value: editableUser.email,
       rules: [
         {
           required: true,
           type: 'email',
-          message: 'Please input a valid email!',
-        },
-      ],
+          message: t('Пожалуйста, введите валидную почту!')
+        }
+      ]
     },
     {
-      label: 'Телефон',
-      name: 'phone_number',
+      label: t("Номер телефона"),
+      name: "phone_number",
       value: editableUser.phone_number,
       rules: [
         {
           required: true,
-          message: 'Please input your phone number!',
+          message: t('Пожалуйста, введите номер телефона!')
         },
         {
           pattern: /^\+\d{10,15}$/,
-          message: 'Phone number must be in the format +1234567890',
-        },
-      ],
+          message: t('Номер телефона должен быть в формате +1234567890!')
+        }
+      ]
     },
     {
-      label: 'Компания',
-      name: 'company_name',
+      label: t("user:Компания"),
+      name: "company_name",
       value: editableUser.company_name,
       rules: [
         {
           required: true,
-          message: 'Please input your company!',
-        },
-      ],
+          message: t('Пожалуйста, введите компанию!')
+        }
+      ]
     },
   ];
 
   const addressFields = [
     {
-      label: 'Улица',
-      name: 'street_name',
-      value: editableUser.address?.street_name,
+      label: t("user:Адрес.Улица"),
+      name: "street_name",
+      value: editableUser.address?.street_name
     },
     {
-      label: 'Номер дома',
-      name: 'street_number',
+      label: t("Адрес.Номер дома"),
+      name: "street_number",
       value: editableUser.address?.street_number,
     },
     {
-      label: 'Город',
-      name: 'city',
-      value: editableUser.address?.city,
+      label: t("user:Адрес.Город"),
+      name: "city",
+      value: editableUser.address?.city
     },
     {
-      label: 'Регион',
-      name: 'region',
-      value: editableUser.address?.region,
+      label: t("user:Адрес.Регион"),
+      name: "region",
+      value: editableUser.address?.region
     },
   ];
 
@@ -132,26 +147,37 @@ export const ProfileCard = (props: IProfileCardProps) => {
       </Avatar>
       <Form form={form}>
         <Descriptions layout="vertical">
-          {fields.map((field) => (
-            <Descriptions.Item label={field.label} key={field.name}>
-              {isEditing ? (
-                <Form.Item
-                  name={field.name}
-                  initialValue={field.value}
-                  rules={field.rules}
-                  style={{ marginBottom: 8 }}
-                >
-                  <Input value={field.value} name={field.name} onChange={handleInputChange} />
-                </Form.Item>
-              ) : (
-                field.value
-              )}
-            </Descriptions.Item>
-          ))}
-          {editableUser.address &&
-            addressFields.map((field) => (
-              <Descriptions.Item label={field.label} key={field.name}>
-                {isEditing ? (
+          {fields
+            .filter(field => location.pathname === routes.profile_customer ? field.name !== 'company_name' : true)
+            .map((field) => (
+              <Descriptions.Item
+                label={field.label}
+                key={field.name}
+              >
+                {isEditing ?
+                  <Form.Item
+                    name={field.name}
+                    initialValue={field.value}
+                    rules={field.rules}
+                    style={{ marginBottom: 8 }}
+                  >
+                    <Input
+                      value={field.value}
+                      name={field.name}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Item> :
+                  field.value
+                }
+              </Descriptions.Item>
+            ))}
+          {editableUser.address && addressFields
+            .map(field => (
+              <Descriptions.Item
+                label={field.label}
+                key={field.name}
+              >
+                {isEditing ?
                   <Form.Item
                     style={{ marginBottom: 8 }}
                     name={field.name}
@@ -162,24 +188,29 @@ export const ProfileCard = (props: IProfileCardProps) => {
                       name={field.name}
                       onChange={handleInputAddressChange}
                     />
-                  </Form.Item>
-                ) : (
-                  field.value
-                )}
+                  </Form.Item> :
+                  field.value || `${t('Не указан', { field: field.label })}`
+                }
               </Descriptions.Item>
             ))}
         </Descriptions>
       </Form>
       <Row gutter={4}>
         <Col className="gutter-row">
-          <Button type={isEditing ? 'default' : 'primary'} onClick={toggleEditMode}>
-            {isEditing ? 'Cancel' : 'Edit'}
+          <Button
+            type={isEditing ? 'default' : 'primary'}
+            onClick={toggleEditMode}
+          >
+            {isEditing ? t("common:Отмена") : t("common:Редактировать")}
           </Button>
         </Col>
         <Col>
-          {isEditing && (
-            <Button type="primary" onClick={saveChanges}>
-              Save
+          {isEditing &&
+            <Button
+              type='primary'
+              onClick={saveChanges}
+            >
+              {t("common:Сохранить")}
             </Button>
           )}
         </Col>

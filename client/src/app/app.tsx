@@ -1,16 +1,22 @@
 import 'antd/dist/reset.css'; // сброс стилей с помощью antd
 import 'shared/styles/styles.scss'; // общие стили для всего приложения
+import './i18n';
 import { Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from './router';
 import { pages } from 'pages';
+import { Layout } from 'widgets/layout';
+import { GlobalSpin } from 'shared/ui/global-spin';
 
 export const App = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Router pages={pages} />
-      </Suspense>
+      <Layout>
+        <Suspense fallback={<GlobalSpin size='large' />}>
+          <Router pages={pages} />
+        </Suspense>
+      </Layout>
     </BrowserRouter>
   );
 };
+

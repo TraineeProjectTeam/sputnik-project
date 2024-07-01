@@ -1,0 +1,16 @@
+{
+  "Профиль покупателя": "Customer profile",
+  "Профиль продавца": "Vendor profile",
+  "Имя": "First name",
+  "Фамилия": "Last name",
+  "Почта": "Email",
+  "Номер телефона": "Phone number",
+  "Компания": "Company",
+  "Адрес": {
+    "Улица": "Street",
+    "Номер дома": "House number",
+    "Город": "City",
+    "Регион": "Region"
+  },
+  "Не указан": "{{field}} not specified"
+}
