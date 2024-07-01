@@ -1,14 +1,21 @@
 import { Layout } from "antd";
 import { routes } from "app/router";
+import { LanguageSelector } from "entities/language-selector";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Header = () => {
+  const { t } = useTranslation(['user', 'common'])
+
   return (
     <StyledHeader>
       <Link to={routes.main}>Main</Link>
-      <Link to={routes.profile_customer}>Profile customer</Link>
-      <Link to={routes.profile_vendor}>Profile vendor</Link>
+      <Link to={routes.profile_customer}>{t('Профиль покупателя')}</Link>
+      <Link to={routes.profile_vendor}>{t('Профиль продавца')}</Link>
+      <div>
+        <LanguageSelector />
+      </div>
     </StyledHeader>
   )
 }
