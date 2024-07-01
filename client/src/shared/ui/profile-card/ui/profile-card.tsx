@@ -52,7 +52,6 @@ export const ProfileCard = (props: IProfileCardProps) => {
         console.log('Validation Failed:', errorInfo);
       });
   };
-
   const fields: { label: string, name: string, value?: string, rules: Rule[] }[] = [
     {
       label: t("user:Имя"),
@@ -212,7 +211,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
             >
               {t("common:Сохранить")}
             </Button>
-          )}
+          }
         </Col>
       </Row>
     </Card>

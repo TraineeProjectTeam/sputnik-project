@@ -5,6 +5,7 @@ import { rulesForFormItems } from 'shared/ui/forms/model/form-rules';
 import useLoginStore from '../model/login.store';
 import { useNavigate } from 'react-router-dom';
 import { ButtonWrapperStyled } from 'shared/ui/forms/ui/form.styles';
+import { useTranslation } from 'react-i18next';
 
 const initialValues: ILoginPhoneDetails = {
   phone_number: '',
@@ -17,6 +18,9 @@ export const LoginFormPhone = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const { loginPhone, error, loading } = useLoginStore();
   const navigate = useNavigate();
+  const [tErrors] = useTranslation('errors');
+  const [tForm] = useTranslation('form');
+  const [tCommon] = useTranslation('common');
 
   const onSubmit = async (values: ILoginPhoneDetails) => {
     try {
@@ -33,7 +37,6 @@ export const LoginFormPhone = () => {
       content: error,
     });
   };
-
   return (
     <Form
       form={form}
@@ -44,23 +47,31 @@ export const LoginFormPhone = () => {
       initialValues={initialValues}
     >
       {contextHolder}
-      <Form.Item label="Номер телефона" name="phone_number" rules={rulesForFormItems.phone}>
+      <Form.Item
+        label={tForm('Номер телефона')}
+        name="phone_number"
+        rules={rulesForFormItems(tErrors).phone}
+      >
         <Input type="tel" placeholder="+12345678901" />
       </Form.Item>
-      <Form.Item label="Пароль" name="password" rules={rulesForFormItems.password}>
+      <Form.Item
+        label={tForm('Пароль')}
+        name="password"
+        rules={rulesForFormItems(tErrors).password}
+      >
         <Input.Password autoComplete="on" />
       </Form.Item>
-      <Form.Item name="role" label="Войти как:">
+      <Form.Item name="role" label={tForm('Войти как')}>
         <Radio.Group>
-          <Radio value="Customer">Покупатель</Radio>
-          <Radio value="Vendor">Продавец</Radio>
+          <Radio value="Customer">{tCommon('Покупатель')}</Radio>
+          <Radio value="Vendor">{tCommon('Продавец')}</Radio>
         </Radio.Group>
       </Form.Item>
       <Form.Item>
         <ButtonWrapperStyled>
           {loading && <Spin />}
           <Button type="primary" htmlType="submit" disabled={loading}>
-            Войти
+            {tCommon('Войти')}
           </Button>
         </ButtonWrapperStyled>
       </Form.Item>
