@@ -21,11 +21,6 @@ export const RootNavigator = () => {
         component={MainPage}
       />
       <RootStack.Screen
-        name={Screens.LOGIN}
-        options={{ headerShown: false }}
-        component={MainPage}
-      />
-      <RootStack.Screen
         name={Screens.PRODUCT}
         options={{ headerShown: false }}
         component={MainPage}

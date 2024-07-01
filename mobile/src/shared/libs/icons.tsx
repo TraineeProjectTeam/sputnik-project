@@ -14,5 +14,5 @@ export const CartIcon = ({ size, color }: IconProps) => (
 );
 
 export const AccountIcon = ({ size, color }: IconProps) => (
-  <Icon name="account-circle" size={size} color={color} />
+  <Icon name="person" size={size} color={color} />
 );

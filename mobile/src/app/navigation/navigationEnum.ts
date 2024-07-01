@@ -6,7 +6,9 @@ export enum Stacks {
 
 export enum Screens {
   LOADING = 'Loading',
-  LOGIN = 'Login',
+  LOGIN_BY_PHONE = 'LoginByPhone',
+  LOGIN_BY_EMAIL = 'LoginByEmail',
+  REGISTRATION = 'Registration',
   CATALOG_SCREEN = 'CatalogScreen',
   CART = 'Cart',
   PRODUCT = 'Product',

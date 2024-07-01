@@ -1,13 +1,15 @@
-interface ICustomer {
+export interface IUser {
   id: number;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  phoneNumber: string;
+  phone_number: string;
+  company_name?: string;
+  address?: IAddress;
   createdAt: Date;
 }
 
-interface IProduct {
+export interface IProduct {
   id: number;
   name: string;
   description: string;
@@ -19,7 +21,7 @@ interface IProduct {
   imagesUrl: string[];
 }
 
-interface IOrder {
+export interface IOrder {
   id: number;
   status: string;
   orderData: Date;
@@ -28,7 +30,7 @@ interface IOrder {
   price: number;
 }
 
-interface IVendors {
+export interface IVendors {
   id: number;
   firstName: string;
   lastName: string;
@@ -36,25 +38,30 @@ interface IVendors {
   phoneNumber: string;
   createdAt: Date;
   companyName: string;
-  addres: IAddress;
+  address: IAddress;
 }
 
-interface IReview {
+export interface IReview {
   customerFullName: string;
   rating: number;
   body: string;
 }
 
-interface IAddress {
+export interface IAddress {
   region: string;
   city: string;
   streetName: string;
   streetNumber: string;
 }
 
-interface IPickupPoint {
+export interface IPickupPoint {
   id: number;
   address: IAddress;
   longitude: string;
   latitude: string;
+}
+
+export enum Role {
+  CUSTOMER = 'Customer',
+  VENDOR = 'Vendor',
 }
