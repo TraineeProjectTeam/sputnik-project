@@ -12,7 +12,9 @@ export const ProfileCard = (props: IProfileCardProps) => {
   const [editableUser, setEditableUser] = useState<IUserProfile>(user);
   const [form] = Form.useForm();
   const location = useLocation()
-  const { t } = useTranslation(['user', 'common', 'errors']);
+  const { t: tErr } = useTranslation('errors');
+  const { t: tCom } = useTranslation('common');
+  const { t: tUsr } = useTranslation('user');
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -54,62 +56,62 @@ export const ProfileCard = (props: IProfileCardProps) => {
 
   const fields: { label: string, name: string, value?: string, rules: Rule[] }[] = [
     {
-      label: t("user:Имя"),
+      label: tUsr("Имя"),
       name: "first_name",
       value: editableUser.first_name,
       rules: [
         {
           required: true,
-          message: t('Пожалуйста, введите имя!')
+          message: tErr('Пожалуйста, введите имя!')
         }
       ]
     },
     {
-      label: t("user:Фамилия"),
+      label: tUsr("Фамилия"),
       name: "last_name",
       value: editableUser.last_name,
       rules: [
         {
           required: true,
-          message: t('Пожалуйста, введите фамилию!')
+          message: tErr('Пожалуйста, введите фамилию!')
         }
       ]
     },
     {
-      label: t("user:Почта"),
+      label: tUsr("Почта"),
       name: "email",
       value: editableUser.email,
       rules: [
         {
           required: true,
           type: 'email',
-          message: t('Пожалуйста, введите валидную почту!')
+          message: tErr('Пожалуйста, введите валидную почту!')
         }
       ]
     },
     {
-      label: t("Номер телефона"),
+      label: tUsr("Номер телефона"),
       name: "phone_number",
       value: editableUser.phone_number,
       rules: [
         {
           required: true,
-          message: t('Пожалуйста, введите номер телефона!')
+          message: tErr('Пожалуйста, введите номер телефона!')
         },
         {
           pattern: /^\+\d{10,15}$/,
-          message: t('Номер телефона должен быть в формате +1234567890!')
+          message: tErr('Номер телефона должен быть в формате +1234567890!')
         }
       ]
     },
     {
-      label: t("user:Компания"),
+      label: tUsr("Компания"),
       name: "company_name",
       value: editableUser.company_name,
       rules: [
         {
           required: true,
-          message: t('Пожалуйста, введите компанию!')
+          message: tErr('Пожалуйста, введите компанию!')
         }
       ]
     },
@@ -117,22 +119,22 @@ export const ProfileCard = (props: IProfileCardProps) => {
 
   const addressFields = [
     {
-      label: t("user:Адрес.Улица"),
+      label: tUsr("Адрес.Улица"),
       name: "street_name",
       value: editableUser.address?.street_name
     },
     {
-      label: t("Адрес.Номер дома"),
+      label: tUsr("Адрес.Номер дома"),
       name: "street_number",
       value: editableUser.address?.street_number,
     },
     {
-      label: t("user:Адрес.Город"),
+      label: tUsr("Адрес.Город"),
       name: "city",
       value: editableUser.address?.city
     },
     {
-      label: t("user:Адрес.Регион"),
+      label: tUsr("Адрес.Регион"),
       name: "region",
       value: editableUser.address?.region
     },
@@ -187,7 +189,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
                       onChange={handleInputAddressChange}
                     />
                   </Form.Item> :
-                  field.value || `${t('Не указан', { field: field.label })}`
+                  field.value || `${tUsr('Не указан', { field: field.label })}`
                 }
               </Descriptions.Item>
             ))}
@@ -199,7 +201,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
             type={isEditing ? 'default' : 'primary'}
             onClick={toggleEditMode}
           >
-            {isEditing ? t("common:Отмена") : t("common:Редактировать")}
+            {isEditing ?tCom("Отмена") : tCom("Редактировать")}
           </Button>
         </Col>
         <Col>
@@ -208,7 +210,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
               type='primary'
               onClick={saveChanges}
             >
-              {t("common:Сохранить")}
+              {tCom("Сохранить")}
             </Button>
           }
         </Col>

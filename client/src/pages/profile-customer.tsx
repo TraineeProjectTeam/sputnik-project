@@ -4,7 +4,7 @@ import { IUserProfile, ProfileCard } from "shared/ui/profile-card";
 
 export const ProfileCustomer = () => {
   const { user, setUser } = useCustomerStore()
-  const { t } = useTranslation('user')
+  const { t: tUsr } = useTranslation('user')
 
   const changeCustomerData = (newData: IUserProfile) => {
     setUser(newData)
@@ -12,7 +12,7 @@ export const ProfileCustomer = () => {
 
   return (
     <ProfileCard
-      title={t('Профиль покупателя')}
+      title={tUsr('Профиль покупателя')}
       user={user}
       callback={changeCustomerData}
     />

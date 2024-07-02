@@ -6,13 +6,13 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Header = () => {
-  const { t } = useTranslation(['user', 'common'])
+  const { t: tUsr } = useTranslation('user')
 
   return (
     <StyledHeader>
       <Link to={routes.main}>Main</Link>
-      <Link to={routes.profile_customer}>{t('Профиль покупателя')}</Link>
-      <Link to={routes.profile_vendor}>{t('Профиль продавца')}</Link>
+      <Link to={routes.profile_customer}>{tUsr('Профиль покупателя')}</Link>
+      <Link to={routes.profile_vendor}>{tUsr('Профиль продавца')}</Link>
       <div>
         <LanguageSelector />
       </div>
