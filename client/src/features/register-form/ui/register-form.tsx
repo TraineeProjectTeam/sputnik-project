@@ -54,6 +54,9 @@ export const RegisterForm = () => {
         layout="vertical"
       >
         {contextHolder}
+        <ButtonLinkStyled type="link" href="/login">
+          {tForm('Уже есть аккаунт? Войдите!')}
+        </ButtonLinkStyled>
         <Form.Item
           label={tForm('Имя')}
           name="first_name"

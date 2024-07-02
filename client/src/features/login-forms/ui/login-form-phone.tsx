@@ -47,6 +47,9 @@ export const LoginFormPhone = () => {
       initialValues={initialValues}
     >
       {contextHolder}
+      <ButtonLinkStyled type="link" href="/register">
+        {tForm('Нет аккаунта? Зарегистрируйтесь!')}
+      </ButtonLinkStyled>
       <Form.Item
         label={tForm('Номер телефона')}
         name="phone_number"

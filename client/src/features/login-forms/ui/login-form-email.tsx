@@ -48,6 +48,9 @@ export const LoginFormEmail = () => {
       initialValues={initialValues}
     >
       {contextHolder}
+      <ButtonLinkStyled type="link" href="/register">
+        {tForm('Нет аккаунта? Зарегистрируйтесь!')}
+      </ButtonLinkStyled>
       <Form.Item
         label={tForm('Адрес электронной почты')}
         name="email"
