@@ -5,6 +5,7 @@ export interface ICustomRouteProps {
   path: string;
   element: ReactNode;
   isAuth: boolean;
+  role?: 'Customer' | 'Vendor';
 }
 
 export interface IRouterProps {

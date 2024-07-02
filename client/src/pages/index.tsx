@@ -14,12 +14,14 @@ export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
   [EnumRoutesName.PROFILE_CUSTOMER]: {
     path: routes.profile_customer,
     element: <ProfileCustomer />,
-    isAuth: true,
+    isAuth: false,
+    role: 'Customer',
   },
   [EnumRoutesName.PROFILE_VENDOR]: {
     path: routes.profile_vendor,
     element: <ProfileVendor />,
-    isAuth: true,
+    isAuth: false,
+    role: 'Vendor',
   },
   [EnumRoutesName.LOGIN]: {
     path: routes.login,
