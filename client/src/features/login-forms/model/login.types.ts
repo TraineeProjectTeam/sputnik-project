@@ -2,13 +2,13 @@ import { ICustomer } from 'entities/customer';
 import { IVendor } from 'entities/vendor';
 
 export interface ILoginEmailDetails {
-  role: string;
+  role: 'Customer' | 'Vendor';
   email: string;
   password: string;
 }
 
 export interface ILoginPhoneDetails {
-  role: string;
+  role: 'Customer' | 'Vendor';
   phone_number: string;
   password: string;
 }

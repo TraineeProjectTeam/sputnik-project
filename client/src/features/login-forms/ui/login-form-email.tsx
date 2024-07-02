@@ -4,7 +4,7 @@ import { ILoginEmailDetails } from 'features/login-forms/model/login.types';
 import { rulesForFormItems } from 'shared/ui/forms/model/form-rules';
 import useLoginStore from '../model/login.store';
 import { useNavigate } from 'react-router-dom';
-import { ButtonWrapperStyled } from 'shared/ui/forms/ui/form.styles';
+import { ButtonLinkStyled, ButtonWrapperStyled } from 'shared/ui/forms/ui/form.styles';
 import { useTranslation } from 'react-i18next';
 
 const initialValues: ILoginEmailDetails = {
@@ -25,7 +25,14 @@ export const LoginFormEmail = () => {
   const onSubmit = async (values: ILoginEmailDetails) => {
     try {
       await loginEmail(values);
-      navigate('/');
+      switch (values.role) {
+        case 'Customer':
+          setTimeout(() => navigate('/profile-customer'), 1000);
+          break;
+        case 'Vendor':
+          setTimeout(() => navigate('/profile-vendor'), 1000);
+          break;
+      }
     } catch {
       showError(error);
     }

@@ -3,7 +3,8 @@ import { ILoginEmailDetails, ILoginPhoneDetails, IResponseLogin } from './login.
 import { api } from 'shared/api';
 import { ICustomer, useCustomerStore } from 'entities/customer';
 import { useVendorStore } from 'entities/vendor';
-import { saveAccessToken } from '../api/login.api';
+import { getCookiesUserData, saveAccessToken, saveRole, saveUserData } from 'shared/lib';
+import Cookies from 'js-cookie';
 
 export interface ILoginStore {
   loginPhone: (loginDetails: ILoginPhoneDetails) => Promise<IResponseLogin>;
@@ -11,12 +12,24 @@ export interface ILoginStore {
   user: ICustomer | null;
   error: string;
   loading: boolean;
+  isLogin: Boolean;
+  role: string | null;
+  setIsLogin: (isLogin: boolean) => void;
+  setRole: (role: 'Customer' | 'Vendor') => void;
 }
 
 const useLoginStore = create<ILoginStore>((set) => ({
-  user: null,
+  user: getCookiesUserData(),
   error: 'Не удалось совершить попытку входа! Пожалуйста, попробуйте еще раз.',
   loading: false,
+  isLogin: Cookies.get('access_token') ? true : false,
+  role: Cookies.get('role') || null,
+  setIsLogin: (isLogin) => {
+    set({ isLogin });
+  },
+  setRole: (role) => {
+    set({ role });
+  },
   loginPhone: async (loginDetails) => {
     try {
       set({ loading: true });
@@ -31,6 +44,10 @@ const useLoginStore = create<ILoginStore>((set) => ({
           break;
       }
       saveAccessToken(data.access_token);
+      saveUserData(data.user);
+      saveRole(loginDetails.role);
+      set({ isLogin: true });
+      set({ role: loginDetails.role });
       return data;
     } catch (error: any) {
       set({ user: null });
@@ -53,6 +70,10 @@ const useLoginStore = create<ILoginStore>((set) => ({
           break;
       }
       saveAccessToken(data.access_token);
+      saveUserData(data.user);
+      saveRole(loginDetails.role);
+      set({ isLogin: true });
+      set({ role: loginDetails.role });
       return data;
     } catch (error: any) {
       set({ user: null });
