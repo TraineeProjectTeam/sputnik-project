@@ -2,7 +2,6 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 
 export type RootStackParamList = {
   Loading: undefined;
-  Login: undefined;
   Main: NavigatorScreenParams<MainTabsStackParams>;
   Catalog: NavigatorScreenParams<CatalogStackParams>;
   Account: NavigatorScreenParams<AccountStackParams>;
@@ -18,6 +17,9 @@ export type MainTabsStackParams = {
 
 export type AccountStackParams = {
   AccountScreen: undefined;
+  LoginByEmail: undefined;
+  LoginByPhone: undefined;
+  Registration: undefined;
   Profile: undefined;
   Orders: undefined;
   Reviews: undefined;

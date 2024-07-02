@@ -8,13 +8,15 @@ import { LogoutButton } from 'shared/ui/logout-button/logout-button';
 import useLoginStore from 'features/login-forms/model/login.store';
 
 export const Header = () => {
-  const [tCommon] = useTranslation('common');
   const [tUser] = useTranslation('user');
+  const [tCommon] = useTranslation('common');
   const isLogin = useLoginStore((state) => state.isLogin);
   const role = useLoginStore((state) => state.role);
   return (
     <StyledHeader>
       <Link to={routes.main}>Main</Link>
+      <Link to={routes.profile_customer}>{tUser('Профиль покупателя')}</Link>
+      <Link to={routes.profile_vendor}>{tUser('Профиль продавца')}</Link>
       {isLogin ? (
         <>
           {role === 'Customer' && (

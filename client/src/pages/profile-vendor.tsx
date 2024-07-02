@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { IUserProfile, ProfileCard } from "shared/ui/profile-card";
 
 export const ProfileVendor = () => {
-  const { t } = useTranslation('user')
+  const { t: tUsr } = useTranslation('user')
   const { user, setVendor } = useVendorStore()
 
   const changeVendorData = (newData: IUserProfile) => {
@@ -22,7 +22,7 @@ export const ProfileVendor = () => {
 
   return (
     <ProfileCard
-      title={t('Профиль продавца')}
+      title={tUsr('Профиль продавца')}
       user={user}
       callback={changeVendorData}
     />
