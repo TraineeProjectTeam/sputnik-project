@@ -12,6 +12,7 @@ export const Header = () => {
   const [tUser] = useTranslation('user');
   const isLogin = useLoginStore((state) => state.isLogin);
   const role = useLoginStore((state) => state.role);
+
   return (
     <StyledHeader>
       <Link to={routes.main}>Main</Link>

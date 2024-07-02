@@ -1,9 +1,10 @@
 import { EnumRoutesName, ICustomRouteProps, routes } from 'app/router';
 import { MainPage } from './main';
-import { ProfileCustomer } from './profile-customer';
-import { ProfileVendor } from './profile-vendor';
-import { LoginPage } from './login-page';
+import { ProfileCustomerPage } from './profile-customer';
+import { ProfileVendorPage } from './profile-vendor';
+import { MapPage } from './map';
 import { RegisterPage } from './register-page';
+import { LoginPage } from './login-page';
 
 export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
   [EnumRoutesName.MAIN]: {
@@ -13,13 +14,13 @@ export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
   },
   [EnumRoutesName.PROFILE_CUSTOMER]: {
     path: routes.profile_customer,
-    element: <ProfileCustomer />,
+    element: <ProfileCustomerPage />,
     isAuth: false,
     role: 'Customer',
   },
   [EnumRoutesName.PROFILE_VENDOR]: {
     path: routes.profile_vendor,
-    element: <ProfileVendor />,
+    element: <ProfileVendorPage />,
     isAuth: false,
     role: 'Vendor',
   },
@@ -31,6 +32,11 @@ export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
   [EnumRoutesName.REGISTER]: {
     path: routes.register,
     element: <RegisterPage />,
+    isAuth: true,
+  },
+  [EnumRoutesName.MAP]: {
+    path: routes.map,
+    element: <MapPage />,
     isAuth: true,
   },
 };
