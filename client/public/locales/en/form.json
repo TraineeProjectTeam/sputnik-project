@@ -1,0 +1,12 @@
+{
+  "Имя": "First name",
+  "Фамилия": "Last name",
+  "Адрес электронной почты": "Email",
+  "Номер телефона": "Phone number",
+  "Пароль": "Password",
+  "Войти как": "Log in as:",
+  "Зарегистрироваться как": "Sign up as:",
+  "Регистрация прошла успешна! Вы будете перенаправлены на страницу входа.": "Registration was successful! You will be redirected to the login page.",
+  "Нет аккаунта? Зарегистрируйтесь!": "No account? Sign up!",
+  "Уже есть аккаунт? Войдите!": "Already have an account? Sign in!"
+}

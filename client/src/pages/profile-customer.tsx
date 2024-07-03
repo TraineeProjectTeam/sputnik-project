@@ -3,11 +3,11 @@ import { useTranslation } from "react-i18next";
 import { IUserProfile, ProfileCard } from "shared/ui/profile-card";
 
 export const ProfileCustomer = () => {
-  const { user, setUser } = useCustomerStore()
+  const { user, setCustomer } = useCustomerStore()
   const { t: tUsr } = useTranslation('user')
 
   const changeCustomerData = (newData: IUserProfile) => {
-    setUser(newData)
+    setCustomer(newData, true)
   }
 
   return (

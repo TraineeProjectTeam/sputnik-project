@@ -1,22 +1,17 @@
 import { create } from 'zustand';
 import { ICustomer } from '../api/cutomer.dto';
 import { changeCustomerRequest } from '../api/customer.api';
+import { getCookiesUserData } from 'shared/lib';
 
 export interface ICustomerStore {
   user: ICustomer;
-  setUser: (user: ICustomer) => void;
+  setCustomer: (user: ICustomer, isUpdate: boolean) => void;
 }
 
 export const useCustomerStore = create<ICustomerStore>((set) => ({
-  user: {
-    id: '1',
-    first_name: 'John',
-    last_name: 'Doe',
-    email: 'john.doe@example.com',
-    phone_number: '+1234567890',
-  },
-  setUser: (user: ICustomer) => {
+  user: getCookiesUserData(),
+  setCustomer: (user: ICustomer, isUpdate: boolean) => {
     set({ user });
-    changeCustomerRequest({ user });
+    isUpdate && changeCustomerRequest({ user });
   },
 }));

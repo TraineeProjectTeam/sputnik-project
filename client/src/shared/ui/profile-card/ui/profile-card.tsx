@@ -28,11 +28,11 @@ export const ProfileCard = (props: IProfileCardProps) => {
         ...editableUser,
         address: {
           ...editableUser.address,
-          [name]: value
-        }
+          [name]: value,
+        },
       });
     }
-  }
+  };
 
   const toggleEditMode = () => {
     setIsEditing((prevIsEditing) => {
@@ -44,7 +44,8 @@ export const ProfileCard = (props: IProfileCardProps) => {
   };
 
   const saveChanges = () => {
-    form.validateFields()
+    form
+      .validateFields()
       .then(() => {
         callback(editableUser);
         setIsEditing(false);
@@ -53,7 +54,6 @@ export const ProfileCard = (props: IProfileCardProps) => {
         console.log('Validation Failed:', errorInfo);
       });
   };
-
   const fields: { label: string, name: string, value?: string, rules: Rule[] }[] = [
     {
       label: tUsr("Имя"),
@@ -141,9 +141,10 @@ export const ProfileCard = (props: IProfileCardProps) => {
   ];
 
   return (
-    <Card title={title} id={`user_id_${user.id}_card`}>
+    <Card title={title} id={`user_id_${user._id}_card`}>
       <Avatar size={64} style={{ marginBottom: 16 }}>
-        {editableUser.first_name[0]}{editableUser.last_name[0]}
+        {editableUser.first_name[0]}
+        {editableUser.last_name[0]}
       </Avatar>
       <Form form={form}>
         <Descriptions layout="vertical">
@@ -215,6 +216,6 @@ export const ProfileCard = (props: IProfileCardProps) => {
           }
         </Col>
       </Row>
-    </Card >
+    </Card>
   );
 };
