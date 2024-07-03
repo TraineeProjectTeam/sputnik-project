@@ -37,8 +37,16 @@ export const Map = (props: IMapProps) => {
         iconCreateFunction={customClusterIcon}
       >
         {markers.map((marker) => (
-          <Marker position={marker.geocode} icon={customIcon} key={marker.id}>
-            <Popup>{marker.popUp}</Popup>
+          <Marker
+            position={[+marker.logitude, +marker.latitude]}
+            icon={customIcon}
+            key={`${marker.logitude}-${marker.latitude}`}
+          >
+            <Popup>
+              {Object.values(marker.address).map((field: string) => (
+                <div key={field}>{field}</div>
+              ))}
+            </Popup>
           </Marker>
         ))}
       </MarkerClusterGroup>

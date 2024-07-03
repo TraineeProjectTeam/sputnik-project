@@ -2,8 +2,19 @@ export interface IMapProps {
   markers: IMarker[];
 }
 
+export interface IAdress {
+  region: string;
+  city: string;
+  street_name: string;
+  street_number: string;
+}
+
 export interface IMarker {
-  geocode: [number, number];
-  popUp: string;
+  address: IAdress;
+  logitude: string;
+  latitude: string;
+}
+
+export interface IGetPickupPointParams {
   id: string;
 }

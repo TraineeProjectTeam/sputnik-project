@@ -1,23 +1,16 @@
-import { IMarker, Map } from 'entities/map';
+import { IMarker, Map, getPickupPointsRequest } from 'entities/map';
+import { useEffect, useState } from 'react';
 
 export const MapPage = () => {
-  const markers: IMarker[] = [
-    {
-      geocode: [48.86, 2.3522],
-      popUp: 'Hello, I am pop up 1',
-      id: '1',
-    },
-    {
-      geocode: [48.85, 2.3522],
-      popUp: 'Hello, I am pop up 2',
-      id: '2',
-    },
-    {
-      geocode: [48.855, 2.34],
-      popUp: 'Hello, I am pop up 3',
-      id: '3',
-    },
-  ];
+  const [markers, setMarkers] = useState<IMarker[]>([]);
+
+  useEffect(() => {
+    getPickupPointsRequest().then((res) => setMarkers(res.data));
+
+    return () => {
+      setMarkers([]);
+    };
+  }, []);
 
   return <Map markers={markers} />;
 };
