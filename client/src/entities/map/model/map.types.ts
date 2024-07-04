@@ -14,7 +14,3 @@ export interface IMarker {
   logitude: string;
   latitude: string;
 }
-
-export interface IGetPickupPointParams {
-  id: string;
-}
