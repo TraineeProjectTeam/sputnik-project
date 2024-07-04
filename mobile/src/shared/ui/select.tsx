@@ -10,7 +10,7 @@ import {
 
 interface SelectProps<T extends FieldValues> extends UseControllerProps<T>, Props {
   label: string;
-  items: Array<string>;
+  items: Array<{ value: string; label: string }>;
 }
 
 export const Select = <T extends FieldValues>({
@@ -21,7 +21,9 @@ export const Select = <T extends FieldValues>({
   defaultValue,
   ...props
 }: SelectProps<T>) => {
-  const [selectedIndex, setSelectedIndex] = React.useState<IndexPath>(new IndexPath(0));
+  const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
+
+  const indexObj = (value: string) => items.findIndex((x) => x.value === value);
 
   return (
     <Controller
@@ -31,17 +33,17 @@ export const Select = <T extends FieldValues>({
       render={({ field: { onChange, value } }) => (
         <UiSelect
           label={label}
-          value={value}
+          value={items[indexObj(value)].label}
           style={styles.select}
           selectedIndex={selectedIndex}
           onSelect={(index: any) => {
-            onChange(items[index.row]);
+            onChange(items[index.row].value);
             setSelectedIndex(index);
           }}
           {...props}
         >
           {items.map((item, index) => (
-            <SelectItem key={index} title={item} />
+            <SelectItem key={index} title={item.label} />
           ))}
         </UiSelect>
       )}
