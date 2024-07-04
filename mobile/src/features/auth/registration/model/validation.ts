@@ -1,34 +1,38 @@
 import * as yup from 'yup';
+import i18n from 'i18next';
 import { Regulars } from '@/shared/libs/regEx';
 import { Role } from '@/shared/libs/types';
 
 export const schema = yup.object().shape({
   email: yup
     .string()
-    .email('Недопустимый адрес электронной почты')
-    .required('Это обязательно поле'),
+    .email(i18n.t('Validation.Недопустимый адрес электронной почты'))
+    .required(i18n.t('Validation.Это обязательно поле')),
   password: yup
     .string()
-    .min(6, 'Пароль должен содержать как минимум 6 символов')
-    .max(30, 'Пароль может содежать только из 30 символов')
+    .min(6, i18n.t('Validation.Пароль должен содержать как минимум 6 символов'))
+    .max(30, i18n.t('Validation.Пароль может содержать максимум 30 символов'))
     .matches(
       Regulars.Password,
-      'Пароль должен содержать только английские прописные, заглавные буквы и цифры.',
+      i18n.t(
+        'Validation.Пароль должен содержать только английские строчные, заглавные буквы и цифры',
+      ),
     )
-    .required('Это обязательно поле'),
+    .required(i18n.t('Validation.Это обязательно поле')),
   first_name: yup
     .string()
-    .min(1, 'Поле не должно быть пустым')
-    .matches(Regulars.Name, 'Имя должно содержать только буквы!')
-    .required('Это обязательно поле'),
+    .matches(Regulars.Name, i18n.t('Validation.Имя должно содержать только буквы'))
+    .required(i18n.t('Validation.Это обязательно поле')),
   last_name: yup
     .string()
-    .min(1, 'Поле не должно быть пустым')
-    .matches(Regulars.Name, 'Фамилия должно содержать только буквы!')
-    .required('Это обязательно поле'),
+    .matches(Regulars.Name, i18n.t('Validation.Фамилия должна содержать только буквы'))
+    .required(i18n.t('Validation.Это обязательно поле')),
   phone_number: yup
     .string()
-    .matches(Regulars.Phone, 'Номер телефона должен быть в формате: +1234567890')
-    .required('Это обязательно поле'),
-  role: yup.mixed<Role>().oneOf(Object.values(Role)).required('Это обязательно поле'),
+    .matches(Regulars.Phone, i18n.t('Validation.Номер телефона должен быть в формате: +1234567890'))
+    .required(i18n.t('Validation.Это обязательно поле')),
+  role: yup
+    .mixed<Role>()
+    .oneOf(Object.values(Role))
+    .required(i18n.t('Validation.Это обязательно поле')),
 });

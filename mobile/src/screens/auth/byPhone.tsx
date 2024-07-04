@@ -1,6 +1,7 @@
 import React from 'react';
 import { StackActions } from '@react-navigation/native';
 import { Button } from '@ui-kitten/components';
+import { useTranslation } from 'react-i18next';
 
 import { AuthByPhoneForm } from '@/features/auth/by-phone';
 
@@ -9,6 +10,7 @@ import { AuthLayout } from '@/shared/ui/authLayout';
 
 export const AuthByPhonePage = () => {
   const navigation = useAppNavigation();
+  const { t } = useTranslation();
 
   const navigateToLoginByEmail = () => {
     navigation.dispatch(StackActions.replace('LoginByEmail'));
@@ -22,10 +24,10 @@ export const AuthByPhonePage = () => {
     <AuthLayout>
       <AuthByPhoneForm />
       <Button onPress={navigateToLoginByEmail} appearance="ghost">
-        Войти по почте
+        {t('Form.Войти по почте')}
       </Button>
       <Button onPress={navigateToRegistration} appearance="ghost">
-        Зарегистрироваться
+        {t('Form.Зарегистрироваться')}
       </Button>
     </AuthLayout>
   );
