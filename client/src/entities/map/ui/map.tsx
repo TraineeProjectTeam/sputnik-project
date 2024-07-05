@@ -36,7 +36,7 @@ export const Map = (props: IMapProps) => {
         showCoverageOnHover={false}
         iconCreateFunction={customClusterIcon}
       >
-        {markers.map((marker) => (
+        {markers?.map((marker) => (
           <Marker
             position={[+marker.logitude, +marker.latitude]}
             icon={customIcon}
