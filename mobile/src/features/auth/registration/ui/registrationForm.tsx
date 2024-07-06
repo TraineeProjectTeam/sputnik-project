@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -6,17 +6,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Spinner, Text } from '@ui-kitten/components';
 import { useTranslation } from 'react-i18next';
 
-import { useUserStore, userRoles } from '@/entities/user';
-
 import { TextStyles } from '@/shared/libs/textStyles';
 import { useAppNavigation } from '@/shared/libs/useAppNavigation';
+import { userRoles } from '@/shared/utils/userRoles';
 import { Input } from '@/shared/ui/input';
 import { Select } from '@/shared/ui/select';
 import { ErrorText } from '@/shared/ui/errorText';
 
 import { schema } from '../model/validation';
 import { RegistrationProps } from '../model/types';
-import { registration } from '../api/api';
+import { useRegistrationStore } from '../model/useRegistrationStore';
 
 export const RegistrationForm = () => {
   const {
@@ -29,24 +28,19 @@ export const RegistrationForm = () => {
     mode: 'onChange',
   });
 
-  const [isLoading, setIsLoading] = useState(false);
   const navigation = useAppNavigation();
   const { t } = useTranslation();
-  const { setUser } = useUserStore();
+  const { registration, isLoading } = useRegistrationStore();
 
   const onPressSend: SubmitHandler<RegistrationProps> = async (formData) => {
     try {
-      setIsLoading(true);
-      const data = await registration(formData);
-      setUser(data.user, data.access_token, formData.role);
+      await registration(formData);
       navigation.dispatch(StackActions.replace('AccountScreen'));
     } catch {
       setError('root', {
         type: 'server',
         message: t('Validation.Проверьте правильность введенных данных'),
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -82,12 +76,14 @@ export const RegistrationForm = () => {
         label={t('Form.Войти как')}
         defaultValue={userRoles[0].value}
       />
-      <Button onPress={handleSubmit(onPressSend)} disabled={!isValid}>
-        {isLoading ? (
-          <Spinner status="control" size="small" />
-        ) : (
-          <Text style={TextStyles.button}>{t('Form.Зарегистрироваться')}</Text>
-        )}
+      <Button onPress={handleSubmit(onPressSend)} disabled={!isValid || isLoading}>
+        <View>
+          {isLoading ? (
+            <Spinner status="control" size="small" />
+          ) : (
+            <Text style={TextStyles.button}>{t('Form.Зарегистрироваться')}</Text>
+          )}
+        </View>
       </Button>
       <ErrorText error={errors.root} />
     </View>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -6,17 +6,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Spinner, Text } from '@ui-kitten/components';
 import { useTranslation } from 'react-i18next';
 
-import { useUserStore, userRoles } from '@/entities/user';
-
 import { TextStyles } from '@/shared/libs/textStyles';
 import { useAppNavigation } from '@/shared/libs/useAppNavigation';
+import { userRoles } from '@/shared/utils/userRoles';
 import { Input } from '@/shared/ui/input';
 import { Select } from '@/shared/ui/select';
 import { ErrorText } from '@/shared/ui/errorText';
 
 import { schema } from '../model/validation';
 import { AuthByEmailProps } from '../model/types';
-import { AuthByEmail } from '../api/api';
+import { useAuthByEmailStore } from '../model/useAuthByEmailStore';
 
 export const AuthByEmailForm = () => {
   const {
@@ -29,24 +28,19 @@ export const AuthByEmailForm = () => {
     mode: 'onChange',
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, authByEmail } = useAuthByEmailStore();
   const navigation = useAppNavigation();
   const { t } = useTranslation();
-  const { setUser } = useUserStore();
 
   const onPressSend: SubmitHandler<AuthByEmailProps> = async (formData) => {
     try {
-      setIsLoading(true);
-      const data = await AuthByEmail(formData);
-      setUser(data.user, data.access_token, formData.role);
+      await authByEmail(formData);
       navigation.dispatch(StackActions.replace('AccountScreen'));
     } catch {
       setError('root', {
         type: 'server',
         message: t('Validation.Проверьте правильность введенных данных'),
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 

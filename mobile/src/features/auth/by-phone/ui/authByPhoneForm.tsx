@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -6,17 +6,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Spinner, Text } from '@ui-kitten/components';
 import { useTranslation } from 'react-i18next';
 
-import { useUserStore, userRoles } from '@/entities/user';
-
 import { TextStyles } from '@/shared/libs/textStyles';
 import { useAppNavigation } from '@/shared/libs/useAppNavigation';
+import { userRoles } from '@/shared/utils/userRoles';
 import { Select } from '@/shared/ui/select';
 import { ErrorText } from '@/shared/ui/errorText';
 import { Input } from '@/shared/ui/input';
 
 import { schema } from '../model/validation';
 import { AuthByPhoneProps } from '../model/types';
-import { AuthByPhone } from '../api/api';
+import { useAuthByPhoneStore } from '../model/useAuthByPhoneStore';
 
 export const AuthByPhoneForm = () => {
   const {
@@ -29,24 +28,19 @@ export const AuthByPhoneForm = () => {
     mode: 'onChange',
   });
 
-  const [isLoading, setIsLoading] = useState(false);
   const navigation = useAppNavigation();
   const { t } = useTranslation();
-  const { setUser } = useUserStore();
+  const { authByPhone, isLoading } = useAuthByPhoneStore();
 
   const onPressSend: SubmitHandler<AuthByPhoneProps> = async (formData) => {
     try {
-      setIsLoading(true);
-      const data = await AuthByPhone(formData);
-      setUser(data.user, data.access_token, formData.role);
+      await authByPhone(formData);
       navigation.dispatch(StackActions.replace('AccountScreen'));
     } catch {
       setError('root', {
         type: 'server',
         message: t('Validation.Проверьте правильность введенных данных'),
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -69,11 +63,13 @@ export const AuthByPhoneForm = () => {
         defaultValue={userRoles[0].value}
       />
       <Button onPress={handleSubmit(onPressSend)} disabled={!isValid || isLoading}>
-        {isLoading ? (
-          <Spinner status="control" size="small" />
-        ) : (
-          <Text style={TextStyles.button}>{t('Form.Войти')}</Text>
-        )}
+        <View>
+          {isLoading ? (
+            <Spinner status="control" size="small" />
+          ) : (
+            <Text style={TextStyles.button}>{t('Form.Войти')}</Text>
+          )}
+        </View>
       </Button>
       <ErrorText error={errors.root} />
     </View>
