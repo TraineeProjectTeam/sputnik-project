@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Controller, FieldValues, UseControllerProps } from 'react-hook-form';
 import {
   SelectItem,
@@ -24,6 +25,7 @@ export const Select = <T extends FieldValues>({
   const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
 
   const indexObj = (value: string) => items.findIndex((x) => x.value === value);
+  const { t } = useTranslation();
 
   return (
     <Controller
@@ -33,7 +35,7 @@ export const Select = <T extends FieldValues>({
       render={({ field: { onChange, value } }) => (
         <UiSelect
           label={label}
-          value={items[indexObj(value)].label}
+          value={t(items[indexObj(value)].label)}
           style={styles.select}
           selectedIndex={selectedIndex}
           onSelect={(index: any) => {
@@ -43,7 +45,7 @@ export const Select = <T extends FieldValues>({
           {...props}
         >
           {items.map((item, index) => (
-            <SelectItem key={index} title={item.label} />
+            <SelectItem key={index} title={t(item.label)} />
           ))}
         </UiSelect>
       )}

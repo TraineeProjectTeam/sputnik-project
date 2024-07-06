@@ -22,7 +22,7 @@
     "Пароль может содержать максимум 30 символов": "Password can contain a maximum of 30 characters",
     "Недопустимый адрес электронной почты": "Invalid email address",
     "Пароль должен содержать только английские строчные, заглавные буквы и цифры": "Password must contain only English lowercase, uppercase letters and numbers",
-    "Номер телефона должен быть в формате: +1234567890": "The telephone number must be in the format: +1234567890",
+    "Номер телефона должен быть в формате +1234567890": "The telephone number must be in the format: +1234567890",
     "Проверьте правильность введенных данных": "Check that the entered data is correct",
     "Имя должно содержать только буквы": "Name must contain only letters",
     "Фамилия должна содержать только буквы": "Last name must contain only letters"

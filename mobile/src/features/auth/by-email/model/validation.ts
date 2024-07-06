@@ -1,7 +1,8 @@
 import * as yup from 'yup';
-import i18n from 'i18next';
+
 import { Regulars } from '@/shared/libs/regEx';
 import { Role } from '@/shared/libs/types';
+import i18n from '@/shared/config/i18n';
 
 export const schema = yup.object().shape({
   email: yup

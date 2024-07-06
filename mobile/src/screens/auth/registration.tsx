@@ -7,6 +7,7 @@ import { RegistrationForm } from '@/features/auth/registration';
 
 import { useAppNavigation } from '@/shared/libs/useAppNavigation';
 import { AuthLayout } from '@/shared/ui/authLayout';
+import { ScrollView } from 'react-native';
 
 export const RegistrationPage = () => {
   const navigation = useAppNavigation();

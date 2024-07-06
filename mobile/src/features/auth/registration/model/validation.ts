@@ -1,7 +1,7 @@
 import * as yup from 'yup';
-import i18n from 'i18next';
 import { Regulars } from '@/shared/libs/regEx';
 import { Role } from '@/shared/libs/types';
+import i18n from '@/shared/config/i18n';
 
 export const schema = yup.object().shape({
   email: yup
@@ -29,7 +29,7 @@ export const schema = yup.object().shape({
     .required(i18n.t('Validation.Это обязательно поле')),
   phone_number: yup
     .string()
-    .matches(Regulars.Phone, i18n.t('Validation.Номер телефона должен быть в формате: +1234567890'))
+    .matches(Regulars.Phone, i18n.t('Validation.Номер телефона должен быть в формате +1234567890'))
     .required(i18n.t('Validation.Это обязательно поле')),
   role: yup
     .mixed<Role>()
