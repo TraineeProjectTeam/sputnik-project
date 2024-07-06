@@ -1,22 +1,21 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from '@ui-kitten/components';
-
-import { useUserStore } from '@/entities/user';
+import { Button, Spinner, Text } from '@ui-kitten/components';
+import { useTranslation } from 'react-i18next';
 
 import { TextStyles } from '@/shared/libs/textStyles';
 import { useAppNavigation } from '@/shared/libs/useAppNavigation';
+import { userRoles } from '@/shared/utils/userRoles';
 import { Input } from '@/shared/ui/input';
 import { Select } from '@/shared/ui/select';
 import { ErrorText } from '@/shared/ui/errorText';
-import { Role } from '@/shared/libs/types';
 
 import { schema } from '../model/validation';
 import { AuthByEmailProps } from '../model/types';
-import { AuthByEmail } from '../api/api';
+import { useAuthByEmailStore } from '../model/useAuthByEmailStore';
 
 export const AuthByEmailForm = () => {
   const {
@@ -29,40 +28,48 @@ export const AuthByEmailForm = () => {
     mode: 'onChange',
   });
 
+  const { isLoading, authByEmail } = useAuthByEmailStore();
   const navigation = useAppNavigation();
+  const { t } = useTranslation();
 
-  const { setUser } = useUserStore();
-
-  const Roles = [Role.CUSTOMER, Role.VENDOR];
-
-  const onPressSend: SubmitHandler<AuthByEmailProps> = (formData) => {
-    AuthByEmail(formData)
-      .then((data) => {
-        setUser(data.user, data.access_token, formData.role);
-        navigation.dispatch(StackActions.replace('AccountScreen'));
-      })
-      .catch((error) => {
-        setError('root', {
-          type: 'server',
-          message: 'Проверьте правильность введеных данных!',
-        });
+  const onPressSend: SubmitHandler<AuthByEmailProps> = async (formData) => {
+    try {
+      await authByEmail(formData);
+      navigation.dispatch(StackActions.replace('AccountScreen'));
+    } catch {
+      setError('root', {
+        type: 'server',
+        message: t('Validation.Проверьте правильность введенных данных'),
       });
+    }
   };
 
   return (
     <View>
-      <Text style={TextStyles.h4}>Вход по почте</Text>
+      <Text style={TextStyles.h4}>{t('Form.Войти по почте')}</Text>
       <Input
         control={control}
         name="email"
-        label="Email"
+        label={t('Form.Адрес электронной почты')}
         error={errors.email}
         keyboardType="email-address"
       />
-      <Input control={control} name="password" label="Password" error={errors.password} />
-      <Select control={control} name="role" label="Role" items={Roles} defaultValue={Roles[0]} />
-      <Button onPress={handleSubmit(onPressSend)} disabled={!isValid}>
-        Submit
+      <Input control={control} name="password" label={t('Form.Пароль')} error={errors.password} />
+      <Select
+        control={control}
+        name="role"
+        label={t('Form.Войти как')}
+        items={userRoles}
+        defaultValue={userRoles[0].value}
+      />
+      <Button onPress={handleSubmit(onPressSend)} disabled={!isValid || isLoading}>
+        <View>
+          {isLoading ? (
+            <Spinner status="control" size="small" />
+          ) : (
+            <Text style={TextStyles.button}>{t('Form.Войти')}</Text>
+          )}
+        </View>
       </Button>
       <ErrorText error={errors.root} />
     </View>

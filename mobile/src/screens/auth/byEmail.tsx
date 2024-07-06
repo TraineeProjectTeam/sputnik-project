@@ -6,9 +6,11 @@ import { AuthByEmailForm } from '@/features/auth/by-email';
 
 import { useAppNavigation } from '@/shared/libs/useAppNavigation';
 import { AuthLayout } from '@/shared/ui/authLayout';
+import { useTranslation } from 'react-i18next';
 
 export const AuthByEmailPage = () => {
   const navigation = useAppNavigation();
+  const { t } = useTranslation();
 
   const navigateToLoginByPhone = () => {
     navigation.dispatch(StackActions.replace('LoginByPhone'));
@@ -22,10 +24,10 @@ export const AuthByEmailPage = () => {
     <AuthLayout>
       <AuthByEmailForm />
       <Button onPress={navigateToLoginByPhone} appearance="ghost">
-        Войти по номеру телефона
+        {t('Form.Войти по номеру телефона')}
       </Button>
       <Button onPress={navigateToRegistration} appearance="ghost">
-        Зарегистрироваться
+        {t('Form.Зарегистрироваться')}
       </Button>
     </AuthLayout>
   );

@@ -8,21 +8,26 @@ export interface IUserWithToken {
 }
 
 interface IUserStore extends Omit<IUserWithToken, 'access_token'> {
-  role: Role;
   setUser: (user: IUser, access_token: string, role: Role) => void;
+  updateUser: (user: IUser) => void;
   reset: () => void;
 }
 
 export const useUserStore = create<IUserStore>((set) => ({
   user: {} as IUser,
-  role: '' as Role,
   setUser: (user, access_token, role) => {
-    set({ user, role });
+    set({ user });
     storage.set('access_token', access_token);
-    storage.set('userId', user.id);
+    storage.set('userId', user._id);
+    storage.set('role', role);
+  },
+  updateUser: (user) => {
+    set({ user });
   },
   reset: () => {
-    set({ user: {} as IUser, role: '' as Role });
+    set({ user: {} as IUser });
     storage.delete('access_token');
+    storage.delete('userId');
+    storage.delete('role');
   },
 }));

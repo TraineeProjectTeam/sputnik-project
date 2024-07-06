@@ -64,5 +64,5 @@ export const TextStyles: ITextStyles = {
   label: new TextStyle(12, '400', Colors.Basic800, 'Montserrat-Regular', 12),
   body: new TextStyle(14, '400', Colors.Basic800, 'Montserrat-Regular', 14),
   bodyBold: new TextStyle(14, '600', Colors.Basic800, 'Montserrat-Bold', 14),
-  button: new TextStyle(14, '600', Colors.Basic800, 'Montserrat-Bold', 14),
+  button: new TextStyle(14, '600', Colors.Basic100, 'Montserrat-Bold', 18),
 };
