@@ -11,24 +11,38 @@ export const LayoutComponent = (props: ILayoutProps) => {
     <StyledLayoutConainer>
       <StyledLayout>
         <Header />
-        <StyledContent>{children}</StyledContent>
-        <Footer />
+        <StyledContainer>
+          <StyledContent>{children}</StyledContent>
+          <Footer />
+        </StyledContainer>
       </StyledLayout>
     </StyledLayoutConainer>
-  )
-}
+  );
+};
 
 const StyledLayoutConainer = styled.div`
   display: flex;
   justify-content: center;
   height: 100%;
-`
+`;
 
 const StyledLayout = styled(Layout)`
   max-width: 75rem;
   position: relative;
-`
+  overflow: hidden;
+`;
+
+const StyledContainer = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
 
 const StyledContent = styled(Layout.Content)`
   flex-grow: 1;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

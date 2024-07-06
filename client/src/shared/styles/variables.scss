@@ -1,4 +1,12 @@
 :root {
+  // height
+  --header-height: 3.75rem;
+  --footer-height: 4.0625rem;
+
   // borders
   --main-border-radius: 0.3125rem;
+
+  // z-index
+  --header-z-index: 100;
+  --footer-z-index: 100;
 }
