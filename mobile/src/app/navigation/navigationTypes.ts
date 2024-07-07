@@ -23,6 +23,7 @@ export type AccountStackParams = {
   Profile: undefined;
   Orders: undefined;
   Reviews: undefined;
+  Language: undefined;
 };
 
 export type CatalogStackParams = {
