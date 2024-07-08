@@ -1,4 +1,4 @@
-import { IMarker, Map, getPickupPointsRequest } from 'entities/map';
+import { IMarker, Map, getPickupPointsRequest } from 'features/map';
 import { useEffect, useState } from 'react';
 
 export const MapPage = () => {
