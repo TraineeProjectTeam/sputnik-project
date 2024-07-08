@@ -13,6 +13,7 @@ export enum Screens {
   CART = 'Cart',
   PRODUCT = 'Product',
   ACCOUNT_SCREEN = 'AccountScreen',
+  LANGUAGE = 'Language',
   PROFILE = 'Profile',
   ORDERS = 'Orders',
   REVIEWS = 'Reviews',

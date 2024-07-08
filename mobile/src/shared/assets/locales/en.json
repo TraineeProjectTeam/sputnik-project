@@ -1,4 +1,6 @@
 {
+  "Язык": "Language",
+  "Профиль": "Profile",
   "Form": {
     "Войти по номеру телефона": "Log in by phone number",
     "Войти по почте": "Log in by email",
@@ -10,7 +12,9 @@
     "Пароль": "Password",
     "Войти как": "Log in as",
     "Войти": "Log in",
-    "Выйти из аккаунта": "Log out"
+    "Выйти из аккаунта": "Log out",
+    "Сохранить": "Save",
+    "Название компании": "Company name"
   },
   "Role": {
     "Покупатель": "Customer",
