@@ -22,7 +22,7 @@ export const useUserFormStore = create<IUseFormStore>((set) => ({
   updateUser: async (formData) => {
     try {
       set({ isLoading: true });
-      const data = await updateUserRequest(userId, role, formData);
+      const data = await updateUserRequest(formData, userId, role);
       useUserStore.getState().updateUser(data);
       return data;
     } catch {
