@@ -3,6 +3,7 @@ import { StackActions } from '@react-navigation/native';
 import { MenuItem, Text } from '@ui-kitten/components';
 import { useTranslation } from 'react-i18next';
 
+import { Screens } from '@/app/navigation/navigationEnum';
 import { useUserStore } from '@/entities/user';
 import { useAppNavigation } from '@/shared/libs/useAppNavigation';
 import { TextStyles } from '@/shared/libs/textStyles';
@@ -14,7 +15,7 @@ export const LogoutButton = () => {
   const navigation = useAppNavigation();
 
   const logout = () => {
-    navigation.dispatch(StackActions.replace('LoginByPhone'));
+    navigation.dispatch(StackActions.replace(Screens.LOGIN_BY_PHONE));
     reset();
   };
 

@@ -7,17 +7,18 @@ import { AuthByPhoneForm } from '@/features/auth/by-phone';
 
 import { useAppNavigation } from '@/shared/libs/useAppNavigation';
 import { AuthLayout } from '@/shared/ui/authLayout';
+import { Screens } from '@/app/navigation/navigationEnum';
 
 export const AuthByPhonePage = () => {
   const navigation = useAppNavigation();
   const { t } = useTranslation();
 
   const navigateToLoginByEmail = () => {
-    navigation.dispatch(StackActions.replace('LoginByEmail'));
+    navigation.dispatch(StackActions.replace(Screens.LOGIN_BY_EMAIL));
   };
 
   const navigateToRegistration = () => {
-    navigation.dispatch(StackActions.replace('Registration'));
+    navigation.dispatch(StackActions.replace(Screens.REGISTRATION));
   };
 
   return (

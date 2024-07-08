@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Spinner, Text } from '@ui-kitten/components';
 import { useTranslation } from 'react-i18next';
 
+import { Screens } from '@/app/navigation/navigationEnum';
 import { TextStyles } from '@/shared/libs/textStyles';
 import { useAppNavigation } from '@/shared/libs/useAppNavigation';
 import { userRoles } from '@/shared/utils/userRoles';
@@ -35,7 +36,7 @@ export const AuthByEmailForm = () => {
   const onPressSend: SubmitHandler<AuthByEmailProps> = async (formData) => {
     try {
       await authByEmail(formData);
-      navigation.dispatch(StackActions.replace('AccountScreen'));
+      navigation.dispatch(StackActions.replace(Screens.ACCOUNT_SCREEN));
     } catch {
       setError('root', {
         type: 'server',
