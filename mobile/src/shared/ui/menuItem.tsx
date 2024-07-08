@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { MenuItem as KittenMenuItem, Text } from '@ui-kitten/components';
 
@@ -16,7 +17,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({ onPress, title }) => {
   return (
     <KittenMenuItem
       onPress={onPress}
-      style={{ paddingLeft: 15, paddingRight: 15 }}
+      style={styles.menuItem}
       title={(props) => (
         <Text {...props} style={TextStyles.bodyBold}>
           {t(title)}
@@ -26,3 +27,10 @@ export const MenuItem: React.FC<MenuItemProps> = ({ onPress, title }) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  menuItem: {
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+});

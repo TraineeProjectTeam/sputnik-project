@@ -85,12 +85,3 @@ export const UserForm = () => {
     </Layout>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

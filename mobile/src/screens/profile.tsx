@@ -1,19 +1,21 @@
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Layout } from '@ui-kitten/components';
 
 import { UserForm } from '@/features/user-form';
-import { Layout } from '@ui-kitten/components';
 
 export const ProfilePage = () => {
   return (
-    <Layout
-      style={{
-        padding: 15,
-        display: 'flex',
-        flex: 1,
-      }}
-    >
+    <Layout style={styles.container}>
       <UserForm />
     </Layout>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 15,
+    display: 'flex',
+    flex: 1,
+  },
+});

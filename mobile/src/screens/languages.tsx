@@ -1,19 +1,21 @@
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Layout } from '@ui-kitten/components';
 
 import { ChangeLanguageButton } from '@/features/change-language';
-import { Layout } from '@ui-kitten/components';
 
 export const LanguagesPage = () => {
   return (
-    <Layout
-      style={{
-        padding: 15,
-        display: 'flex',
-        flex: 1,
-      }}
-    >
+    <Layout style={styles.container}>
       <ChangeLanguageButton />
     </Layout>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 15,
+    display: 'flex',
+    flex: 1,
+  },
+});
