@@ -24,12 +24,13 @@ const StyledLayoutConainer = styled.div`
   display: flex;
   justify-content: center;
   height: 100%;
+  width: 100%;
 `;
 
 const StyledLayout = styled(Layout)`
   max-width: 75rem;
   position: relative;
-  overflow: hidden;
+  height: 100%;
 `;
 
 const StyledContainer = styled.div`
