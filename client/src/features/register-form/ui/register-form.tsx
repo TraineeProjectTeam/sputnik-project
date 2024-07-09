@@ -65,6 +65,11 @@ export const RegisterForm = () => {
       content: error,
     });
   };
+
+  const handleLinkClick = () => {
+    navigate('/login');
+  };
+
   return (
     <WrapperStyled>
       <Typography.Title>{tCommon('Зарегистрироваться')}</Typography.Title>
@@ -76,7 +81,7 @@ export const RegisterForm = () => {
         layout="vertical"
       >
         {contextHolder}
-        <ButtonLinkStyled type="link" href="/login">
+        <ButtonLinkStyled type="link" onClick={handleLinkClick}>
           {tForm('Уже есть аккаунт? Войдите!')}
         </ButtonLinkStyled>
         <Form.Item

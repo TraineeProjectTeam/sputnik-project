@@ -45,6 +45,10 @@ export const LoginFormEmail = () => {
     });
   };
 
+  const handleLinkClick = () => {
+    navigate('/register');
+  };
+
   return (
     <Form
       form={form}
@@ -55,7 +59,7 @@ export const LoginFormEmail = () => {
       initialValues={initialValues}
     >
       {contextHolder}
-      <ButtonLinkStyled type="link" href="/register">
+      <ButtonLinkStyled type="link" onClick={handleLinkClick}>
         {tForm('Нет аккаунта? Зарегистрируйтесь!')}
       </ButtonLinkStyled>
       <Form.Item
