@@ -72,7 +72,6 @@ export const LoginFormEmail = () => {
       <Form.Item
         label={tForm('Пароль')}
         name="password"
-        rules={rulesForFormItems(tErrors).password}
       >
         <Input.Password autoComplete="on" />
       </Form.Item>
