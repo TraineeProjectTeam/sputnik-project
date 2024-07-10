@@ -88,6 +88,7 @@ export const RegisterForm = () => {
           label={tForm('Имя')}
           name="first_name"
           rules={rulesForFormItems(tErrors).firstName}
+          validateTrigger="onBlur"
         >
           <Input placeholder="Иван" />
         </Form.Item>
@@ -95,6 +96,7 @@ export const RegisterForm = () => {
           label={tForm('Фамилия')}
           name="last_name"
           rules={rulesForFormItems(tErrors).lastName}
+          validateTrigger="onBlur"
         >
           <Input placeholder="Иванов" />
         </Form.Item>
@@ -102,6 +104,7 @@ export const RegisterForm = () => {
           label={tForm('Номер телефона')}
           name="phone_number"
           rules={rulesForFormItems(tErrors).phone}
+          validateTrigger="onBlur"
         >
           <Input type="tel" placeholder="+12345678901" />
         </Form.Item>
@@ -109,6 +112,7 @@ export const RegisterForm = () => {
           label={tForm('Адрес электронной почты')}
           name="email"
           rules={rulesForFormItems(tErrors).email}
+          validateTrigger="onBlur"
         >
           <Input type="email" placeholder="mail@mail.ru" />
         </Form.Item>
@@ -116,6 +120,7 @@ export const RegisterForm = () => {
           label={tForm('Пароль')}
           name="password"
           rules={rulesForFormItems(tErrors).password}
+          validateTrigger="onBlur"
         >
           <Input.Password autoComplete="on" />
         </Form.Item>

@@ -66,13 +66,11 @@ export const LoginFormEmail = () => {
         label={tForm('Адрес электронной почты')}
         name="email"
         rules={rulesForFormItems(tErrors).email}
+        validateTrigger="onBlur"
       >
         <Input type="email" placeholder="mail@mail.ru" />
       </Form.Item>
-      <Form.Item
-        label={tForm('Пароль')}
-        name="password"
-      >
+      <Form.Item label={tForm('Пароль')} name="password">
         <Input.Password autoComplete="on" />
       </Form.Item>
       <Form.Item name="role" label={tForm('Войти как')}>
