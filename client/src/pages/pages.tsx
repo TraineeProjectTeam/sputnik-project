@@ -3,8 +3,8 @@ import { MainPage } from './main';
 import { ProfileCustomerPage } from './profile-customer';
 import { ProfileVendorPage } from './profile-vendor';
 import { MapPage } from './map';
-import { RegisterPage } from './register-page';
-import { LoginPage } from './login-page';
+import { RegisterPage } from './register';
+import { LoginPage } from './login';
 
 export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
   [EnumRoutesName.MAIN]: {
