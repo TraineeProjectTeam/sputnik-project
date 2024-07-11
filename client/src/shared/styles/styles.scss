@@ -5,6 +5,11 @@
   height: 100%;
 }
 
+html {
+  scrollbar-color: var(--main-background-color);
+  scrollbar-width: thin;
+}
+
 body {
   color: var(--main-text-color);
 }
@@ -18,6 +23,5 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 5.5rem;
   background: var(--main-background-color);
 }
