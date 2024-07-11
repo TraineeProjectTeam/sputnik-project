@@ -12,6 +12,7 @@ export const Header = () => {
   const [tUser] = useTranslation('user');
   const isLogin = useLoginStore((state) => state.isLogin);
   const role = useLoginStore((state) => state.role);
+
   return (
     <StyledHeader>
       <Link to={routes.main}>Main</Link>
@@ -37,13 +38,13 @@ export const Header = () => {
 };
 
 const StyledHeader = styled(Layout.Header)`
-  height: 3.75rem;
+  height: var(--header-height);
   background-color: var(--main-background-color);
   display: flex;
   column-gap: 0.75rem;
   position: sticky;
   top: 0;
   width: 100%;
-  z-index: 100;
+  z-index: var(--header-z-index);
   align-items: center;
 `;
