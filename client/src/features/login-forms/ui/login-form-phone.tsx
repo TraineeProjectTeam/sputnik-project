@@ -44,6 +44,11 @@ export const LoginFormPhone = () => {
       content: error,
     });
   };
+
+  const handleLinkClick = () => {
+    navigate('/register');
+  };
+
   return (
     <Form
       form={form}
@@ -54,21 +59,18 @@ export const LoginFormPhone = () => {
       initialValues={initialValues}
     >
       {contextHolder}
-      <ButtonLinkStyled type="link" href="/register">
+      <ButtonLinkStyled type="link" onClick={handleLinkClick}>
         {tForm('Нет аккаунта? Зарегистрируйтесь!')}
       </ButtonLinkStyled>
       <Form.Item
         label={tForm('Номер телефона')}
         name="phone_number"
         rules={rulesForFormItems(tErrors).phone}
+        validateTrigger="onBlur"
       >
         <Input type="tel" placeholder="+12345678901" />
       </Form.Item>
-      <Form.Item
-        label={tForm('Пароль')}
-        name="password"
-        rules={rulesForFormItems(tErrors).password}
-      >
+      <Form.Item label={tForm('Пароль')} name="password">
         <Input.Password autoComplete="on" />
       </Form.Item>
       <Form.Item name="role" label={tForm('Войти как')}>

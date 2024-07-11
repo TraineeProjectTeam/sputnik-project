@@ -45,6 +45,10 @@ export const LoginFormEmail = () => {
     });
   };
 
+  const handleLinkClick = () => {
+    navigate('/register');
+  };
+
   return (
     <Form
       form={form}
@@ -55,21 +59,18 @@ export const LoginFormEmail = () => {
       initialValues={initialValues}
     >
       {contextHolder}
-      <ButtonLinkStyled type="link" href="/register">
+      <ButtonLinkStyled type="link" onClick={handleLinkClick}>
         {tForm('Нет аккаунта? Зарегистрируйтесь!')}
       </ButtonLinkStyled>
       <Form.Item
         label={tForm('Адрес электронной почты')}
         name="email"
         rules={rulesForFormItems(tErrors).email}
+        validateTrigger="onBlur"
       >
         <Input type="email" placeholder="mail@mail.ru" />
       </Form.Item>
-      <Form.Item
-        label={tForm('Пароль')}
-        name="password"
-        rules={rulesForFormItems(tErrors).password}
-      >
+      <Form.Item label={tForm('Пароль')} name="password">
         <Input.Password autoComplete="on" />
       </Form.Item>
       <Form.Item name="role" label={tForm('Войти как')}>
