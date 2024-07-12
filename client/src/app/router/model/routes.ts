@@ -5,6 +5,7 @@ export enum EnumRoutesName {
   LOGIN = 'login',
   REGISTER = 'register',
   MAP = 'map',
+  ORDERS = 'orders',
 }
 
 export const routes: Record<EnumRoutesName, string> = {
@@ -14,4 +15,5 @@ export const routes: Record<EnumRoutesName, string> = {
   [EnumRoutesName.LOGIN]: '/login',
   [EnumRoutesName.REGISTER]: '/register',
   [EnumRoutesName.MAP]: '/map',
+  [EnumRoutesName.ORDERS]: '/orders',
 };

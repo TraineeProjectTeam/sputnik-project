@@ -5,6 +5,7 @@ import { ProfileVendorPage } from './profile-vendor';
 import { MapPage } from './map';
 import { RegisterPage } from './register';
 import { LoginPage } from './login';
+import { OrdersPage } from './orders';
 
 export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
   [EnumRoutesName.MAIN]: {
@@ -38,5 +39,10 @@ export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
     path: routes.map,
     element: <MapPage />,
     isAuth: true,
+  },
+  [EnumRoutesName.ORDERS]: {
+    path: routes.orders,
+    element: <OrdersPage />,
+    isAuth: false,
   },
 };
