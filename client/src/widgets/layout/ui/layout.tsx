@@ -30,4 +30,6 @@ const StyledContainer = styled.div`
 
 const StyledContent = styled(Layout.Content)`
   padding: 0.5rem;
+  max-width: 43.75rem;
+  margin: 0 auto;
 `;

@@ -17,18 +17,22 @@ export const Header = () => {
     <StyledHeader>
       <StyledContent>
         <Link to={EnumRoutesName.MAIN}>{tCommon('Главная')}</Link>
-        {role === 'Customer' && (
-          <Link to={EnumRoutesName.PROFILE_CUSTOMER}>{tCommon('Профиль покупателя')}</Link>
-        )}
-        {role === 'Vendor' && <Link to={EnumRoutesName.PROFILE_VENDOR}>{tCommon('Профиль продавца')}</Link>}
-        <List
-          dataSource={getProfileLinks(tCommon)}
-          renderItem={(route) => (
-            <List.Item>
-              <Link to={route.url}>{route.label}</Link>
-            </List.Item>
-          )}
-        />
+        {isLogin &&
+          <>
+            {role === 'Customer' && (
+              <Link to={EnumRoutesName.PROFILE_CUSTOMER}>{tCommon('Профиль покупателя')}</Link>
+            )}
+            {role === 'Vendor' && <Link to={EnumRoutesName.PROFILE_VENDOR}>{tCommon('Профиль продавца')}</Link>}
+            <List
+              dataSource={getProfileLinks(tCommon)}
+              renderItem={(route) => (
+                <List.Item>
+                  <Link to={route.url}>{route.label}</Link>
+                </List.Item>
+              )}
+            />
+          </>
+        }
       </StyledContent>
       <StyledContent>
         <LanguageSelector />
