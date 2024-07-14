@@ -1,4 +1,4 @@
-import { EnumRoutesName, ICustomRouteProps, routes } from 'app/router';
+import { ICustomRouteProps, } from 'app';
 import { MainPage } from './main';
 import { ProfileCustomerPage } from './profile-customer';
 import { ProfileVendorPage } from './profile-vendor';
@@ -6,42 +6,43 @@ import { MapPage } from './map';
 import { RegisterPage } from './register';
 import { LoginPage } from './login';
 import { OrdersPage } from './orders';
+import { EnumRoutesName } from 'shared/config';
 
 export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
   [EnumRoutesName.MAIN]: {
-    path: routes.main,
+    path: EnumRoutesName.MAIN,
     element: <MainPage />,
     isAuth: true,
   },
   [EnumRoutesName.PROFILE_CUSTOMER]: {
-    path: routes.profile_customer,
+    path: EnumRoutesName.PROFILE_CUSTOMER,
     element: <ProfileCustomerPage />,
     isAuth: false,
     role: 'Customer',
   },
   [EnumRoutesName.PROFILE_VENDOR]: {
-    path: routes.profile_vendor,
+    path: EnumRoutesName.PROFILE_VENDOR,
     element: <ProfileVendorPage />,
     isAuth: false,
     role: 'Vendor',
   },
   [EnumRoutesName.LOGIN]: {
-    path: routes.login,
+    path: EnumRoutesName.LOGIN,
     element: <LoginPage />,
     isAuth: true,
   },
   [EnumRoutesName.REGISTER]: {
-    path: routes.register,
+    path: EnumRoutesName.REGISTER,
     element: <RegisterPage />,
     isAuth: true,
   },
   [EnumRoutesName.MAP]: {
-    path: routes.map,
+    path: EnumRoutesName.MAP,
     element: <MapPage />,
     isAuth: true,
   },
   [EnumRoutesName.ORDERS]: {
-    path: routes.orders,
+    path: EnumRoutesName.ORDERS,
     element: <OrdersPage />,
     isAuth: false,
   },

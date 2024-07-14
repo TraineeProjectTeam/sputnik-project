@@ -10,7 +10,6 @@ export interface IOrder {
 }
 
 export interface IUpdateOrderRequestParams {
-  id: string;
   order: IOrder;
 }
 
@@ -18,6 +17,14 @@ export interface IDeleteOrderRequestParams {
   id: string;
 }
 
-export interface IGetOrderByIdRequestParams {
-  id: string;
+export interface IAddOrderRequestParams {
+  order: IOrder;
+}
+
+export interface IOrdersStore {
+  orders: IOrder[];
+  setOrders: (orders: IOrder[]) => void;
+  deleteOrder: (id: string) => void;
+  addOrder: (order: IOrder) => void;
+  updateOrder: (order: IOrder) => void;
 }

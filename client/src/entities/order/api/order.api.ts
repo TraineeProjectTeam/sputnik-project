@@ -1,7 +1,7 @@
 import { api } from 'shared/api';
 import {
+  IAddOrderRequestParams,
   IDeleteOrderRequestParams,
-  IGetOrderByIdRequestParams,
   IOrder,
   IUpdateOrderRequestParams,
 } from '../model/order.types';
@@ -17,7 +17,7 @@ export const getOrdersRequest = async (): AxiosPromise<IOrder[]> => {
 export const updateOrderRequest = async (
   params: IUpdateOrderRequestParams,
 ): AxiosPromise<IOrder> => {
-  const response = await api.put(`${BASE_URL}/${params.id}`, params.order);
+  const response = await api.put(`${BASE_URL}/${params.order.customer_id}`, params.order);
   return response.data;
 };
 
@@ -28,9 +28,7 @@ export const deleteOrderRequest = async (
   return response.data;
 };
 
-export const getOrderByRequest = async (
-  params: IGetOrderByIdRequestParams,
-): AxiosPromise<IOrder> => {
-  const response = await api.get(`${BASE_URL}/${params.id}`);
+export const addOrderRequest = async (params: IAddOrderRequestParams): AxiosPromise<IOrder> => {
+  const response = await api.post(`${BASE_URL}`, params);
   return response.data;
 };
