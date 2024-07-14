@@ -3,7 +3,7 @@ import { Avatar, Card, Descriptions, Button, Row, Col, Input, Form, } from "antd
 import { IProfileCardProps, IUserProfile } from "../model/profile-card.types";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
-import { getProfileCardAddressFields, getProfileCardFields, } from "../lib/get-profile-links";
+import { getProfileCardAddressFields, getProfileCardFields, } from "../lib/profile-card.lib";
 import { EnumRoutesName } from "shared/config";
 
 export const ProfileCard = (props: IProfileCardProps) => {

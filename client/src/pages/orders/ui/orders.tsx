@@ -1,13 +1,12 @@
-import { getOrdersRequest, useOrdersStore } from 'entities/order';
+import { useOrdersStore } from 'entities/order';
 import { useEffect } from 'react';
 
 export const OrdersPage = () => {
-  const { orders } = useOrdersStore();
+  const { orders, getOrders } = useOrdersStore();
 
   useEffect(() => {
-    getOrdersRequest()
-  }, []);
-
+    getOrders()
+  }, [getOrders]);
   console.log(orders)
   return <></>;
 };

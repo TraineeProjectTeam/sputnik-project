@@ -23,7 +23,8 @@ export interface IAddOrderRequestParams {
 
 export interface IOrdersStore {
   orders: IOrder[];
-  setOrders: (orders: IOrder[]) => void;
+  isLoading: boolean;
+  getOrders: () => void;
   deleteOrder: (id: string) => void;
   addOrder: (order: IOrder) => void;
   updateOrder: (order: IOrder) => void;
