@@ -10,7 +10,6 @@ export const OrdersPage = () => {
   useEffect(() => {
     getOrders()
   }, [getOrders]);
-  console.log(orders)
 
   return (
     <>

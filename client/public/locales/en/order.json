@@ -1,0 +1,6 @@
+{
+  "Заказ от": "Order from {{date}}",
+  "Доставка в пункт выдачи": "Delivery to the pick-up point",
+  "Дата доставки": "Delivery date: {{date}}",
+  "active": "Active"
+}

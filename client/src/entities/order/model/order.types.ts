@@ -1,4 +1,5 @@
 export interface IOrder {
+  readonly _id: string;
   readonly customer_id: string;
   status: string;
   order_date: Date;
