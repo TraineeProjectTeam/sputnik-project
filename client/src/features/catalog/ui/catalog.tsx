@@ -19,13 +19,18 @@ export const Catalog = () => {
   return (
     <ContainerStyled>
       <ListStyled>
-        {categories(tCategories).map((category) => (
-          <List.Item key={category.id} onClick={() => handleCategoryClick(category)}>
-            <CardStyled hoverable cover={<img alt={category.name} src={category.image} />}>
-              <NameStyled level={4}>{category.text}</NameStyled>
-            </CardStyled>
-          </List.Item>
-        ))}
+        {categories(tCategories).map((category) => {
+          const createClickHandler = () => {
+            handleCategoryClick(category);
+          };
+          return (
+            <List.Item key={category.id} onClick={createClickHandler}>
+              <CardStyled hoverable cover={<img alt={category.name} src={category.image} />}>
+                <NameStyled level={4}>{category.text}</NameStyled>
+              </CardStyled>
+            </List.Item>
+          );
+        })}
       </ListStyled>
     </ContainerStyled>
   );
