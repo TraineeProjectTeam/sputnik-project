@@ -1,30 +1,26 @@
 import { ProductCard } from 'shared/ui/product-card/ui/product-card';
-import { ContainerStyled, ListStyled, TextStyled } from './products.styles';
+import { ContainerStyled, ListStyled } from './products.styles';
 import { List } from 'antd';
 import { useProductsStore } from 'entities/product';
 import { useEffect } from 'react';
 import { useCategoriesStore } from 'entities/category';
 import { GlobalSpin } from 'shared/ui/global-spin';
-import { useTranslation } from 'react-i18next';
+import { Message } from 'shared/ui/message';
 
 export const Products = () => {
   const { products, getProducts, loading } = useProductsStore();
   const { selectedCategory } = useCategoriesStore();
-  const { t } = useTranslation('categories');
 
   useEffect(() => {
     if (selectedCategory) {
       getProducts(selectedCategory.name);
     }
   }, [selectedCategory]);
-  const NoProductsMessage = () => (
-    <TextStyled>{t('В данной категории пока нет товаров.')}</TextStyled>
-  );
 
   return loading ? (
     <GlobalSpin size={'large'} />
   ) : products.length === 0 ? (
-    <NoProductsMessage />
+    <Message text="В данной категории пока нет товаров." locales="categories" />
   ) : (
     <ContainerStyled>
       <ListStyled>

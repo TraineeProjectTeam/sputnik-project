@@ -1,4 +1,3 @@
-import { Typography } from 'antd';
 import styled from 'styled-components';
 
 export const ContainerStyled = styled.div`
@@ -18,11 +17,4 @@ export const ListStyled = styled.ul`
   @media (max-width: 1300px) {
     justify-content: center;
   }
-`;
-
-export const TextStyled = styled(Typography.Text)`
-  text-align: center;
-  font-size: 1.5rem;
-  display: inline-block;
-  width: 100%;
 `;
