@@ -17,12 +17,14 @@ export const Header = () => {
     <StyledHeader>
       <StyledContent>
         <Link to={EnumRoutesName.MAIN}>{tCommon('Главная')}</Link>
-        {isLogin &&
+        {isLogin && (
           <>
             {role === 'Customer' && (
               <Link to={EnumRoutesName.PROFILE_CUSTOMER}>{tCommon('Профиль покупателя')}</Link>
             )}
-            {role === 'Vendor' && <Link to={EnumRoutesName.PROFILE_VENDOR}>{tCommon('Профиль продавца')}</Link>}
+            {role === 'Vendor' && (
+              <Link to={EnumRoutesName.PROFILE_VENDOR}>{tCommon('Профиль продавца')}</Link>
+            )}
             <List
               dataSource={getProfileLinks(tCommon)}
               renderItem={(route) => (
@@ -32,7 +34,7 @@ export const Header = () => {
               )}
             />
           </>
-        }
+        )}
       </StyledContent>
       <StyledContent>
         <LanguageSelector />
@@ -67,4 +69,4 @@ const StyledContent = styled.div`
   align-items: center;
   justify-content: center;
   gap: 0.625rem;
-`
+`;

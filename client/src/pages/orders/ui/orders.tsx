@@ -1,7 +1,6 @@
-import { List } from 'antd';
+import { List, Empty } from 'antd';
 import { useOrdersStore } from 'entities/order';
 import { useEffect } from 'react';
-import { GlobalSpin } from 'shared/ui/global-spin';
 import { OrderCard } from 'shared/ui/order-card';
 
 export const OrdersPage = () => {
@@ -11,19 +10,17 @@ export const OrdersPage = () => {
     getOrders();
   }, [getOrders]);
 
+  if (!orders.length && !isLoading) {
+    return <Empty />;
+  }
+
   return (
-    <>
-      {isLoading ? (
-        <GlobalSpin size="large" />
-      ) : (
-        <List>
-          {orders.map((order) => (
-            <List.Item key={order.customer_id} style={{ display: 'block' }}>
-              <OrderCard order={order} />
-            </List.Item>
-          ))}
-        </List>
-      )}
-    </>
+    <List loading={isLoading}>
+      {orders.map((order) => (
+        <List.Item key={order.customer_id} style={{ display: 'block' }}>
+          <OrderCard order={order} />
+        </List.Item>
+      ))}
+    </List>
   );
 };
