@@ -6,4 +6,5 @@ export enum EnumRoutesName {
   REGISTER = '/register',
   MAP = '/map',
   ORDERS = '/orders',
+  ORDER = '/orders/:id',
 }

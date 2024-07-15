@@ -1,4 +1,4 @@
-import { ICustomRouteProps, } from 'app';
+import { ICustomRouteProps } from 'app';
 import { MainPage } from './main';
 import { ProfileCustomerPage } from './profile-customer';
 import { ProfileVendorPage } from './profile-vendor';
@@ -44,6 +44,11 @@ export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
   [EnumRoutesName.ORDERS]: {
     path: EnumRoutesName.ORDERS,
     element: <OrdersPage />,
+    isAuth: false,
+  },
+  [EnumRoutesName.ORDER]: {
+    path: EnumRoutesName.ORDER,
+    element: <></>,
     isAuth: false,
   },
 };

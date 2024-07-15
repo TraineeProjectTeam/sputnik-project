@@ -8,7 +8,7 @@ export const OrdersPage = () => {
   const { orders, getOrders, isLoading } = useOrdersStore();
 
   useEffect(() => {
-    getOrders()
+    getOrders();
   }, [getOrders]);
 
   return (
@@ -18,7 +18,7 @@ export const OrdersPage = () => {
       ) : (
         <List>
           {orders.map((order) => (
-            <List.Item key={order.customer_id}  >
+            <List.Item key={order.customer_id} style={{ display: 'block' }}>
               <OrderCard order={order} />
             </List.Item>
           ))}
