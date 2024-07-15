@@ -25,7 +25,6 @@ export const ProductCard = (props: IProductCardProps) => {
   const { product } = props;
   const discount = product.discountPrice ? getDiscount(product.discountPrice, product.price) : 0;
   const { t } = useTranslation('product');
-  const handleLinkClick = () => {};
 
   return (
     <CardStyled
@@ -51,9 +50,7 @@ export const ProductCard = (props: IProductCardProps) => {
         {t('Осталось')} {product.remaining} {t('шт')}
       </Typography.Text>
       <NameStyled level={5}>
-        <LinkStyled type="link" onClick={handleLinkClick}>
-          {product.name}
-        </LinkStyled>
+        <LinkStyled type="link">{product.name}</LinkStyled>
       </NameStyled>
       <FooterCardStyled>
         {product.rating && (
