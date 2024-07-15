@@ -124,7 +124,7 @@ export const RegisterForm = () => {
         >
           <Input.Password autoComplete="on" />
         </Form.Item>
-        <Form.Item name="role" label={tForm('Зарегистрироваться как')}>
+        <Form.Item name="role" label={tForm('Зарегистрироваться как')} rules={rulesForFormItems(tErrors).role}>
           <Radio.Group>
             <Radio value="Customer">{tCommon('Покупатель')}</Radio>
             <Radio value="Vendor">{tCommon('Продавец')}</Radio>

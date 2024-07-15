@@ -63,5 +63,11 @@ export const rulesForFormItems = (t: TFunction): IRulesForFormItems => {
         message: t('Фамилия может содержать только буквы!'),
       },
     ],
+    role: [
+      {
+        required: true,
+        message: t('Пожалуйста, выберите роль!'),
+      },
+    ],
   };
 };

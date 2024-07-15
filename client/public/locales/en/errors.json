@@ -11,5 +11,6 @@
   "Пароль должен содержать хотя бы 1 цифру и 1 букву, и быть длиной не менее 6 символов!": "The password must contain at least 1 number and 1 letter, and be at least 6 characters long!",
   "Имя может содержать только буквы!": "The name can only contain letters!",
   "Фамилия может содержать только буквы!": "Last name can only contain letters!",
-  "Не удалось совершить попытку регистрации! Пожалуйста, попробуйте еще раз.": "Registration attempt failed! Please try again."
+  "Не удалось совершить попытку регистрации! Пожалуйста, попробуйте еще раз.": "Registration attempt failed! Please try again.",
+  "Пожалуйста, выберите роль!": "Please choose a role!"
 }
