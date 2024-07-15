@@ -38,10 +38,10 @@ export const ProductCard = (props: IProductCardProps) => {
       }
     >
       <PriceBlockStyled>
-        <PriceStyled>{product.price} ₽</PriceStyled>
-        {product.discountPrice && (
+        <PriceStyled>{product.discountPrice ? product.discountPrice : product.price} ₽</PriceStyled>
+        { product.discountPrice && (
           <>
-            <PriceBeforeDiscountStyled>{product.discountPrice} ₽</PriceBeforeDiscountStyled>
+            <PriceBeforeDiscountStyled>{product.price} ₽</PriceBeforeDiscountStyled>
             <DiscountStyled>{discount} %</DiscountStyled>
           </>
         )}
