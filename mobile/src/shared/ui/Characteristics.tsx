@@ -43,7 +43,7 @@ export const Characteristics: React.FC<CharacteristicsProps> = ({ characteristic
             {isShowMore ? t('Product.Скрыть') : t('Product.Показать полностью')}
           </Text>
           <Icon
-            name={isShowMore ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}
+            name={isShowMore ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
             color={Colors.Primary500}
             size={22}
           />

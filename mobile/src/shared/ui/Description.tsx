@@ -38,7 +38,7 @@ export const Description: React.FC<DescriptionProps> = ({ description }) => {
             {isShowMore ? t('Product.Скрыть') : t('Product.Показать полностью')}
           </Text>
           <Icon
-            name={isShowMore ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}
+            name={isShowMore ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
             color={Colors.Primary500}
             size={22}
           />
@@ -53,12 +53,5 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'black',
-    shadowOffset: {
-      width: 100,
-      height: 100,
-    },
-    shadowOpacity: 0,
-    shadowRadius: 0,
   },
 });
