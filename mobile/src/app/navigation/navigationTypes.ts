@@ -1,4 +1,5 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
+import { IProduct } from '@/shared/libs/types';
 
 export type RootStackParamList = {
   Loading: undefined;
@@ -6,7 +7,7 @@ export type RootStackParamList = {
   Catalog: NavigatorScreenParams<CatalogStackParams>;
   Account: NavigatorScreenParams<AccountStackParams>;
   Cart: undefined;
-  Product: undefined;
+  Product: { product: IProduct };
 };
 
 export type MainTabsStackParams = {
