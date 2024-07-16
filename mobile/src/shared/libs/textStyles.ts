@@ -26,6 +26,12 @@ interface ITextStyles {
   body: TextStyle;
   bodyBold: TextStyle;
   button: TextStyle;
+  p1: TextStyle;
+  p2: TextStyle;
+  s1: TextStyle;
+  s2: TextStyle;
+  c1: TextStyle;
+  c2: TextStyle;
 }
 
 class TextStyle {
@@ -62,7 +68,13 @@ export const TextStyles: ITextStyles = {
   h5: new TextStyle(20, '600', Colors.Basic800, 'Montserrat-Bold', 20),
   h6: new TextStyle(16, '600', Colors.Basic800, 'Montserrat-Bold', 16),
   label: new TextStyle(12, '400', Colors.Basic800, 'Montserrat-Regular', 12),
-  body: new TextStyle(14, '400', Colors.Basic800, 'Montserrat-Regular', 14),
-  bodyBold: new TextStyle(14, '600', Colors.Basic800, 'Montserrat-Bold', 14),
+  body: new TextStyle(14, '400', Colors.Basic800, 'Montserrat-Regular', 18),
+  bodyBold: new TextStyle(14, '600', Colors.Basic800, 'Montserrat-Bold', 18),
   button: new TextStyle(14, '600', Colors.Basic100, 'Montserrat-Bold', 18),
+  p1: new TextStyle(15, '500', Colors.Basic800, 'Montserrat-Medium', 20),
+  p2: new TextStyle(13, '400', Colors.Basic800, 'Montserrat-Regular', 18),
+  s1: new TextStyle(15, '500', Colors.Basic800, 'Montserrat-Medium', 24),
+  s2: new TextStyle(13, '500', Colors.Basic800, 'Montserrat-Medium', 24),
+  c1: new TextStyle(12, '400', Colors.Basic800, 'Montserrat-Regular', 16),
+  c2: new TextStyle(12, '500', Colors.Basic800, 'Montserrat-Medium', 16),
 };
