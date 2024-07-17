@@ -26,7 +26,7 @@ export const AuthByEmailForm = () => {
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(schema),
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
   const { isLoading, authByEmail } = useAuthByEmailStore();
