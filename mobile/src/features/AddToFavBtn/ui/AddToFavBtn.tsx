@@ -5,10 +5,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from '@/shared/libs/colors';
 
 export const AddToFavoriteBtn = () => {
-  const [clicked, setIsCliced] = useState(false);
+  const [clicked, setIsClicked] = useState(false);
+
+  const toggleFavorite = () => {
+    setIsClicked(!clicked);
+  };
 
   return (
-    <Pressable onPress={() => setIsCliced(!clicked)} style={styles.button}>
+    <Pressable onPress={toggleFavorite} style={styles.button}>
       <View>
         <Icon style={styles.iconBg} name="favorite" size={26} color="#fff" />
         <Icon

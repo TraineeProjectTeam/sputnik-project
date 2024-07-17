@@ -7,7 +7,7 @@ export type RootStackParamList = {
   Catalog: NavigatorScreenParams<CatalogStackParams>;
   Account: NavigatorScreenParams<AccountStackParams>;
   Cart: undefined;
-  Product: { product: IProduct };
+  Product: IProductPageParams;
 };
 
 export type MainTabsStackParams = {
@@ -29,4 +29,8 @@ export type AccountStackParams = {
 
 export type CatalogStackParams = {
   CatalogScreen: undefined;
+};
+
+export type IProductPageParams = {
+  product: IProduct;
 };
