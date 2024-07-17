@@ -23,7 +23,7 @@ export const UserForm = () => {
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(schema(role)),
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
   const { updateUser, isLoading } = useUserFormStore();

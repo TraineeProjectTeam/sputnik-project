@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { TextStyles } from '../libs/textStyles';
 
-export const HeaderBack = ({ title }: { title: string }) => {
+export const Header = ({ title }: { title: string }) => {
   const { t } = useTranslation();
 
   return (

@@ -1,8 +1,8 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { MainPage } from '@/screens';
 import { Screens } from '../navigationEnum';
+import { ProductsScreen } from '@/screens/ProductsScreen';
 
 export const CatalogStackNavigator = () => {
   const CatalogStack = createNativeStackNavigator();
@@ -12,7 +12,7 @@ export const CatalogStackNavigator = () => {
       initialRouteName={Screens.CATALOG_SCREEN}
       screenOptions={{ headerShown: false }}
     >
-      <CatalogStack.Screen name={Screens.CATALOG_SCREEN} component={MainPage} />
+      <CatalogStack.Screen name={Screens.CATALOG_SCREEN} component={ProductsScreen} />
     </CatalogStack.Navigator>
   );
 };

@@ -24,3 +24,17 @@ export const ArrowRight = ({ size, color }: IconProps) => (
 export const ArrowLeft = ({ size, color }: IconProps) => (
   <Icon name="chevron-left" size={size} color={color} />
 );
+
+export const Star = ({ size, color }: IconProps) => <Icon name="star" size={size} color={color} />;
+
+export const ChatBubble = ({ size, color }: IconProps) => (
+  <Icon name="chat-bubble" size={size} color={color} />
+);
+
+export const ShoppingBag = ({ size, color }: IconProps) => (
+  <Icon name="shopping-bag" size={size} color={color} />
+);
+
+export const CheckCircle = ({ size, color }: IconProps) => (
+  <Icon name="check-circle-outline" size={size} color={color} />
+);
