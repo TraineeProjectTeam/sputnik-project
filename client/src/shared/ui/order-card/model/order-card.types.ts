@@ -5,11 +5,12 @@ export interface IOrderCardProps {
   order: IOrder;
 }
 
-export type EnumStatusType = keyof typeof EnumStatus;
+export type TypeEnumStatus = keyof typeof EnumStatus;
 
 export enum EnumStatus {
+  all = 'Все',
   active = 'Активный',
-  inWay = 'В пути',
+  in_way = 'В пути',
   delivered = 'Доставлен',
   recieved = 'Получен',
   cancelled = 'Отменен',

@@ -1,26 +1,33 @@
-import { List, Empty } from 'antd';
+import { List } from 'antd';
 import { useOrdersStore } from 'entities/order';
+import { FilterOrders } from 'features/filter-orders';
 import { useEffect } from 'react';
-import { OrderCard } from 'shared/ui/order-card';
+import { useTranslation } from 'react-i18next';
+import { EnumStatus, OrderCard } from 'shared/ui/order-card';
 
 export const OrdersPage = () => {
-  const { orders, getOrders, isLoading } = useOrdersStore();
+  const { orders, getOrders, isLoading, filtredStatus } = useOrdersStore();
+  const { t: tOrder } = useTranslation('order');
+
+  const filteredOrders =
+    filtredStatus !== EnumStatus.all
+      ? orders.filter((order) => order.status === tOrder(filtredStatus).toLowerCase())
+      : orders;
 
   useEffect(() => {
     getOrders();
   }, [getOrders]);
 
-  if (!orders.length && !isLoading) {
-    return <Empty />;
-  }
-
   return (
-    <List loading={isLoading}>
-      {orders.map((order) => (
-        <List.Item key={order.customer_id} style={{ display: 'block' }}>
-          <OrderCard order={order} />
-        </List.Item>
-      ))}
-    </List>
+    <>
+      <FilterOrders />
+      <List loading={isLoading}>
+        {filteredOrders.map((order) => (
+          <List.Item key={order.customer_id} style={{ display: 'block' }}>
+            <OrderCard order={order} />
+          </List.Item>
+        ))}
+      </List>
+    </>
   );
 };

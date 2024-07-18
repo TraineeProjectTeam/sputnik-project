@@ -1,3 +1,5 @@
+import { EnumStatus } from 'shared/ui/order-card';
+
 export interface IOrder {
   readonly _id: string;
   readonly customer_id: string;
@@ -24,7 +26,9 @@ export interface IAddOrderRequestParams {
 
 export interface IOrdersStore {
   orders: IOrder[];
+  filtredStatus: EnumStatus;
   isLoading: boolean;
+  setOrdredStatus: (status: EnumStatus) => void;
   getOrders: () => void;
   deleteOrder: (id: string) => void;
   addOrder: (order: IOrder) => void;

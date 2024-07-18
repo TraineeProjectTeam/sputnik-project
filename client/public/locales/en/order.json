@@ -4,6 +4,7 @@
   "Дата доставки:": "Delivery date: {{date}}",
   "Предполагаемая дата доставки:": "Estimated delivery date: {{date}}",
   "Оплачено": "Paid",
+  "Все": "All",
   "Активный": "Active",
   "В пути": "In way",
   "Доставлен": "Delivered",
