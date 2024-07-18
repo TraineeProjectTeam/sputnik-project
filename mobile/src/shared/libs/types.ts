@@ -5,20 +5,23 @@ export interface IUser {
   email: string;
   phone_number: string;
   company_name?: string;
-  address?: IAddress;
   createdAt: Date;
 }
 
 export interface IProduct {
-  id: number;
+  _id: number;
   name: string;
   description: string;
   price: number;
   discountPrice: number;
   rating: number;
   thumbnail: string;
+  remaining: number;
+  reviews_count: number;
   tags: string[];
-  imagesUrl: string[];
+  images: string[];
+  reviews: string[];
+  characteristics: string[];
 }
 
 export interface IOrder {
@@ -28,17 +31,6 @@ export interface IOrder {
   estimatedDeliveryDate: Date;
   deliveryDate: Date;
   price: number;
-}
-
-export interface IVendors {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  createdAt: Date;
-  companyName: string;
-  address: IAddress;
 }
 
 export interface IReview {

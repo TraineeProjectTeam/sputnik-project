@@ -7,4 +7,6 @@ export enum EnumRoutesName {
   MAP = '/map',
   ORDERS = '/orders',
   ORDER = '/orders/:id',
+  CATALOG = '/catalog',
+  CATEGORY = '/catalog/:id',
 }

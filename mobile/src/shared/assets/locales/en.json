@@ -1,6 +1,20 @@
 {
   "Язык": "Language",
   "Профиль": "Profile",
+  "Product": {
+    "Описание": "Description",
+    "Характеристики": "Characteristics",
+    "В корзину": "Add to cart",
+    "Отзыв": "Review",
+    "Отзыва": "Reviews",
+    "Отзывов": "Reviews",
+    "Нет": "No",
+    "Осталось": "Left",
+    "шт": "piece",
+    "Основные": "Main",
+    "Скрыть": "Hide",
+    "Показать полностью": "Show more"
+  },
   "Form": {
     "Войти по номеру телефона": "Log in by phone number",
     "Войти по почте": "Log in by email",

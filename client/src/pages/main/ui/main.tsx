@@ -1,3 +1,5 @@
+import { Catalog } from 'features/catalog';
+
 export const MainPage = () => {
-  return <div>Main page</div>;
+  return <Catalog />;
 };

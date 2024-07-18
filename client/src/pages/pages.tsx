@@ -7,6 +7,8 @@ import { RegisterPage } from './register';
 import { LoginPage } from './login';
 import { OrdersPage } from './orders';
 import { EnumRoutesName } from 'shared/config';
+import { CategoryPage } from './category';
+import { CatalogPage } from './catalog';
 
 export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
   [EnumRoutesName.MAIN]: {
@@ -50,5 +52,15 @@ export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
     path: EnumRoutesName.ORDER,
     element: <></>,
     isAuth: false,
+  },
+  [EnumRoutesName.CATALOG]: {
+    path: EnumRoutesName.CATALOG,
+    element: <CatalogPage />,
+    isAuth: true,
+  },
+  [EnumRoutesName.CATEGORY]: {
+    path: EnumRoutesName.CATEGORY,
+    element: <CategoryPage />,
+    isAuth: true,
   },
 };

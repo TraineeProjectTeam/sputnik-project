@@ -26,7 +26,7 @@ export const AuthByPhoneForm = () => {
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(schema),
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
   const navigation = useAppNavigation();
