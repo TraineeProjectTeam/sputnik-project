@@ -2,7 +2,11 @@
   "Заказ от": "Order from {{date}}",
   "Доставка в пункт выдачи": "Delivery to the pick-up point",
   "Дата доставки:": "Delivery date: {{date}}",
-  "active": "Active",
   "Предполагаемая дата доставки:": "Estimated delivery date: {{date}}",
-  "Оплачено": "Paid"
+  "Оплачено": "Paid",
+  "Активный": "Active",
+  "В пути": "In way",
+  "Доставлен": "Delivered",
+  "Получен": "Recieved",
+  "Отменен": "Canceled"
 }
