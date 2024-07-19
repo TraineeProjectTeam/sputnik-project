@@ -1,11 +1,10 @@
 import { Select } from 'antd';
-import { EnumStatus } from 'shared/ui/order-card';
-import styled from 'styled-components';
 import { useOrdersStore } from 'entities/order';
 import { useTranslation } from 'react-i18next';
+import { EnumStatus } from 'shared/ui/order-card';
 
 export const FilterOrders = () => {
-  const { isLoading, setOrdredStatus, filtredStatus } = useOrdersStore();
+  const { isLoading, setOrdredStatus } = useOrdersStore();
   const { t: tOrder } = useTranslation('order');
 
   const handleChange = (value: EnumStatus) => {
@@ -13,18 +12,17 @@ export const FilterOrders = () => {
   };
 
   return (
-    <StyledSelect
+    <Select
       disabled={isLoading}
+      defaultValue={EnumStatus.all}
       onChange={handleChange}
-      value={filtredStatus}
-      options={Object.values(EnumStatus).map((status) => ({
-        value: status,
-        label: tOrder(status),
-      }))}
-    />
+      style={{ width: 300 }}
+    >
+      {Object.values(EnumStatus).map((status) => (
+        <Select.Option key={status} value={status}>
+          {tOrder(status)}
+        </Select.Option>
+      ))}
+    </Select>
   );
 };
-
-const StyledSelect = styled(Select)`
-  width: 18.75rem;
-`;
