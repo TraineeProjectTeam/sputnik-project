@@ -1,10 +1,5 @@
 import { Button, Card } from 'antd';
-import {
-  EnumStatus,
-  IOrderCardProps,
-  IRenderDeliveryDateProps,
-  TypeEnumStatus,
-} from '../model/order-card.types';
+import { EnumStatus, IOrderCardProps, IRenderDeliveryDateProps } from '../model/order-card.types';
 import { useTranslation } from 'react-i18next';
 import { useCurrentLanguage } from 'shared/lib';
 import styled from 'styled-components';
@@ -65,7 +60,7 @@ export const OrderCard = (props: IOrderCardProps) => {
           <StyledStatus>
             {tOrder('Доставка в пункт выдачи')}
             <Button size="small" disabled>
-              {tOrder(EnumStatus[order.status as TypeEnumStatus])}
+              {tOrder(EnumStatus[order.status as keyof typeof EnumStatus])}
             </Button>
           </StyledStatus>
           {renderDeliveryDate({

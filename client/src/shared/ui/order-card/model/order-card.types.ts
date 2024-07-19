@@ -5,8 +5,6 @@ export interface IOrderCardProps {
   order: IOrder;
 }
 
-export type TypeEnumStatus = keyof typeof EnumStatus;
-
 export enum EnumStatus {
   all = 'Все',
   active = 'Активный',

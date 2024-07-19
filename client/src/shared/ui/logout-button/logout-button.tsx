@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 export const LogoutButton = () => {
-  const { t: tComm } = useTranslation('common');
+  const { t } = useTranslation('common');
   const navigate = useNavigate();
   const setIsLogin = useLoginStore((state) => state.setIsLogin);
 
@@ -15,5 +15,5 @@ export const LogoutButton = () => {
     setIsLogin(false);
   };
 
-  return <Button onClick={onLogout}>{tComm('Выйти')}</Button>;
+  return <Button onClick={onLogout}>{t('Выйти')}</Button>;
 };
