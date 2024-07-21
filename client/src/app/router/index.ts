@@ -1,3 +1,3 @@
 export { Router } from './ui/router';
-export { type ICustomRouteProps } from './model/routes.types';
-export { routes, EnumRoutesName } from './model/routes';
+export { getProfileRoutes } from './lib/get-profile-routes';
+export * from './model/routes.types';

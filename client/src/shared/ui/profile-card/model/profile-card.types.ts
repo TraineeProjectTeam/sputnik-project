@@ -1,8 +1,17 @@
+import { Rule } from 'antd/es/form';
+
 interface IAddress {
   region: string;
   city: string;
   street_name: string;
   street_number: string;
+}
+
+export interface IProfileCard {
+  label: string;
+  name: string;
+  value?: string;
+  rules?: Rule[];
 }
 
 export interface IUserProfile {

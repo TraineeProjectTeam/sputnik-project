@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { routes } from '../model/routes';
 import { IRouterProps } from '../model/routes.types';
 import Cookies from 'js-cookie';
 import useLoginStore from 'features/login-forms/model/login.store';
+import { EnumRoutesName } from 'shared/config';
 
 export const Router = (props: IRouterProps) => {
   const { pages } = props;
@@ -20,7 +20,7 @@ export const Router = (props: IRouterProps) => {
         }
         return <Route key={`route_${page.path}`} path={page.path} element={page.element} />;
       })}
-      <Route key={`route_default`} path="*" element={<Navigate to={routes.main} />} />
+      <Route key={`route_default`} path="*" element={<Navigate to={EnumRoutesName.MAIN} />} />
     </Routes>
   );
 };

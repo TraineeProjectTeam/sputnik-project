@@ -29,5 +29,15 @@ const StyledContainer = styled.div`
 `;
 
 const StyledContent = styled(Layout.Content)`
-  padding: 0.5rem;
+  padding: 2.5rem;
+  max-width: 62.5rem;
+  margin: 0 auto;
+
+  @media (max-width: 48rem) {
+    padding: 1.5625rem;
+  }
+
+  @media (max-width: 26.5625rem) {
+    padding: 0.75rem;
+  }
 `;

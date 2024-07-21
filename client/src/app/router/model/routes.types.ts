@@ -1,5 +1,10 @@
 import { ReactNode } from 'react';
-import { EnumRoutesName } from './routes';
+import { EnumRoutesName } from 'shared/config';
+
+export interface IRoute {
+  url: string;
+  label: string;
+}
 
 export interface ICustomRouteProps {
   path: string;

@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 export const LogoutButton = () => {
+  const { t } = useTranslation('common');
   const navigate = useNavigate();
   const setIsLogin = useLoginStore((state) => state.setIsLogin);
-  const { t } = useTranslation('common');
 
   const onLogout = () => {
     Cookies.remove('access_token');
