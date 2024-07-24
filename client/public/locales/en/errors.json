@@ -12,5 +12,6 @@
   "Имя может содержать только буквы!": "The name can only contain letters!",
   "Фамилия может содержать только буквы!": "Last name can only contain letters!",
   "Не удалось совершить попытку регистрации! Пожалуйста, попробуйте еще раз.": "Registration attempt failed! Please try again.",
-  "Пожалуйста, выберите роль!": "Please choose a role!"
+  "Пожалуйста, выберите роль!": "Please choose a role!",
+  "Ошибка копирования!": "Error with copying text: {{error}}!"
 }

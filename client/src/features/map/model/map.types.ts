@@ -14,3 +14,9 @@ export interface IMarker {
   logitude: string;
   latitude: string;
 }
+
+export interface IMapStore {
+  pickupPoints: IMarker[];
+  isLoading: boolean;
+  getPickupPoints: () => void;
+}

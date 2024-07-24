@@ -5,6 +5,8 @@ import { useCurrentLanguage } from 'shared/lib';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { EnumRoutesName } from 'shared/config';
+import { convertDeliveryDate } from 'shared/lib/helpers';
+import { convertEstimatedDeliveryDate, convertOrderDate } from 'shared/lib/helpers/date';
 
 const renderDeliveryDate = (props: IRenderDeliveryDateProps) => {
   const { delivery_date, estimated_delivery_date, lang, tOrder } = props;
@@ -13,7 +15,7 @@ const renderDeliveryDate = (props: IRenderDeliveryDateProps) => {
     return (
       <p>
         {tOrder('Дата доставки:', {
-          date: `${new Date(delivery_date).toLocaleTimeString(lang, { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })}`,
+          date: convertDeliveryDate({ date: delivery_date, lang }),
         })}
       </p>
     );
@@ -21,7 +23,7 @@ const renderDeliveryDate = (props: IRenderDeliveryDateProps) => {
     return (
       <p>
         {tOrder('Предполагаемая дата доставки:', {
-          date: `${new Date(estimated_delivery_date).toLocaleDateString(lang, { day: 'numeric', month: 'long' })}`,
+          date: convertEstimatedDeliveryDate({ date: estimated_delivery_date, lang }),
         })}
       </p>
     );
@@ -42,7 +44,7 @@ export const OrderCard = (props: IOrderCardProps) => {
               <div>
                 <div>
                   {tOrder(`Заказ от`, {
-                    date: `${new Date(order.order_date).toLocaleDateString(lang, { day: 'numeric', month: 'long' })}`,
+                    date: convertOrderDate({ date: order.order_date, lang }),
                   })}
                 </div>
                 <StyledLink type="link">{order._id}</StyledLink>
