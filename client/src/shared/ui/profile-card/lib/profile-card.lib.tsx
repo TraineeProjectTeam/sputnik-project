@@ -1,24 +1,24 @@
-import { TFunction } from "i18next";
-import { IProfileCard, IUserProfile } from "../model/profile-card.types";
-import { EnumRoutesName } from "shared/config";
-import { getProfileRoutes } from "app";
+import { TFunction } from 'i18next';
+import { IProfileCard, IUserProfile } from '../model/profile-card.types';
+import { EnumRoutesName } from 'shared/config';
+import { getProfileRoutes } from 'app';
 
 const getTranslationProfileLink = (route: string, tCom: TFunction) => {
   switch (route) {
-    case (EnumRoutesName.ORDERS): {
-      return tCom('Заказы')
+    case EnumRoutesName.ORDERS: {
+      return tCom('Заказы');
     }
   }
-}
+};
 
 export const getProfileLinks = (tCom: TFunction) => {
   return getProfileRoutes().map((route) => {
     return {
       url: route,
-      label: getTranslationProfileLink(route, tCom)
+      label: getTranslationProfileLink(route, tCom),
     };
   });
-}
+};
 
 export const getProfileCardFields = (
   tErr: TFunction,
@@ -32,6 +32,7 @@ export const getProfileCardFields = (
       value: editableUser.first_name,
       rules: [
         {
+          type: 'string',
           required: true,
           message: tErr('Пожалуйста, введите имя!'),
         },
@@ -43,6 +44,7 @@ export const getProfileCardFields = (
       value: editableUser.last_name,
       rules: [
         {
+          type: 'string',
           required: true,
           message: tErr('Пожалуйста, введите фамилию!'),
         },
@@ -81,6 +83,7 @@ export const getProfileCardFields = (
       value: editableUser.company_name,
       rules: [
         {
+          type: 'string',
           required: true,
           message: tErr('Пожалуйста, введите компанию!'),
         },
@@ -98,21 +101,41 @@ export const getProfileCardAddressFields = (
       label: t('Адрес.Улица'),
       name: 'street_name',
       value: editableUser.address?.street_name,
+      rules: [
+        {
+          type: 'string',
+        },
+      ],
     },
     {
       label: t('Адрес.Номер дома'),
       name: 'street_number',
       value: editableUser.address?.street_number,
+      rules: [
+        {
+          type: 'number',
+        },
+      ],
     },
     {
       label: t('Адрес.Город'),
       name: 'city',
       value: editableUser.address?.city,
+      rules: [
+        {
+          type: 'string',
+        },
+      ],
     },
     {
       label: t('Адрес.Регион'),
       name: 'region',
       value: editableUser.address?.region,
+      rules: [
+        {
+          type: 'string',
+        },
+      ],
     },
   ];
 };
