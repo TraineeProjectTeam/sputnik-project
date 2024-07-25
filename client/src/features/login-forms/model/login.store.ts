@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 export interface ILoginStore {
   loginPhone: (loginDetails: ILoginPhoneDetails) => Promise<IResponseLogin>;
   loginEmail: (loginDetails: ILoginEmailDetails) => Promise<IResponseLogin>;
+  clearUserStores: () => void;
   user: ICustomer | null;
   error: string;
   loading: boolean;
@@ -29,6 +30,10 @@ const useLoginStore = create<ILoginStore>((set) => ({
   },
   setRole: (role) => {
     set({ role });
+  },
+  clearUserStores: () => {
+    useCustomerStore.getState().clearCustomer();
+    useVendorStore.getState().clearVendor();
   },
   loginPhone: async (loginDetails) => {
     try {
