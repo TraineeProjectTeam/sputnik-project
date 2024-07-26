@@ -8,6 +8,7 @@ import { PageSpinner } from '@/shared/ui/PageSpinner';
 import { NoItems } from '@/shared/ui/NoItems';
 
 import { CustomerReviewCard } from './CustomerReviewCard';
+import { IReview } from '@/shared/libs/types';
 
 export const CustomerReviews = () => {
   const { getReviews, reviews, isLoading } = useReviewsStore();
@@ -25,10 +26,8 @@ export const CustomerReviews = () => {
     return <PageSpinner />;
   }
 
-  return (
-    <FlatList
-      data={reviews}
-      renderItem={({ item }) => <CustomerReviewCard review={item} key={item._id} />}
-    />
-  );
+  const keyExtractor = (item: IReview) => item._id;
+  const renderItem = ({ item }: { item: IReview }) => <CustomerReviewCard review={item} />;
+
+  return <FlatList data={reviews} keyExtractor={keyExtractor} renderItem={renderItem} />;
 };

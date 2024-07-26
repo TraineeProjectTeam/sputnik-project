@@ -5,6 +5,7 @@ import { PageSpinner } from '@/shared/ui/PageSpinner';
 
 import { ProductCard } from './ProductCard';
 import { useProductListStore } from '../model/UseProductListStore';
+import { IProduct } from '@/shared/libs/types';
 
 export const ProductList = () => {
   const { products, getProducts, isLoading } = useProductListStore();
@@ -17,6 +18,9 @@ export const ProductList = () => {
     return <PageSpinner />;
   }
 
+  const keyExtractor = (item: IProduct) => item._id;
+  const renderItem = ({ item }: { item: IProduct }) => <ProductCard product={item} />;
+
   return (
     <FlatList
       data={products}
@@ -25,9 +29,8 @@ export const ProductList = () => {
       numColumns={2}
       contentContainerStyle={{ gap: 7 }}
       columnWrapperStyle={{ gap: 5 }}
-      renderItem={({ item }) => {
-        return <ProductCard product={item} />;
-      }}
+      keyExtractor={keyExtractor}
+      renderItem={renderItem}
     />
   );
 };

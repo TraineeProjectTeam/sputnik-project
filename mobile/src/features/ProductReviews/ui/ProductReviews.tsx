@@ -11,6 +11,7 @@ import { declination } from '@/shared/utils/declination';
 import { TextStyles } from '@/shared/libs/textStyles';
 import { PageSpinner } from '@/shared/ui/PageSpinner';
 import { ReviewCard } from '@/shared/ui/ReviewCard';
+import { IReview } from '@/shared/libs/types';
 
 interface ProductReviewsProps {
   idsReview: string[];
@@ -36,6 +37,9 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({
     return <PageSpinner />;
   }
 
+  const keyExtractor = (item: IReview) => item._id;
+  const renderItem = ({ item }: { item: IReview }) => <ReviewCard review={item} />;
+
   return (
     <FlatList
       ListHeaderComponent={
@@ -49,7 +53,8 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({
         </Layout>
       }
       data={reviews}
-      renderItem={({ item }) => <ReviewCard review={item} key={item._id} />}
+      keyExtractor={keyExtractor}
+      renderItem={renderItem}
     />
   );
 };
