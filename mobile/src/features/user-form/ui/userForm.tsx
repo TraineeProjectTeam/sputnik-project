@@ -16,27 +16,25 @@ import { useUserStore } from '@/entities/user';
 
 export const UserForm = () => {
   const role = storage.getString('role');
+  const { user } = useUserStore();
   const {
     control,
-    setValue,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(schema(role)),
     mode: 'onBlur',
+    defaultValues: {
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      phone_number: user.phone_number,
+      company_name: user.company_name,
+    },
   });
 
   const { updateUser, isLoading } = useUserFormStore();
   const { t } = useTranslation();
-  const { user } = useUserStore();
-
-  useEffect(() => {
-    setValue('email', user.email, { shouldValidate: true });
-    setValue('first_name', user.first_name, { shouldValidate: true });
-    setValue('last_name', user.last_name, { shouldValidate: true });
-    setValue('phone_number', user.phone_number, { shouldValidate: true });
-    setValue('company_name', user.company_name, { shouldValidate: true });
-  }, []);
 
   const onPressSend: SubmitHandler<updateUserProps> = (formData) => {
     updateUser(formData);
