@@ -6,10 +6,11 @@ export interface IUser {
   phone_number: string;
   company_name?: string;
   createdAt: Date;
+  reviews: string[];
 }
 
 export interface IProduct {
-  _id: number;
+  _id: string;
   name: string;
   description: string;
   price: number;
@@ -21,7 +22,7 @@ export interface IProduct {
   tags: string[];
   images: string[];
   reviews: string[];
-  characteristics: string[];
+  characteristic: string[];
 }
 
 export interface IOrder {
@@ -34,7 +35,13 @@ export interface IOrder {
 }
 
 export interface IReview {
-  customerFullName: string;
+  _id: string;
+  customer_id: string;
+  product_id: {
+    name: string;
+    thumbnail: string;
+  };
+  customer_fullname: string;
   rating: number;
   body: string;
 }
@@ -56,4 +63,9 @@ export interface IPickupPoint {
 export enum Role {
   CUSTOMER = 'Customer',
   VENDOR = 'Vendor',
+}
+
+export interface IUpdateReview {
+  body: string;
+  rating: number;
 }
