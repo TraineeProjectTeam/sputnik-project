@@ -19,6 +19,10 @@ export const AccountPage = () => {
     navigation.navigate(Stacks.ACCOUNT, { screen: Screens.LANGUAGE });
   };
 
+  const navigateToReviews = () => {
+    navigation.navigate(Stacks.ACCOUNT, { screen: Screens.CUSTOMER_REVIEWS });
+  };
+
   const { getUser } = useUserFormStore();
 
   useEffect(() => {
@@ -30,6 +34,7 @@ export const AccountPage = () => {
       <Menu style={styles.menu}>
         <MenuItem onPress={navigateToProfile} title="Профиль" />
         <MenuItem onPress={navigateToLanguages} title="Язык" />
+        <MenuItem onPress={navigateToReviews} title="Отзывы" />
         <LogoutButton />
       </Menu>
     </Layout>
