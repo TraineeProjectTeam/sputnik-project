@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { Star } from '../libs/icons';
 import { TextStyles } from '../libs/textStyles';
 import { Colors } from '../libs/colors';
+import { maxRating } from '../utils/maxRating';
 
 interface RatingButtonProps {
   value: number;
@@ -30,7 +31,7 @@ export const RatingButton: React.FC<RatingButtonProps> = ({ value, changeValue }
   return (
     <View style={styles.container}>
       <View style={styles.stars}>
-        {[...Array(5)].map((_, i) => {
+        {[...Array(maxRating)].map((_, i) => {
           const handleChangeValue = () => {
             changeValue(i + 1);
           };
