@@ -11,12 +11,18 @@ import {
   LanguagesPage,
 } from '@/screens';
 
-import { Screens } from '../navigationEnum';
+import { CustomerReviewsScreen } from '@/screens/CustomerReviewsScreen';
+import { UpdateReviewScreen } from '@/screens/UpdateReviewScreen';
+import { CreateReviewScreen } from '@/screens/CreateReviewScreen';
+
 import { storage } from '@/shared/libs/storage';
 import { HeaderBack } from '@/shared/ui/headerBack';
 
+import { Screens } from '../navigationEnum';
+import { AccountStackParams } from '../navigationTypes';
+
 export const ProfileStackNavigator = () => {
-  const ProfileStack = createNativeStackNavigator();
+  const ProfileStack = createNativeStackNavigator<AccountStackParams>();
 
   const isAuth = storage.contains('access_token');
 
@@ -40,7 +46,24 @@ export const ProfileStackNavigator = () => {
         options={{ headerShown: true, header: () => <HeaderBack title={'Язык'} /> }}
       />
       <ProfileStack.Screen name={Screens.ORDERS} component={MainPage} />
-      <ProfileStack.Screen name={Screens.REVIEWS} component={MainPage} />
+      <ProfileStack.Screen
+        name={Screens.CUSTOMER_REVIEWS}
+        component={CustomerReviewsScreen}
+        options={{ headerShown: true, header: () => <HeaderBack title={'Review.Мои отзывы'} /> }}
+      />
+      <ProfileStack.Screen
+        name={Screens.CREATE_REVIEW}
+        component={CreateReviewScreen}
+        options={{ headerShown: true, header: () => <HeaderBack title={'Review.Новый отзыв'} /> }}
+      />
+      <ProfileStack.Screen
+        name={Screens.EDIT_REVIEW}
+        component={UpdateReviewScreen}
+        options={{
+          headerShown: true,
+          header: () => <HeaderBack title={'Review.Ваш отзыв о товаре'} />,
+        }}
+      />
       <ProfileStack.Screen name={Screens.LOGIN_BY_PHONE} component={AuthByPhonePage} />
       <ProfileStack.Screen name={Screens.LOGIN_BY_EMAIL} component={AuthByEmailPage} />
       <ProfileStack.Screen name={Screens.REGISTRATION} component={RegistrationPage} />

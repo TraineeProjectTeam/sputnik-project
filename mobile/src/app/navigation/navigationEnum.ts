@@ -16,5 +16,8 @@ export enum Screens {
   LANGUAGE = 'Language',
   PROFILE = 'Profile',
   ORDERS = 'Orders',
-  REVIEWS = 'Reviews',
+  CUSTOMER_REVIEWS = 'CustomerReviews',
+  PRODUCT_REVIEWS = 'ProductReviews',
+  CREATE_REVIEW = 'CreateReview',
+  EDIT_REVIEW = 'EditReview',
 }
