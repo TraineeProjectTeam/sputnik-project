@@ -8,9 +8,13 @@ export const LogoutButton = () => {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const setIsLogin = useLoginStore((state) => state.setIsLogin);
+  const clearUserStores = useLoginStore((state) => state.clearUserStores);
 
   const onLogout = () => {
     Cookies.remove('access_token');
+    Cookies.remove('role');
+    Cookies.remove('user');
+    clearUserStores();
     navigate('/');
     setIsLogin(false);
   };
