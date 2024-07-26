@@ -54,7 +54,9 @@ export const ProductCard = ({ product }: { product: IProduct }) => {
             <RatingAndReviews rating={product.rating} reviews_count={product.reviews_count} />
           )}
         </View>
-        <AddToCartBtn size="tiny" />
+        <View style={styles.button}>
+          <AddToCartBtn size="tiny" />
+        </View>
       </Pressable>
     </Layout>
   );
@@ -69,4 +71,11 @@ const styles = StyleSheet.create({
   pressable: { display: 'flex', flex: 1 },
   favButton: { position: 'absolute', zIndex: 5, right: 3, top: 3 },
   body: { margin: 7, marginTop: 3 },
+  button: {
+    marginLeft: 7,
+    marginRight: 7,
+    padding: 0,
+    marginTop: 'auto',
+    marginBottom: 7,
+  },
 });
