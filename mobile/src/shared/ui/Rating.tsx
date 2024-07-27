@@ -28,21 +28,25 @@ export const RatingButton: React.FC<RatingButtonProps> = ({ value, changeValue }
     t('Review.Отличный'),
   ];
 
+  const StarArray = () =>
+    [...Array(maxRating)].map((_, i) => {
+      const handleChangeValue = () => {
+        changeValue(i + 1);
+      };
+
+      return (
+        <TouchableWithoutFeedback key={i} onPress={handleChangeValue}>
+          <View>
+            <Star size={32} color={value >= i + 1 ? Colors.Warning400 : Colors.Basic200} />
+          </View>
+        </TouchableWithoutFeedback>
+      );
+    });
+
   return (
     <View style={styles.container}>
       <View style={styles.stars}>
-        {[...Array(maxRating)].map((_, i) => {
-          const handleChangeValue = () => {
-            changeValue(i + 1);
-          };
-          return (
-            <TouchableWithoutFeedback key={i} onPress={handleChangeValue}>
-              <View>
-                <Star size={32} color={value >= i + 1 ? Colors.Warning400 : Colors.Basic200} />
-              </View>
-            </TouchableWithoutFeedback>
-          );
-        })}
+        <StarArray />
       </View>
       <Text>
         {value && <Text style={TextStyles.p1}>{`${text[value - 1]} ${t('Review.товар')}`} </Text>}
