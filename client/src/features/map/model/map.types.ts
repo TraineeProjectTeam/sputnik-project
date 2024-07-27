@@ -16,7 +16,9 @@ export interface IMarker {
 }
 
 export interface IMapStore {
+  pickupPoint: IMarker | null;
   pickupPoints: IMarker[];
   isLoading: boolean;
+  getPickupPoint: (id: string) => void;
   getPickupPoints: () => void;
 }

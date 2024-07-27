@@ -2,8 +2,9 @@ import { List } from 'antd';
 import { useOrdersStore } from 'entities/order';
 import { FilterOrders } from 'features/filter-orders';
 import { useEffect } from 'react';
-import { EnumStatus, OrderCard } from 'shared/ui/order-card';
-import styled from 'styled-components';
+import { EnumStatus } from 'shared/ui/buttons';
+import { OrderCard } from 'shared/ui/order-card';
+import { StyledListItem } from './orders.styles';
 
 export const OrdersPage = () => {
   const { orders, getOrders, isLoading, filtredStatus } = useOrdersStore();
@@ -32,7 +33,3 @@ export const OrdersPage = () => {
     </>
   );
 };
-
-const StyledListItem = styled(List.Item)`
-  display: block !important;
-`;

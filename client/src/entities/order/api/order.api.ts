@@ -9,6 +9,11 @@ import { AxiosPromise } from 'axios';
 
 const BASE_URL = '/orders';
 
+export const getOrderRequest = async (id: string): AxiosPromise<IOrder> => {
+  const response = await api.get(`${BASE_URL}/${id}`);
+  return response;
+};
+
 export const getOrdersRequest = async (): AxiosPromise<IOrder[]> => {
   const response = await api.get(`${BASE_URL}`);
   return response;

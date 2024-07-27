@@ -20,5 +20,9 @@ export const ProfileVendorPage = () => {
     setVendor(vendorData, true);
   };
 
+  if (!user) {
+    return null;
+  }
+
   return <ProfileCard title={tCom('Профиль продавца')} user={user} callback={changeVendorData} />;
 };

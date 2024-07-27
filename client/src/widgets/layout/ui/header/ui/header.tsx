@@ -1,12 +1,12 @@
-import { Layout, List } from 'antd';
+import { List } from 'antd';
 import { LanguageSelector } from 'entities/language-selector';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { LogoutButton } from 'shared/ui/logout-button/logout-button';
 import useLoginStore from 'features/login-forms/model/login.store';
 import { getProfileLinks } from 'shared/ui/profile-card';
 import { EnumRoutesName } from 'shared/config';
+import { LogoutButton } from 'shared/ui/buttons';
+import { StyledContent, StyledHeader } from './header.styles';
 
 export const Header = () => {
   const [tCommon] = useTranslation('common');
@@ -50,23 +50,3 @@ export const Header = () => {
     </StyledHeader>
   );
 };
-
-const StyledHeader = styled(Layout.Header)`
-  height: var(--header-height);
-  background-color: var(--main-background-color);
-  display: flex;
-  column-gap: 0.75rem;
-  position: sticky;
-  top: 0;
-  width: 100%;
-  z-index: var(--header-z-index);
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const StyledContent = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.625rem;
-`;

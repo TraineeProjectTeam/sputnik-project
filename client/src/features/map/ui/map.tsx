@@ -38,9 +38,9 @@ export const Map = () => {
       >
         {pickupPoints?.map((marker) => (
           <Marker
-            position={[+marker.logitude, +marker.latitude]}
+            position={[+marker.latitude, +marker.logitude]}
             icon={customIcon}
-            key={`${marker.logitude}-${marker.latitude}`}
+            key={`${marker.latitude}-${marker.logitude}`}
           >
             <Popup>
               {Object.values(marker.address).map((field: string) => (

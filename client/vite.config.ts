@@ -1,5 +1,6 @@
 import { defineConfig, UserConfig, AliasOptions } from 'vite';
 import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
 
 const alias: AliasOptions = [
   { find: 'pages', replacement: '/src/pages' },
@@ -11,7 +12,7 @@ const alias: AliasOptions = [
 ];
 
 const config: UserConfig = {
-  plugins: [react()],
+  plugins: [react(), svgr()],
   resolve: {
     alias,
   },

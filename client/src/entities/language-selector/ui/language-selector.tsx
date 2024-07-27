@@ -4,13 +4,13 @@ import { languages } from '../model/languages-selector.constants';
 import EnFlag from '../assets/flags/en.svg';
 import RuFlag from '../assets/flags/ru.svg';
 import { ReactNode } from 'react';
-import styled from 'styled-components';
+import { StyledFlag } from './language-selector.styles';
 
 const { Option } = Select;
 
 const flags = {
   en: EnFlag,
-  ru: RuFlag
+  ru: RuFlag,
 };
 
 const FlagComponent = ({ lang }: { lang: string }): ReactNode => {
@@ -26,24 +26,13 @@ export const LanguageSelector = () => {
   };
 
   return (
-    <Select
-      defaultValue={i18n.language}
-      onChange={changeLanguageHandler}
-    >
-      {languages.map(lang =>
-        <Option
-          key={lang.code}
-          value={lang.code}
-        >
+    <Select defaultValue={i18n.language} onChange={changeLanguageHandler}>
+      {languages.map((lang) => (
+        <Option key={lang.code} value={lang.code}>
           <FlagComponent lang={lang.code} />
           {lang.name}
         </Option>
-      )}
+      ))}
     </Select>
   );
 };
-
-const StyledFlag = styled.img`
-  height: 1.25rem;
-  width: 1.875rem;
-`

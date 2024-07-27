@@ -1,5 +1,10 @@
 import { Map } from 'features/map';
+import { StyledMapWrapper } from './map.styles';
 
 export const MapPage = () => {
-  return <Map />;
+  return (
+    <StyledMapWrapper>
+      <Map />
+    </StyledMapWrapper>
+  );
 };

@@ -5,13 +5,27 @@ import {
   getOrdersRequest,
   updateOrderRequest,
   addOrderRequest,
+  getOrderRequest,
 } from '../api/order.api';
-import { EnumStatus } from 'shared/ui/order-card';
+import { EnumStatus } from 'shared/ui/buttons';
 
 export const useOrdersStore = create<IOrdersStore>((set, get) => ({
+  order: null,
   orders: [],
   filtredStatus: EnumStatus.all,
   isLoading: false,
+  isLoadingOrder: false,
+  getOrder: async (id: string) => {
+    try {
+      set({ isLoadingOrder: true });
+      const response = await getOrderRequest(id);
+      set({ order: response.data });
+    } catch (error: any) {
+      throw new Error(error.message);
+    } finally {
+      set({ isLoadingOrder: false });
+    }
+  },
   getOrders: async () => {
     try {
       set({ isLoading: true });

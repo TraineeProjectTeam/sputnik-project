@@ -1,12 +1,21 @@
-import { Button, Card } from 'antd';
-import { EnumStatus, IOrderCardProps, IRenderDeliveryDateProps } from '../model/order-card.types';
+import { Card } from 'antd';
+import { IOrderCardProps, IRenderDeliveryDateProps } from '../model/order-card.types';
 import { useTranslation } from 'react-i18next';
 import { useCurrentLanguage } from 'shared/lib';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { EnumRoutesName } from 'shared/config';
 import { convertDeliveryDate } from 'shared/lib/helpers';
 import { convertEstimatedDeliveryDate, convertOrderDate } from 'shared/lib/helpers/date';
+import {
+  StyledContent,
+  StyledLink,
+  StyledOrderInfo,
+  StyledPaidSpan,
+  StyledPrice,
+  StyledStatus,
+  StyledTitle,
+} from './order-card.styles';
+import { EnumStatus, StatusButton } from 'shared/ui/buttons';
 
 const renderDeliveryDate = (props: IRenderDeliveryDateProps) => {
   const { delivery_date, estimated_delivery_date, lang, tOrder } = props;
@@ -37,7 +46,7 @@ export const OrderCard = (props: IOrderCardProps) => {
 
   return (
     <Link to={`${EnumRoutesName.ORDERS}/${order._id}`}>
-      <StyledCard>
+      <StyledOrderInfo>
         <Card.Meta
           title={
             <StyledTitle>
@@ -61,9 +70,7 @@ export const OrderCard = (props: IOrderCardProps) => {
         <StyledContent>
           <StyledStatus>
             {tOrder('Доставка в пункт выдачи')}
-            <Button size="small" disabled>
-              {tOrder(EnumStatus[order.status as keyof typeof EnumStatus])}
-            </Button>
+            <StatusButton status={EnumStatus[order.status as keyof typeof EnumStatus]} />
           </StyledStatus>
           {renderDeliveryDate({
             delivery_date: order.delivery_date,
@@ -73,65 +80,7 @@ export const OrderCard = (props: IOrderCardProps) => {
             status: order.status,
           })}
         </StyledContent>
-      </StyledCard>
+      </StyledOrderInfo>
     </Link>
   );
 };
-
-const StyledCard = styled(Card)`
-  box-shadow: var(--shadow);
-
-  @media (max-width: 26.5625rem) {
-    .ant-card-body {
-      padding: 0.625rem;
-    }
-  }
-`;
-
-const StyledStatus = styled.p`
-  display: flex;
-  column-gap: 0.625rem;
-`;
-
-const StyledPaidSpan = styled.span`
-  text-transform: lowercase;
-  font-size: 0.875rem;
-  font-weight: 400;
-  & > button {
-    cursor: default;
-  }
-`;
-
-const StyledPrice = styled.span`
-  font-size: 1.25rem;
-  font-weight: 700;
-
-  @media (max-width: 26.5625rem) {
-    font-size: 1rem;
-  }
-`;
-
-const StyledTitle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.25rem;
-  font-weight: 700;
-  flex-wrap: wrap;
-
-  @media (max-width: 26.5625rem) {
-    font-size: 1rem;
-  }
-`;
-
-const StyledLink = styled(Button)`
-  font-size: 0.875rem;
-  padding: 0;
-`;
-
-const StyledContent = styled.div`
-  padding-top: 1.25rem;
-
-  @media (max-width: 26.5625rem) {
-    padding-top: 1rem;
-  }
-`;
