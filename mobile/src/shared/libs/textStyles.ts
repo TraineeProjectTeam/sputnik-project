@@ -61,12 +61,12 @@ class TextStyle {
 }
 
 export const TextStyles: ITextStyles = {
-  h1: new TextStyle(36, '600', Colors.Basic800, 'Montserrat-Bold', 36),
-  h2: new TextStyle(32, '600', Colors.Basic800, 'Montserrat-Bold', 32),
-  h3: new TextStyle(28, '600', Colors.Basic800, 'Montserrat-Bold', 28),
-  h4: new TextStyle(24, '600', Colors.Basic800, 'Montserrat-Bold', 24),
-  h5: new TextStyle(20, '600', Colors.Basic800, 'Montserrat-Bold', 20),
-  h6: new TextStyle(16, '600', Colors.Basic800, 'Montserrat-Bold', 16),
+  h1: new TextStyle(36, '600', Colors.Basic800, 'Montserrat-Bold', 48),
+  h2: new TextStyle(32, '600', Colors.Basic800, 'Montserrat-Bold', 40),
+  h3: new TextStyle(28, '600', Colors.Basic800, 'Montserrat-Bold', 36),
+  h4: new TextStyle(24, '600', Colors.Basic800, 'Montserrat-Bold', 32),
+  h5: new TextStyle(20, '600', Colors.Basic800, 'Montserrat-Bold', 28),
+  h6: new TextStyle(16, '600', Colors.Basic800, 'Montserrat-Bold', 22),
   label: new TextStyle(12, '400', Colors.Basic800, 'Montserrat-Regular', 12),
   body: new TextStyle(14, '400', Colors.Basic800, 'Montserrat-Regular', 18),
   bodyBold: new TextStyle(14, '600', Colors.Basic800, 'Montserrat-Bold', 18),

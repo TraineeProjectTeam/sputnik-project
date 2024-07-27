@@ -14,7 +14,7 @@ interface RatingWithReviewsProps {
 
 export const RatingAndReviews: React.FC<RatingWithReviewsProps> = ({ rating, reviews_count }) => {
   const { t } = useTranslation();
-  const titles = [t('Product.Отзыв'), t('Product.Отзыва'), t('Product.Отзывов')];
+  const titles = [t('Product.отзыв'), t('Product.отзыва'), t('Product.отзывов')];
 
   return (
     <View style={styles.container}>

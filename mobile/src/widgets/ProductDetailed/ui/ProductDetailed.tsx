@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { Button, Layout } from '@ui-kitten/components';
+
+import { Screens } from '@/app/navigation/navigationEnum';
 
 import { AddToCartBtn } from '@/features/AddToCartBtn';
 
@@ -12,6 +15,7 @@ import { RemainingProducts } from '@/shared/ui/RemainingProducts';
 import { Description } from '@/shared/ui/Description';
 import { Characteristics } from '@/shared/ui/Characteristics';
 import { IProduct } from '@/shared/libs/types';
+import { useAppNavigation } from '@/shared/libs/useAppNavigation';
 
 interface ProductDetailed {
   product: IProduct;
@@ -34,6 +38,18 @@ export const ProductDetailed: React.FC<ProductDetailed> = ({ product }) => {
     setSelectedButton('description');
   };
 
+  const navigation = useAppNavigation();
+
+  const navigateToReviews = () => {
+    navigation.dispatch(
+      StackActions.push(Screens.PRODUCT_REVIEWS, {
+        reviews: product.reviews,
+        rating: product.rating,
+        reviews_count: product.reviews_count,
+      }),
+    );
+  };
+
   return (
     <Layout level="2" style={styles.layout}>
       <ScrollView>
@@ -44,7 +60,11 @@ export const ProductDetailed: React.FC<ProductDetailed> = ({ product }) => {
             {product.remaining && <RemainingProducts remaining={product.remaining} />}
           </View>
         </Layout>
-        <ReviewButton rating={product.rating} reviews_count={product.reviews_count} />
+        <ReviewButton
+          rating={product.rating}
+          reviews_count={product.reviews_count}
+          onPress={navigateToReviews}
+        />
         <Layout style={styles.description}>
           <View style={styles.btns}>
             {product.description && (
@@ -56,7 +76,7 @@ export const ProductDetailed: React.FC<ProductDetailed> = ({ product }) => {
                 {t('Product.Описание')}
               </Button>
             )}
-            {product.characteristics && (
+            {product.characteristic.length > 0 && (
               <Button
                 appearance={selectedButton === 'characteristics' ? 'filled' : 'outline'}
                 size="small"
@@ -69,11 +89,13 @@ export const ProductDetailed: React.FC<ProductDetailed> = ({ product }) => {
           </View>
           {selectedButton === 'description' && <Description description={product.description} />}
           {selectedButton === 'characteristics' && (
-            <Characteristics characteristics={product.characteristics} />
+            <Characteristics characteristics={product.characteristic} />
           )}
         </Layout>
       </ScrollView>
-      <AddToCartBtn />
+      <Layout style={styles.buttonLayout}>
+        <AddToCartBtn />
+      </Layout>
     </Layout>
   );
 };
@@ -85,4 +107,10 @@ const styles = StyleSheet.create({
   description: { padding: 15, marginTop: 15, borderRadius: 20, marginBottom: 10 },
   btns: { display: 'flex', flexDirection: 'row' },
   charBtn: { marginLeft: 10 },
+  buttonLayout: {
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
 });

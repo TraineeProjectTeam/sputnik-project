@@ -1,5 +1,5 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
-import { IProduct } from '@/shared/libs/types';
+import { IProduct, IReview } from '@/shared/libs/types';
 
 export type RootStackParamList = {
   Loading: undefined;
@@ -7,7 +7,6 @@ export type RootStackParamList = {
   Catalog: NavigatorScreenParams<CatalogStackParams>;
   Account: NavigatorScreenParams<AccountStackParams>;
   Cart: undefined;
-  Product: IProductPageParams;
 };
 
 export type MainTabsStackParams = {
@@ -23,14 +22,32 @@ export type AccountStackParams = {
   Registration: undefined;
   Profile: undefined;
   Orders: undefined;
-  Reviews: undefined;
+  CustomerReviews: undefined;
+  CreateReview: ICreateReviewPageParams;
+  EditReview: IEditReviewPageParams;
   Language: undefined;
 };
 
 export type CatalogStackParams = {
   CatalogScreen: undefined;
+  Product: IProductPageParams;
+  ProductReviews: IProductReviewPageParams;
 };
 
 export type IProductPageParams = {
   product: IProduct;
+};
+
+export type ICreateReviewPageParams = {
+  product: IProduct;
+};
+
+export type IEditReviewPageParams = {
+  review: IReview;
+};
+
+export type IProductReviewPageParams = {
+  reviews: string[];
+  reviews_count: number;
+  rating: number;
 };

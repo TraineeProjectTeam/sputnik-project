@@ -38,3 +38,11 @@ export const ShoppingBag = ({ size, color }: IconProps) => (
 export const CheckCircle = ({ size, color }: IconProps) => (
   <Icon name="check-circle-outline" size={size} color={color} />
 );
+
+export const DeleteIcon = ({ size, color }: IconProps) => (
+  <Icon name="delete" size={size} color={color} />
+);
+
+export const EditIcon = ({ size, color }: IconProps) => (
+  <Icon name="edit" size={size} color={color} />
+);

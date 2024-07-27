@@ -10,14 +10,15 @@ import { declination } from '../utils/declination';
 interface ReviewsButtonProps {
   rating: number;
   reviews_count: number;
+  onPress: () => void;
 }
 
-export const ReviewButton: React.FC<ReviewsButtonProps> = ({ rating, reviews_count }) => {
+export const ReviewButton: React.FC<ReviewsButtonProps> = ({ rating, reviews_count, onPress }) => {
   const { t } = useTranslation();
-  const titles = [t('Product.Отзыв'), t('Product.Отзыва'), t('Product.Отзывов')];
+  const titles = [t('Product.отзыв'), t('Product.отзыва'), t('Product.отзывов')];
 
   return (
-    <Pressable style={styles.pressable}>
+    <Pressable style={styles.pressable} onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.rating}>
           <Star size={18} color={reviews_count ? Colors.Warning500 : Colors.Basic700} />
