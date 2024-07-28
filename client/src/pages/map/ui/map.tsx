@@ -1,16 +1,10 @@
-import { IMarker, Map, getPickupPointsRequest } from 'features/map';
-import { useEffect, useState } from 'react';
+import { Map } from 'features/map';
+import { StyledMapWrapper } from './map.styles';
 
 export const MapPage = () => {
-  const [markers, setMarkers] = useState<IMarker[]>([]);
-
-  useEffect(() => {
-    getPickupPointsRequest().then((res) => setMarkers(res.data));
-
-    return () => {
-      setMarkers([]);
-    };
-  }, []);
-
-  return <Map markers={markers} />;
+  return (
+    <StyledMapWrapper>
+      <Map />
+    </StyledMapWrapper>
+  );
 };

@@ -3,5 +3,9 @@
   "шт": "pcs",
   "отзыв": "review",
   "отзыва": "reviews",
-  "отзывов": "reviews"
+  "отзывов": "reviews",
+  "товар": "order",
+  "товаров": "orders",
+  "товара": "orders",
+  "В корзину": "Into a basket"
 }

@@ -9,5 +9,8 @@
   "В пути": "In way",
   "Доставлен": "Delivered",
   "Получен": "Recieved",
-  "Отменен": "Canceled"
+  "Отменен": "Canceled",
+  "Заказ №": "Order № {{number}}",
+  "Нет такого заказа": "No this order",
+  "К списку заказов": "Back to orders"
 }

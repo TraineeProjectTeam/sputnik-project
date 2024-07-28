@@ -10,6 +10,10 @@ export const ProfileCustomerPage = () => {
     setCustomer(newData, true);
   };
 
+  if (!user) {
+    return null;
+  }
+
   return (
     <ProfileCard title={tCom('Профиль покупателя')} user={user} callback={changeCustomerData} />
   );

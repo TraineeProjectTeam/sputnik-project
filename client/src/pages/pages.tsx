@@ -6,6 +6,7 @@ import { MapPage } from './map';
 import { RegisterPage } from './register';
 import { LoginPage } from './login';
 import { OrdersPage } from './orders';
+import { OrderPage } from './order';
 import { EnumRoutesName } from 'shared/config';
 import { CategoryPage } from './category';
 import { CatalogPage } from './catalog';
@@ -50,7 +51,7 @@ export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
   },
   [EnumRoutesName.ORDER]: {
     path: EnumRoutesName.ORDER,
-    element: <></>,
+    element: <OrderPage />,
     isAuth: false,
   },
   [EnumRoutesName.CATALOG]: {

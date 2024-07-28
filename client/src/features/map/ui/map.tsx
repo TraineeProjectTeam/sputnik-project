@@ -3,11 +3,11 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { Icon, divIcon } from 'leaflet';
-import { IMapProps } from '../model/map.types';
 import customIconUrl from '../assets/icon.svg';
+import { useMapStore } from '../model/map.store';
 
-export const Map = (props: IMapProps) => {
-  const { markers } = props;
+export const Map = () => {
+  const { pickupPoints } = useMapStore();
 
   const customIcon = new Icon({
     iconUrl: customIconUrl,
@@ -24,7 +24,7 @@ export const Map = (props: IMapProps) => {
   };
 
   return (
-    <MapContainer center={[48.8566, 2.3522]} zoom={13}>
+    <MapContainer center={[+pickupPoints[0].latitude, +pickupPoints[0].logitude]} zoom={13}>
       <TileLayer
         attribution="Google Maps"
         url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png"
@@ -36,11 +36,11 @@ export const Map = (props: IMapProps) => {
         showCoverageOnHover={false}
         iconCreateFunction={customClusterIcon}
       >
-        {markers?.map((marker) => (
+        {pickupPoints?.map((marker) => (
           <Marker
-            position={[+marker.logitude, +marker.latitude]}
+            position={[+marker.latitude, +marker.logitude]}
             icon={customIcon}
-            key={`${marker.logitude}-${marker.latitude}`}
+            key={`${marker.latitude}-${marker.logitude}`}
           >
             <Popup>
               {Object.values(marker.address).map((field: string) => (
