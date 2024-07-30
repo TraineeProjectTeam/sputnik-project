@@ -20,4 +20,5 @@ export enum Screens {
   PRODUCT_REVIEWS = 'ProductReviews',
   CREATE_REVIEW = 'CreateReview',
   EDIT_REVIEW = 'EditReview',
+  FAVORITES = 'Favorites',
 }

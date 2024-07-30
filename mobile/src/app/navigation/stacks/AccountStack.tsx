@@ -14,6 +14,11 @@ import {
 import { CustomerReviewsScreen } from '@/screens/CustomerReviewsScreen';
 import { UpdateReviewScreen } from '@/screens/UpdateReviewScreen';
 import { CreateReviewScreen } from '@/screens/CreateReviewScreen';
+import { FavoriteProductsScreen } from '@/screens/FavoriteProductsScreen';
+import { ProductReviewsScreen } from '@/screens/ProductReviewsScreen';
+import { ProductDetailedScreen } from '@/screens/ProductDetailedScreen';
+
+import { HeaderProduct } from '@/widgets/HeaderProduct';
 
 import { storage } from '@/shared/libs/storage';
 import { HeaderBack } from '@/shared/ui/headerBack';
@@ -63,6 +68,32 @@ export const ProfileStackNavigator = () => {
           headerShown: true,
           header: () => <HeaderBack title={'Review.Ваш отзыв о товаре'} />,
         }}
+      />
+      <ProfileStack.Screen
+        name={Screens.FAVORITES}
+        component={FavoriteProductsScreen}
+        options={{
+          headerShown: true,
+          header: () => <HeaderBack title={'Избранное'} />,
+        }}
+      />
+      <ProfileStack.Screen
+        name={Screens.PRODUCT}
+        options={({ route }) => ({
+          headerShown: true,
+          header: () => (
+            <HeaderProduct title={route.params.product.name} productId={route.params.product._id} />
+          ),
+        })}
+        component={ProductDetailedScreen}
+      />
+      <ProfileStack.Screen
+        name={Screens.PRODUCT_REVIEWS}
+        options={{
+          headerShown: true,
+          header: () => <HeaderBack title={'Отзывы'} />,
+        }}
+        component={ProductReviewsScreen}
       />
       <ProfileStack.Screen name={Screens.LOGIN_BY_PHONE} component={AuthByPhonePage} />
       <ProfileStack.Screen name={Screens.LOGIN_BY_EMAIL} component={AuthByEmailPage} />

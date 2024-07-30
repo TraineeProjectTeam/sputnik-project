@@ -25,7 +25,9 @@ export const CatalogStackNavigator = () => {
         name={Screens.PRODUCT}
         options={({ route }) => ({
           headerShown: true,
-          header: () => <HeaderProduct title={route.params.product.name} />,
+          header: () => (
+            <HeaderProduct title={route.params.product.name} productId={route.params.product._id} />
+          ),
         })}
         component={ProductDetailedScreen}
       />
