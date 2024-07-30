@@ -10,7 +10,12 @@ import { Colors } from '@/shared/libs/colors';
 import { TextStyles } from '@/shared/libs/textStyles';
 import { useAppNavigation } from '@/shared/libs/useAppNavigation';
 
-export const HeaderProduct = ({ title }: { title: string }) => {
+interface HeaderProductProps {
+  title: string;
+  productId: string;
+}
+
+export const HeaderProduct: React.FC<HeaderProductProps> = ({ title, productId }) => {
   const navigation = useAppNavigation();
 
   const navigateBack = () => {
@@ -23,6 +28,8 @@ export const HeaderProduct = ({ title }: { title: string }) => {
       icon={<ArrowLeft size={30} color={Colors.Basic600} />}
     />
   );
+
+  const AddToFav = () => <AddToFavoriteBtn productId={productId} />;
 
   return (
     <Layout>
@@ -41,7 +48,7 @@ export const HeaderProduct = ({ title }: { title: string }) => {
           </Text>
         )}
         accessoryLeft={renderBackAction}
-        accessoryRight={AddToFavoriteBtn}
+        accessoryRight={AddToFav}
       />
     </Layout>
   );
