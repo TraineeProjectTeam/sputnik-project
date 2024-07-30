@@ -7,6 +7,7 @@ export interface IUser {
   company_name?: string;
   createdAt: Date;
   reviews: string[];
+  featured: string[];
 }
 
 export interface IProduct {
