@@ -1,25 +1,47 @@
-import React, { useEffect } from 'react';
-import { FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import { Spinner } from '@ui-kitten/components';
 
-import { PageSpinner } from '@/shared/ui/PageSpinner';
-
-import { ProductCard } from './ProductCard';
-import { useProductListStore } from '../model/UseProductListStore';
 import { IProduct } from '@/shared/libs/types';
+import { NoItems } from '@/shared/ui/NoItems';
+import { ProductCard } from './ProductCard';
 
-export const ProductList = () => {
-  const { products, getProducts, isLoading } = useProductListStore();
+interface ProductListProps {
+  products: IProduct[];
+  onEndReached?: () => void;
+  refreshProducts: () => Promise<IProduct[]>;
+  isLoading: boolean;
+  NoItemsText?: string;
+}
 
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  if (isLoading) {
-    return <PageSpinner />;
-  }
+export const ProductList: React.FC<ProductListProps> = ({
+  products,
+  onEndReached,
+  isLoading,
+  refreshProducts,
+  NoItemsText = 'Список продуктов пуст',
+}) => {
+  const [refreshing, setIsRefreshing] = useState(false);
 
   const keyExtractor = (item: IProduct) => item._id;
   const renderItem = ({ item }: { item: IProduct }) => <ProductCard product={item} />;
+  const loader = () =>
+    isLoading && (
+      <View style={styles.loader}>
+        <Spinner />
+      </View>
+    );
+  const NoItem = () => !isLoading && <NoItems text={NoItemsText} />;
+
+  const onRefresh = () => {
+    try {
+      setIsRefreshing(true);
+      refreshProducts();
+    } catch {
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
 
   return (
     <FlatList
@@ -27,10 +49,32 @@ export const ProductList = () => {
       horizontal={false}
       showsVerticalScrollIndicator={false}
       numColumns={2}
-      contentContainerStyle={{ gap: 7 }}
-      columnWrapperStyle={{ gap: 5 }}
+      ListEmptyComponent={NoItem}
+      contentContainerStyle={styles.content}
+      ListFooterComponentStyle={isLoading && styles.footer}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
+      ListFooterComponent={loader}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  content: {
+    flexGrow: 1,
+  },
+  footer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 5,
+  },
+});

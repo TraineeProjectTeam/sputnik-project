@@ -13,7 +13,7 @@ interface IUserStore extends Omit<IUserWithToken, 'access_token'> {
   reset: () => void;
 }
 
-export const useUserStore = create<IUserStore>((set) => ({
+export const useUserStore = create<IUserStore>((set, get) => ({
   user: {} as IUser,
   setUser: (user, access_token, role) => {
     set({ user });

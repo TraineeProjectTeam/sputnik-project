@@ -26,6 +26,9 @@ export type AccountStackParams = {
   CreateReview: ICreateReviewPageParams;
   EditReview: IEditReviewPageParams;
   Language: undefined;
+  Favorites: undefined;
+  Product: IProductPageParams;
+  ProductReviews: IProductReviewPageParams;
 };
 
 export type CatalogStackParams = {

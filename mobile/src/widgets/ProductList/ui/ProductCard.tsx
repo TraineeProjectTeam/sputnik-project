@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { LayoutChangeEvent, Pressable, StyleSheet, Text, View } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { Layout } from '@ui-kitten/components';
@@ -32,7 +32,7 @@ export const ProductCard = ({ product }: { product: IProduct }) => {
     <Layout style={styles.container} onLayout={findWidth}>
       <Pressable onPress={navigateToProductPage} style={styles.pressable}>
         <View style={styles.favButton}>
-          <AddToFavoriteBtn />
+          <AddToFavoriteBtn productId={product._id} />
         </View>
         <Carousel
           items={product.images}
@@ -64,9 +64,12 @@ export const ProductCard = ({ product }: { product: IProduct }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '49.3%',
+    width: '49%',
     borderRadius: 10,
     overflow: 'hidden',
+    marginLeft: 2,
+    marginRight: 2,
+    marginTop: 5,
   },
   pressable: { display: 'flex', flex: 1 },
   favButton: { position: 'absolute', zIndex: 5, right: 3, top: 3 },

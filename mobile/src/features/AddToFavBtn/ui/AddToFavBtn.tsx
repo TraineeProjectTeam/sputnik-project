@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import { useFavoriteStore } from '@/entities/Favorite';
+
 import { Colors } from '@/shared/libs/colors';
 
-export const AddToFavoriteBtn = () => {
-  const [clicked, setIsClicked] = useState(false);
+interface AddToFavoriteBtnProps {
+  productId: string;
+}
+
+export const AddToFavoriteBtn: React.FC<AddToFavoriteBtnProps> = ({ productId }) => {
+  const { addToFavorite, deleteFavorite, isFavorite } = useFavoriteStore();
 
   const toggleFavorite = () => {
-    setIsClicked(!clicked);
+    if (isFavorite(productId)) {
+      deleteFavorite(productId);
+    } else {
+      addToFavorite(productId);
+    }
   };
 
   return (
@@ -16,9 +26,9 @@ export const AddToFavoriteBtn = () => {
       <View>
         <Icon style={styles.iconBg} name="favorite" size={26} color="#fff" />
         <Icon
-          name={clicked ? 'favorite' : 'favorite-outline'}
+          name={isFavorite(productId) ? 'favorite' : 'favorite-outline'}
           size={24}
-          color={clicked ? 'red' : Colors.Basic700}
+          color={isFavorite(productId) ? 'red' : Colors.Basic700}
         />
       </View>
     </Pressable>

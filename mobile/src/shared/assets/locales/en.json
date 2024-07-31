@@ -2,6 +2,8 @@
   "Язык": "Language",
   "Профиль": "Profile",
   "Отзывы": "Reviews",
+  "Избранное": "Favorites",
+  "Список избранных товаров пуст": "The list of favorite products is empty",
   "Product": {
     "Описание": "Description",
     "Характеристики": "Characteristics",
@@ -14,7 +16,8 @@
     "шт": "piece",
     "Основные": "Main",
     "Скрыть": "Hide",
-    "Показать полностью": "Show more"
+    "Показать полностью": "Show more",
+    "Список продуктов пуст": "Product list is empty"
   },
   "Review": {
     "Мои отзывы": "My reviews",

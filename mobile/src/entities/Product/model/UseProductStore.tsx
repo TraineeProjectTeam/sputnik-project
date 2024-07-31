@@ -2,13 +2,13 @@ import { create } from 'zustand';
 import { IProduct } from '@/shared/libs/types';
 import { getProductsRequest } from '../api/api';
 
-interface IProductListStore {
+interface IProductStore {
   products: IProduct[];
   isLoading: boolean;
-  getProducts: () => void;
+  getProducts: () => Promise<IProduct[]>;
 }
 
-export const useProductListStore = create<IProductListStore>((set) => ({
+export const useProductStore = create<IProductStore>((set) => ({
   products: [],
   isLoading: false,
   getProducts: async () => {
@@ -16,6 +16,7 @@ export const useProductListStore = create<IProductListStore>((set) => ({
       set({ isLoading: true });
       const data = await getProductsRequest();
       set({ products: data });
+      return data;
     } catch {
       throw new Error();
     } finally {
