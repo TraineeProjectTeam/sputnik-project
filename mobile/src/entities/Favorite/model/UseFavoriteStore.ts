@@ -1,17 +1,19 @@
 import { create } from 'zustand';
 import { IProduct } from '@/shared/libs/types';
 import { addToFavorite, deleteFavorite, getFavorites } from '../api/api';
-import { useUserStore } from '@/entities/user';
 
 interface IUseFavoriteStore {
   isLoading: boolean;
   favorites: IProduct[];
+  favoriteIds: string[];
   currentPage: number;
   pagination: Pagination;
+  setFavoriteIds: (ids: string[]) => void;
   getFavorites: () => Promise<IProduct[]>;
   refreshFavorites: () => Promise<IProduct[]>;
   addToFavorite: (id: string) => Promise<IProduct>;
   deleteFavorite: (id: string) => Promise<IProduct>;
+  isFavorite: (id: string) => boolean;
 }
 
 export interface Pagination {
@@ -24,8 +26,12 @@ export interface Pagination {
 export const useFavoriteStore = create<IUseFavoriteStore>((set, get) => ({
   isLoading: false,
   favorites: [],
+  favoriteIds: [],
   currentPage: 0,
   pagination: {} as Pagination,
+  setFavoriteIds: (ids) => {
+    set({ favoriteIds: ids });
+  },
   getFavorites: async () => {
     try {
       set({ isLoading: true });
@@ -51,16 +57,21 @@ export const useFavoriteStore = create<IUseFavoriteStore>((set, get) => ({
   },
   addToFavorite: async (id) => {
     try {
-      return await addToFavorite(id);
+      const data = await addToFavorite(id);
+      set({ favoriteIds: [data._id, ...get().favoriteIds] });
+      return data;
     } catch {
       throw new Error();
     }
   },
   deleteFavorite: async (id) => {
     try {
-      return await deleteFavorite(id);
+      const data = await deleteFavorite(id);
+      set({ favoriteIds: get().favoriteIds.filter((productId) => productId !== data._id) });
+      return data;
     } catch {
       throw new Error();
     }
   },
+  isFavorite: (id) => get().favoriteIds?.some((productId) => productId === id),
 }));

@@ -31,6 +31,7 @@ export const ProductList: React.FC<ProductListProps> = ({
         <Spinner />
       </View>
     );
+  const NoItem = () => !isLoading && <NoItems text={NoItemsText} />;
 
   const onRefresh = () => {
     try {
@@ -48,8 +49,9 @@ export const ProductList: React.FC<ProductListProps> = ({
       horizontal={false}
       showsVerticalScrollIndicator={false}
       numColumns={2}
-      ListEmptyComponent={<NoItems text={NoItemsText} />}
+      ListEmptyComponent={NoItem}
       contentContainerStyle={styles.content}
+      ListFooterComponentStyle={isLoading && styles.footer}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       onEndReached={onEndReached}
@@ -64,10 +66,15 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
   },
-  loader: {
+  footer: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loader: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    marginVertical: 5,
   },
 });

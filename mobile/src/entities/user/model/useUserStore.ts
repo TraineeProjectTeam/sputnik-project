@@ -11,9 +11,6 @@ interface IUserStore extends Omit<IUserWithToken, 'access_token'> {
   setUser: (user: IUser, access_token: string, role: Role) => void;
   updateUser: (user: IUser) => void;
   reset: () => void;
-  addToUserFavorite: (id: string) => void;
-  deleteUserFavorite: (id: string) => void;
-  isFavorite: (id: string) => boolean;
 }
 
 export const useUserStore = create<IUserStore>((set, get) => ({
@@ -33,21 +30,4 @@ export const useUserStore = create<IUserStore>((set, get) => ({
     storage.delete('userId');
     storage.delete('role');
   },
-  addToUserFavorite: (id) => {
-    set({
-      user: {
-        ...get().user,
-        featured: [id, ...get().user.featured],
-      },
-    });
-  },
-  deleteUserFavorite: (id) => {
-    set({
-      user: {
-        ...get().user,
-        featured: get().user.featured.filter((productId) => productId !== id),
-      },
-    });
-  },
-  isFavorite: (id) => get().user.featured?.some((productId) => productId === id),
 }));

@@ -3,26 +3,21 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useFavoriteStore } from '@/entities/Favorite';
-import { useUserStore } from '@/entities/user';
 
 import { Colors } from '@/shared/libs/colors';
-import { IProduct } from '@/shared/libs/types';
 
 interface AddToFavoriteBtnProps {
   productId: string;
 }
 
 export const AddToFavoriteBtn: React.FC<AddToFavoriteBtnProps> = ({ productId }) => {
-  const { addToFavorite, deleteFavorite } = useFavoriteStore();
-  const { isFavorite, addToUserFavorite, deleteUserFavorite } = useUserStore();
+  const { addToFavorite, deleteFavorite, isFavorite } = useFavoriteStore();
 
   const toggleFavorite = () => {
     if (isFavorite(productId)) {
       deleteFavorite(productId);
-      deleteUserFavorite(productId);
     } else {
       addToFavorite(productId);
-      addToUserFavorite(productId);
     }
   };
 
