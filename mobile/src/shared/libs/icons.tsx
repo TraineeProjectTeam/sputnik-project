@@ -46,3 +46,11 @@ export const DeleteIcon = ({ size, color }: IconProps) => (
 export const EditIcon = ({ size, color }: IconProps) => (
   <Icon name="edit" size={size} color={color} />
 );
+
+export const AddIcon = ({ size, color }: IconProps) => (
+  <Icon name="add" size={size} color={color} />
+);
+
+export const RemoveIcon = ({ size, color }: IconProps) => (
+  <Icon name="remove" size={size} color={color} />
+);
