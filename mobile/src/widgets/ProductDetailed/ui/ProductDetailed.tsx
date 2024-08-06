@@ -94,7 +94,7 @@ export const ProductDetailed: React.FC<ProductDetailed> = ({ product }) => {
         </Layout>
       </ScrollView>
       <Layout style={styles.buttonLayout}>
-        <AddToCartBtn />
+        <AddToCartBtn productId={product._id} remaining={product.remaining} />
       </Layout>
     </Layout>
   );
