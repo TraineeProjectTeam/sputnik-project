@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { IProduct } from '@/shared/libs/types';
+import { createWithEqualityFn } from 'zustand/traditional';
+import { IProduct, Pagination } from '@/shared/libs/types';
 import { addToFavorite, deleteFavorite, getFavorites } from '../api/api';
 
 interface IUseFavoriteStore {
@@ -14,16 +14,10 @@ interface IUseFavoriteStore {
   addToFavorite: (id: string) => Promise<IProduct>;
   deleteFavorite: (id: string) => Promise<IProduct>;
   isFavorite: (id: string) => boolean;
+  reset: () => void;
 }
 
-export interface Pagination {
-  page: number;
-  pageSize: number;
-  pageCount: number;
-  total: number;
-}
-
-export const useFavoriteStore = create<IUseFavoriteStore>((set, get) => ({
+export const useFavoriteStore = createWithEqualityFn<IUseFavoriteStore>((set, get) => ({
   isLoading: false,
   favorites: [],
   favoriteIds: [],
@@ -74,4 +68,7 @@ export const useFavoriteStore = create<IUseFavoriteStore>((set, get) => ({
     }
   },
   isFavorite: (id) => get().favoriteIds?.some((productId) => productId === id),
+  reset: () => {
+    set({ favorites: [], favoriteIds: [] });
+  },
 }));
