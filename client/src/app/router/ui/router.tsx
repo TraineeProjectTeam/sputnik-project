@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { IRouterProps } from '../model/routes.types';
 import Cookies from 'js-cookie';
-import useLoginStore from 'features/login-forms/model/login.store';
+import { useLoginStore } from 'features/login-forms';
 import { EnumRoutesName } from 'shared/config';
 
 export const Router = (props: IRouterProps) => {

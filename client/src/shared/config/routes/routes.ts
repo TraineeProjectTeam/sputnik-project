@@ -9,4 +9,5 @@ export enum EnumRoutesName {
   ORDER = '/orders/:id',
   CATALOG = '/catalog',
   CATEGORY = '/catalog/:id',
+  PRODUCTS_VENDOR = '/products-vendor',
 }

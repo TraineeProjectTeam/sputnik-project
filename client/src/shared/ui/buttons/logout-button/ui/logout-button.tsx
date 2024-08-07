@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import useLoginStore from 'features/login-forms/model/login.store';
+import { useLoginStore } from 'features/login-forms';
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';

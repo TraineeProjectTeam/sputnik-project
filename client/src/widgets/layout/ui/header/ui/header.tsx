@@ -2,7 +2,7 @@ import { List } from 'antd';
 import { LanguageSelector } from 'entities/language-selector';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import useLoginStore from 'features/login-forms/model/login.store';
+import { useLoginStore } from 'features/login-forms';
 import { getProfileLinks } from 'shared/ui/profile-card';
 import { EnumRoutesName } from 'shared/config';
 import { LogoutButton } from 'shared/ui/buttons';
@@ -23,7 +23,10 @@ export const Header = () => {
               <Link to={EnumRoutesName.PROFILE_CUSTOMER}>{tCommon('Профиль покупателя')}</Link>
             )}
             {role === 'Vendor' && (
-              <Link to={EnumRoutesName.PROFILE_VENDOR}>{tCommon('Профиль продавца')}</Link>
+              <>
+                <Link to={EnumRoutesName.PROFILE_VENDOR}>{tCommon('Профиль продавца')}</Link>
+                <Link to={EnumRoutesName.PRODUCTS_VENDOR}>{tCommon('Товары')}</Link>
+              </>
             )}
             <List
               dataSource={getProfileLinks(tCommon)}

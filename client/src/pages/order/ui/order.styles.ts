@@ -78,6 +78,12 @@ export const StyledColumn = styled.div`
 export const StyledColumnContainer = styled.div`
   display: flex;
   column-gap: 0.5rem;
+
+  span {
+    svg {
+      font-size: 1.5rem;
+    }
+  }
 `;
 
 export const StyledFullWidth = styled.div`

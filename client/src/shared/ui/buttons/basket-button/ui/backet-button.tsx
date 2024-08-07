@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import useLoginStore from 'features/login-forms/model/login.store';
+import { useLoginStore } from 'features/login-forms';
 import { useTranslation } from 'react-i18next';
 
 export const BasketButton = () => {

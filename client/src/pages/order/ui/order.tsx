@@ -88,7 +88,7 @@ const renderPriceInfo = (t: TFunction<'price', undefined>, price: number) => (
 export const OrderPage = () => {
   const { order, getOrder, isLoadingOrder } = useOrdersStore();
   const { user } = useCustomerStore();
-  const { productsForOrder, loadingProductsForOrder } = useProductsStore();
+  const { productsForOrder, isLoadingProductsForOrder } = useProductsStore();
   const { pickupPoint, isLoading: isLoadingPickupPoint } = useMapStore();
   const { t: tOrder } = useTranslation('order');
   const { t: tCommon } = useTranslation('common');
@@ -103,7 +103,7 @@ export const OrderPage = () => {
     }
   }, [getOrder, id]);
 
-  if (isLoadingOrder || isLoadingPickupPoint || loadingProductsForOrder) {
+  if (isLoadingOrder || isLoadingPickupPoint || isLoadingProductsForOrder) {
     return <GlobalSpin size={'large'} />;
   }
 

@@ -1,4 +1,4 @@
-import { Typography } from 'antd';
+import { Button, Typography } from 'antd';
 import { IProductCardProps } from '../model/product-card.types';
 import { StarIcon } from 'shared/ui/star-icon';
 import { ReviewsIcon } from 'shared/ui/reviews-icon';
@@ -16,14 +16,19 @@ import {
   RatingStyled,
   ReviewsCountBlockStyled,
   ReviewsCountStyled,
+  StyledEditButton,
 } from './product-card.style';
 import { getReviewWordForm } from '../utils/getReviewWordForm';
 import { getDiscount } from '../utils/getDiscount';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+import { EnumRoutesName } from 'shared/config';
 
 export const ProductCard = (props: IProductCardProps) => {
   const { product } = props;
   const discount = product.discountPrice ? getDiscount(product.discountPrice, product.price) : 0;
+  const { pathname } = useLocation();
+  const isEditingProduct = pathname === EnumRoutesName.PRODUCTS_VENDOR;
   const { t } = useTranslation('product');
 
   return (
@@ -39,7 +44,7 @@ export const ProductCard = (props: IProductCardProps) => {
     >
       <PriceBlockStyled>
         <PriceStyled>{product.discountPrice ? product.discountPrice : product.price} ₽</PriceStyled>
-        { product.discountPrice && (
+        {product.discountPrice && (
           <>
             <PriceBeforeDiscountStyled>{product.price} ₽</PriceBeforeDiscountStyled>
             <DiscountStyled>{discount} %</DiscountStyled>
@@ -68,6 +73,9 @@ export const ProductCard = (props: IProductCardProps) => {
           </ReviewsCountBlockStyled>
         )}
       </FooterCardStyled>
+      <StyledEditButton>
+        {isEditingProduct && <Button type="primary">{t('Редактировать')}</Button>}
+      </StyledEditButton>
     </CardStyled>
   );
 };

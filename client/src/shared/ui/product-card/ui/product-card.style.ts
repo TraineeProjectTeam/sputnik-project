@@ -117,3 +117,10 @@ export const LinkStyled = styled(Button)`
   text-align: left;
   height: initial;
 `;
+
+export const StyledEditButton = styled.div`
+  padding-top: 0.75rem;
+  & > button {
+    width: 100%;
+  }
+`;
