@@ -10,5 +10,14 @@
   "В корзину": "Into a basket",
   "У вас пока нет продуктов": "You don't have any products yet",
   "Список ваших продуктов": "List of your products",
-  "Редактировать": "Edit"
+  "Редактировать": "Edit",
+  "ID Продукта": "Product ID",
+  "Название": "Name",
+  "Описание": "Descrption",
+  "Категория": "Category",
+  "Цена": "Price",
+  "Цена со скидкой": "Discounted price",
+  "Эскиз": "Thumbnail",
+  "Картинки": "Images",
+  "Файл загружен!": "File {{fileName}} is uploaded"
 }

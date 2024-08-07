@@ -73,9 +73,12 @@ export const ProductCard = (props: IProductCardProps) => {
           </ReviewsCountBlockStyled>
         )}
       </FooterCardStyled>
-      <StyledEditButton>
-        {isEditingProduct && <Button type="primary">{t('Редактировать')}</Button>}
-      </StyledEditButton>
+
+      {isEditingProduct && (
+        <StyledEditButton>
+          <Button type="primary">{t('Редактировать')}</Button>
+        </StyledEditButton>
+      )}
     </CardStyled>
   );
 };

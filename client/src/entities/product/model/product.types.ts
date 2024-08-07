@@ -1,5 +1,5 @@
 export interface IProduct {
-  _id: string;
+  readonly _id: string;
   name: string;
   description: string;
   price: number;
@@ -10,4 +10,8 @@ export interface IProduct {
   reviews_count?: number;
   category: string;
   remaining: number;
+}
+
+export interface IUpdateProductRequestParams {
+  updatedProduct: IProduct;
 }

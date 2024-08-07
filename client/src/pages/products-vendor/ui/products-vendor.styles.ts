@@ -8,3 +8,14 @@ export const StyledList = styled.ul`
   padding: 0;
   padding-top: 1.25rem;
 `;
+
+export const StyledModalContent = styled.div`
+  .ant-form-item {
+    margin-bottom: 0.5rem;
+  }
+`;
+
+export const StyledImg = styled.img`
+  height: 6.25rem;
+  width: 6.25rem;
+`;

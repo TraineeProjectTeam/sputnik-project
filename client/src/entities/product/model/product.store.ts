@@ -1,21 +1,26 @@
 import { create } from 'zustand';
 import { IProduct } from './product.types';
-import { api } from 'shared/api';
+import {
+  getProductsByCategoryRequest,
+  getProductsRequest,
+  updateProductRequest,
+} from '../api/product.api';
 
 interface IProductsStore {
   productsForVendor: IProduct[];
   productsForOrder: IProduct[];
   productsByCategory: IProduct[];
-  getProductByIds: (ids: string[]) => void;
-  setProducts: (products: IProduct[]) => void;
-  getProductsByCategory: (category: string) => Promise<IProduct[]>;
   isLoadingForVendor: boolean;
   isLoadingProductsForOrder: boolean;
   isLoadingByCategory: boolean;
+  updateProduct: (updatedProduct: IProduct) => void;
+  getProductByIds: (ids: string[]) => void;
+  getProductsByCategory: (category: string) => void;
+  setProducts: (products: IProduct[]) => void;
   setLoading: (loading: boolean) => void;
 }
 
-export const useProductsStore = create<IProductsStore>((set) => ({
+export const useProductsStore = create<IProductsStore>((set, get) => ({
   productsForVendor: [
     {
       _id: '66995f7ecc1ec96dfb6c8648',
@@ -25,7 +30,7 @@ export const useProductsStore = create<IProductsStore>((set) => ({
       price: 1999,
       discountPrice: 686,
       rating: 5,
-      thumbnail: 'https://picsum.photos/id/112/200/300',
+      thumbnail: 'https://i.ibb.co/YcsLcMF/6488422188.webp',
       images: [
         'https://i.ibb.co/YcsLcMF/6488422188.webp',
         'https://i.ibb.co/PgWCfpK/6488422190.webp',
@@ -53,7 +58,7 @@ export const useProductsStore = create<IProductsStore>((set) => ({
       price: 3095,
       discountPrice: 1935,
       rating: 5,
-      thumbnail: 'https://picsum.photos/id/190/200/300',
+      thumbnail: 'https://i.ibb.co/JCNGvbN/7067901428.webp',
       images: [
         'https://i.ibb.co/JCNGvbN/7067901428.webp',
         'https://i.ibb.co/d0tGTDh/7067901453.webp',
@@ -132,12 +137,13 @@ export const useProductsStore = create<IProductsStore>((set) => ({
   getProductByIds: async (ids: string[]) => {
     try {
       set({ isLoadingProductsForOrder: true });
-      const { data } = await api.get<IProduct[]>('/products');
-      const productsForOrder = data.filter((product) => ids.includes(product._id));
+      const response = await getProductsRequest();
+      const productsForOrder = Object.values(response.data).filter((product) =>
+        ids.includes(product._id),
+      );
       set({
         productsForOrder,
       });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       set({ productsForOrder: [] });
       throw new Error(error.message);
@@ -145,13 +151,27 @@ export const useProductsStore = create<IProductsStore>((set) => ({
       set({ isLoadingProductsForOrder: false });
     }
   },
+  updateProduct: async (updatedProduct: IProduct) => {
+    try {
+      set({ isLoadingForVendor: true });
+      await updateProductRequest({ updatedProduct });
+      set({
+        productsForVendor: get().productsForVendor.map((product) =>
+          product._id === updatedProduct._id ? { ...product, ...updatedProduct } : product,
+        ),
+      });
+    } catch (error: any) {
+      set({ productsForVendor: [] });
+      throw new Error(error.message);
+    } finally {
+      set({ isLoadingForVendor: false });
+    }
+  },
   getProductsByCategory: async (category) => {
     try {
       set({ isLoadingByCategory: true });
-      const { data } = await api.post<IProduct[]>('/products', { category });
-      set({ productsByCategory: data });
-      return data;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const response = await getProductsByCategoryRequest(category);
+      set({ productsByCategory: response.data });
     } catch (error: any) {
       set({ productsByCategory: [] });
       throw new Error(error.message);

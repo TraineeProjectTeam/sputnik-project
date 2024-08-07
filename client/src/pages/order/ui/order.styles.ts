@@ -1,3 +1,4 @@
+import { CopyOutlined } from '@ant-design/icons';
 import { Card } from 'antd';
 import styled from 'styled-components';
 
@@ -160,4 +161,8 @@ export const StyledImg = styled.img`
   height: 4.5rem;
   width: 4.5rem;
   object-fit: contain;
+`;
+
+export const StyledCopyOutlined = styled(CopyOutlined)`
+  font-size: 1.25rem;
 `;
