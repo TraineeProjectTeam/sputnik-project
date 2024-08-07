@@ -1,24 +1,24 @@
-import { cartProduct, IProduct, OrderProduct, Pagination } from '@/shared/libs/types';
+import { ICartProduct, IProduct, IOrderProduct, IPagination } from '@/shared/libs/types';
 import { addToCart, deleteProductInCart, getCartProduct, updateQuantityProduct } from '../api/api';
 import { createWithEqualityFn } from 'zustand/traditional';
 
 interface IUseCartStore {
   isLoading: boolean;
-  cartProducts: OrderProduct[];
-  cartProductsId: cartProduct[];
+  cartProducts: IOrderProduct[];
+  cartProductsId: ICartProduct[];
   currentPage: number;
-  pagination: Pagination;
-  setProductsIds: (cartProducts: cartProduct[]) => void;
-  getCartProducts: () => Promise<OrderProduct[]>;
+  pagination: IPagination;
+  setProductsIds: (cartProducts: ICartProduct[]) => void;
+  getCartProducts: () => Promise<IOrderProduct[]>;
   refreshCart: () => Promise<any>;
-  addToCart: (id: string) => Promise<OrderProduct>;
+  addToCart: (id: string) => Promise<IOrderProduct>;
   deleteFavorite: (id: string) => Promise<IProduct>;
-  updateQuantity: (id: string, quantity: number) => Promise<OrderProduct>;
+  updateQuantity: (id: string, quantity: number) => Promise<IOrderProduct>;
   isInCart: (id: string) => boolean;
   quantity: () => number;
   price: () => number;
   discount: () => number;
-  getProduct: (id: string) => cartProduct;
+  getProduct: (id: string) => ICartProduct;
   reset: () => void;
 }
 
@@ -27,7 +27,7 @@ export const useCartStore = createWithEqualityFn<IUseCartStore>((set, get) => ({
   cartProducts: [],
   cartProductsId: [],
   currentPage: 0,
-  pagination: {} as Pagination,
+  pagination: {} as IPagination,
   setProductsIds: (cartProducts) => {
     set({ cartProductsId: cartProducts });
   },

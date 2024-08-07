@@ -9,7 +9,7 @@ import { useCartStore } from '@/entities/Cart';
 import { TextStyles } from '@/shared/libs/textStyles';
 import { Colors } from '@/shared/libs/colors';
 import { storage } from '@/shared/libs/storage';
-import { OrderProduct } from '@/shared/libs/types';
+import { IOrderProduct } from '@/shared/libs/types';
 import { NoItems } from '@/shared/ui/NoItems';
 
 import { CartProduct } from './CartProduct';
@@ -44,8 +44,8 @@ export const CartProductList = () => {
     }
   };
 
-  const keyExtractor = (item: OrderProduct) => item.product._id;
-  const renderItem = ({ item }: { item: OrderProduct }) => <CartProduct product={item.product} />;
+  const keyExtractor = (item: IOrderProduct) => item.product._id;
+  const renderItem = ({ item }: { item: IOrderProduct }) => <CartProduct product={item.product} />;
 
   const header = () =>
     cartProducts.length > 0 && (

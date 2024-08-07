@@ -1,9 +1,9 @@
 import { api } from '@/shared/api';
-import { IProduct, OrderProduct, Pagination } from '@/shared/libs/types';
+import { IProduct, IOrderProduct, IPagination } from '@/shared/libs/types';
 
 export const getCartProduct = async (
   page: number,
-): Promise<{ products: OrderProduct[]; pagination: Pagination }> => {
+): Promise<{ products: IOrderProduct[]; pagination: IPagination }> => {
   const response = await api.get('/cart', {
     params: {
       page: page,
@@ -13,7 +13,7 @@ export const getCartProduct = async (
   return response.data;
 };
 
-export const addToCart = async (id: string): Promise<OrderProduct> => {
+export const addToCart = async (id: string): Promise<IOrderProduct> => {
   const response = await api.post('/cart', { product_id: id });
   return response.data;
 };
@@ -21,7 +21,7 @@ export const addToCart = async (id: string): Promise<OrderProduct> => {
 export const updateQuantityProduct = async (
   id: string,
   quantity: number,
-): Promise<OrderProduct> => {
+): Promise<IOrderProduct> => {
   const response = await api.put(`/cart/${id}`, { quantity });
   return response.data;
 };

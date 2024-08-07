@@ -72,19 +72,19 @@ export interface IUpdateReview {
   rating: number;
 }
 
-export interface Pagination {
+export interface IPagination {
   page: number;
   pageSize: number;
   pageCount: number;
   total: number;
 }
 
-export interface OrderProduct {
+export interface IOrderProduct {
   product: IProduct;
   quantity: number;
 }
 
-export interface cartProduct {
+export interface ICartProduct {
   product: string;
   quantity: number;
 }
