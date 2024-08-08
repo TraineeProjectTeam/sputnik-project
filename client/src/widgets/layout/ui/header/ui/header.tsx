@@ -1,17 +1,29 @@
-import { List } from 'antd';
+import { Button, List } from 'antd';
 import { LanguageSelector } from 'entities/language-selector';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLoginStore } from 'features/login-forms';
 import { getProfileLinks } from 'shared/ui/profile-card';
+import Cookies from 'js-cookie';
 import { EnumRoutesName } from 'shared/config';
-import { LogoutButton } from 'shared/ui/buttons';
 import { StyledContent, StyledHeader } from './header.styles';
 
 export const Header = () => {
   const [tCommon] = useTranslation('common');
   const isLogin = useLoginStore((state) => state.isLogin);
   const role = useLoginStore((state) => state.role);
+  const navigate = useNavigate();
+  const setIsLogin = useLoginStore((state) => state.setIsLogin);
+  const clearUserStores = useLoginStore((state) => state.clearUserStores);
+
+  const onLogout = () => {
+    Cookies.remove('access_token');
+    Cookies.remove('role');
+    Cookies.remove('user');
+    clearUserStores();
+    navigate('/');
+    setIsLogin(false);
+  };
 
   return (
     <StyledHeader>
@@ -42,7 +54,7 @@ export const Header = () => {
       <StyledContent>
         <LanguageSelector />
         {isLogin ? (
-          <LogoutButton />
+          <Button onClick={onLogout}>{tCommon('Выйти')}</Button>
         ) : (
           <>
             <Link to={EnumRoutesName.LOGIN}>{tCommon('Войти')}</Link>

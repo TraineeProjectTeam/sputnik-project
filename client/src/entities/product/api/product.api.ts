@@ -20,3 +20,8 @@ export const getProductsByCategoryRequest = async (category: string): AxiosPromi
   const response = api.post<IProduct[]>(`${BASE_URL}`, { category });
   return response;
 };
+
+export const addProductRequest = async (newProduct: IProduct): AxiosPromise<IProduct> => {
+  const response = await api.post<IProduct>(`${BASE_URL}/create`, newProduct);
+  return response;
+};

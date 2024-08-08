@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { IProduct } from './product.types';
 import {
+  addProductRequest,
   getProductsByCategoryRequest,
   getProductsRequest,
   updateProductRequest,
@@ -16,6 +17,7 @@ interface IProductsStore {
   updateProduct: (updatedProduct: IProduct) => void;
   getProductByIds: (ids: string[]) => void;
   getProductsByCategory: (category: string) => void;
+  addProduct: (newProduct: IProduct) => void;
   setProducts: (products: IProduct[]) => void;
   setLoading: (loading: boolean) => void;
 }
@@ -154,10 +156,10 @@ export const useProductsStore = create<IProductsStore>((set, get) => ({
   updateProduct: async (updatedProduct: IProduct) => {
     try {
       set({ isLoadingForVendor: true });
-      await updateProductRequest({ updatedProduct });
+      const response = await updateProductRequest({ updatedProduct });
       set({
         productsForVendor: get().productsForVendor.map((product) =>
-          product._id === updatedProduct._id ? { ...product, ...updatedProduct } : product,
+          product._id === updatedProduct._id ? { ...product, ...response.data } : product,
         ),
       });
     } catch (error: any) {
@@ -177,6 +179,19 @@ export const useProductsStore = create<IProductsStore>((set, get) => ({
       throw new Error(error.message);
     } finally {
       set({ isLoadingByCategory: false });
+    }
+  },
+  addProduct: async (newProduct: IProduct) => {
+    try {
+      set({ isLoadingForVendor: true });
+      const response = await addProductRequest(newProduct);
+      set({
+        productsForVendor: [...get().productsForVendor, response.data],
+      });
+    } catch (error: any) {
+      throw new Error(error.message);
+    } finally {
+      set({ isLoadingForVendor: false });
     }
   },
   setProducts: (productsByCategory) => set({ productsByCategory }),
