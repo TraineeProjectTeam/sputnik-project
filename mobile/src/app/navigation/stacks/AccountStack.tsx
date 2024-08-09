@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   AuthByEmailPage,
   AuthByPhonePage,
-  MainPage,
   RegistrationPage,
   AccountPage,
   ProfilePage,
@@ -50,7 +49,6 @@ export const ProfileStackNavigator = () => {
         component={LanguagesPage}
         options={{ headerShown: true, header: () => <HeaderBack title={'Язык'} /> }}
       />
-      <ProfileStack.Screen name={Screens.ORDERS} component={MainPage} />
       <ProfileStack.Screen
         name={Screens.CUSTOMER_REVIEWS}
         component={CustomerReviewsScreen}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { LayoutChangeEvent, Pressable, StyleSheet, Text, View } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { Layout } from '@ui-kitten/components';
@@ -16,51 +16,54 @@ import { Carousel } from '@/shared/ui/Carousel/Carousel';
 import { IProduct } from '@/shared/libs/types';
 import { RemainingProducts } from '@/shared/ui/RemainingProducts';
 
-export const ProductCard = ({ product }: { product: IProduct }) => {
-  const navigate = useAppNavigation();
-  const [width, setWidth] = useState(0);
+export const ProductCard = memo(
+  ({ product }: { product: IProduct }) => {
+    const navigate = useAppNavigation();
+    const [width, setWidth] = useState(0);
 
-  const navigateToProductPage = () => {
-    navigate.dispatch(StackActions.push(Screens.PRODUCT, { product: product }));
-  };
+    const navigateToProductPage = () => {
+      navigate.dispatch(StackActions.push(Screens.PRODUCT, { product: product }));
+    };
 
-  const findWidth = (event: LayoutChangeEvent) => {
-    setWidth(event.nativeEvent.layout.width);
-  };
+    const findWidth = (event: LayoutChangeEvent) => {
+      setWidth(event.nativeEvent.layout.width);
+    };
 
-  return (
-    <Layout style={styles.container} onLayout={findWidth}>
-      <Pressable onPress={navigateToProductPage} style={styles.pressable}>
-        <View style={styles.favButton}>
-          <AddToFavoriteBtn productId={product._id} />
-        </View>
-        <Carousel
-          items={product.images}
-          onResponderRelease={navigateToProductPage}
-          width={width}
-          height={250}
-        />
-        <View style={styles.body}>
-          <PriceWithDiscount
-            price={product.price}
-            discountPrice={product.discountPrice}
-            size="small"
+    return (
+      <Layout style={styles.container} onLayout={findWidth}>
+        <Pressable onPress={navigateToProductPage} style={styles.pressable}>
+          <View style={styles.favButton}>
+            <AddToFavoriteBtn productId={product._id} />
+          </View>
+          <Carousel
+            items={product.images}
+            onResponderRelease={navigateToProductPage}
+            width={width}
+            height={250}
           />
-          {product.remaining && <RemainingProducts remaining={product.remaining} size="small" />}
-          <Text numberOfLines={2} style={TextStyles.c1}>
-            {product.name}
-          </Text>
-          {product.rating && (
-            <RatingAndReviews rating={product.rating} reviews_count={product.reviews_count} />
-          )}
-        </View>
-        <View style={styles.button}>
-          <AddToCartBtn size="tiny" />
-        </View>
-      </Pressable>
-    </Layout>
-  );
-};
+          <View style={styles.body}>
+            <PriceWithDiscount
+              price={product.price}
+              discountPrice={product.discountPrice}
+              size="small"
+            />
+            {product.remaining && <RemainingProducts remaining={product.remaining} size="small" />}
+            <Text numberOfLines={2} style={TextStyles.c1}>
+              {product.name}
+            </Text>
+            {product.rating && (
+              <RatingAndReviews rating={product.rating} reviews_count={product.reviews_count} />
+            )}
+          </View>
+          <View style={styles.button}>
+            <AddToCartBtn productId={product._id} remaining={product.remaining} size="tiny" />
+          </View>
+        </Pressable>
+      </Layout>
+    );
+  },
+  (prevProps, nextProps) => prevProps.product._id === nextProps.product._id,
+);
 
 const styles = StyleSheet.create({
   container: {

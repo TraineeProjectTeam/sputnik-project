@@ -3,7 +3,18 @@
   "Профиль": "Profile",
   "Отзывы": "Reviews",
   "Избранное": "Favorites",
+  "Корзина": "Cart",
   "Список избранных товаров пуст": "The list of favorite products is empty",
+  "Произошла ошибка при загрузке данных...": "An error occurred while loading data...",
+  "Cart": {
+    "Доставка": "Delivery",
+    "Корзина пуста": "Cart is empty",
+    "Ваша корзина": "Your cart",
+    "Товары": "Products",
+    "Скидка": "Discount",
+    "Итого": "Total",
+    "Оформить заказ": "Checkout"
+  },
   "Product": {
     "Описание": "Description",
     "Характеристики": "Characteristics",

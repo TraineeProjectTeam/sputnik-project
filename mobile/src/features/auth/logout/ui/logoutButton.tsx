@@ -8,15 +8,21 @@ import { useUserStore } from '@/entities/user';
 import { useAppNavigation } from '@/shared/libs/useAppNavigation';
 import { TextStyles } from '@/shared/libs/textStyles';
 import { Colors } from '@/shared/libs/colors';
+import { useCartStore } from '@/entities/Cart';
+import { useFavoriteStore } from '@/entities/Favorite';
 
 export const LogoutButton = () => {
   const { reset } = useUserStore();
   const { t } = useTranslation();
   const navigation = useAppNavigation();
+  const { reset: resetCart } = useCartStore();
+  const { reset: resetFavorites } = useFavoriteStore();
 
   const logout = () => {
     navigation.dispatch(StackActions.replace(Screens.LOGIN_BY_PHONE));
     reset();
+    resetCart();
+    resetFavorites();
   };
 
   return (

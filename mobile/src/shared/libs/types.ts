@@ -8,6 +8,7 @@ export interface IUser {
   createdAt: Date;
   reviews: string[];
   featured: string[];
+  cart: { product: string; quantity: number }[];
 }
 
 export interface IProduct {
@@ -69,4 +70,21 @@ export enum Role {
 export interface IUpdateReview {
   body: string;
   rating: number;
+}
+
+export interface IPagination {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
+}
+
+export interface IOrderProduct {
+  product: IProduct;
+  quantity: number;
+}
+
+export interface ICartProduct {
+  product: string;
+  quantity: number;
 }

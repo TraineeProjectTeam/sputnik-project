@@ -3,6 +3,8 @@ import { create } from 'zustand';
 import { AuthByEmailProps } from './types';
 import { AuthByEmail } from '../api/api';
 import { IUserWithToken, useUserStore } from '@/entities/user';
+import { useCartStore } from '@/entities/Cart';
+import { useFavoriteStore } from '@/entities/Favorite';
 
 interface IAuthByEmailStore {
   isLoading: boolean;
@@ -16,6 +18,8 @@ export const useAuthByEmailStore = create<IAuthByEmailStore>((set) => ({
       set({ isLoading: true });
       const data = await AuthByEmail(formData);
       useUserStore.getState().setUser(data.user, data.access_token, formData.role);
+      useCartStore.getState().setProductsIds(data.user.cart);
+      useFavoriteStore.getState().setFavoriteIds(data.user.featured);
       return data;
     } catch {
       throw new Error();
