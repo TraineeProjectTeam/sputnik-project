@@ -34,7 +34,6 @@ export const useProductsStore = create<IProductsStore>((set, get) => ({
       rating: 5,
       thumbnail: 'https://i.ibb.co/YcsLcMF/6488422188.webp',
       images: [
-        'https://i.ibb.co/YcsLcMF/6488422188.webp',
         'https://i.ibb.co/PgWCfpK/6488422190.webp',
         'https://i.ibb.co/LYGqND2/6689482663.webp',
       ],
@@ -62,7 +61,6 @@ export const useProductsStore = create<IProductsStore>((set, get) => ({
       rating: 5,
       thumbnail: 'https://i.ibb.co/JCNGvbN/7067901428.webp',
       images: [
-        'https://i.ibb.co/JCNGvbN/7067901428.webp',
         'https://i.ibb.co/d0tGTDh/7067901453.webp',
         'https://i.ibb.co/qDxhmTF/7067901498.webp',
       ],

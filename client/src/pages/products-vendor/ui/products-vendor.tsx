@@ -1,21 +1,25 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Flex, Form, Input, List, message, Modal, Select, Upload } from 'antd';
+import { Button, Form, Input, List, message, Modal, Select, Upload } from 'antd';
 import { IProduct, useProductsStore } from 'entities/product';
 import { useTranslation } from 'react-i18next';
 import { GlobalSpin } from 'shared/ui/global-spin';
 import { ProductCard } from 'shared/ui/product-card';
-import { StyledImg, StyledList, StyledModalContent } from './products-vendor.styles';
+import { UploadOutlined } from '@ant-design/icons';
+import { StyledList, StyledModalContent } from './products-vendor.styles';
 import { getProductsVendorFields } from '../lib/products-vendor.lib';
-import { IEditableProductField, IInitialValuesFields } from '../model/products-vendor.types';
-import { TFunction } from 'i18next';
+import {
+  IEditableProductField,
+  IInitialValuesFields,
+  TypeProductField,
+} from '../model/products-vendor.types';
 import { ICategory } from 'entities/category';
+import { UploadChangeParam, UploadFile } from 'antd/es/upload';
 
 const renderFields = (
   field: IEditableProductField,
   onChangeInput: (e: ChangeEvent<HTMLInputElement>) => void,
-  onChangeSelect: (category: string) => void,
-  tProduct: TFunction,
-  tErr: TFunction,
+  onChangeCategory: (category: string) => void,
+  onChangeFile: (info: UploadChangeParam<UploadFile>, type: TypeProductField) => void,
 ) => {
   switch (field.type) {
     case 'text':
@@ -26,35 +30,51 @@ const renderFields = (
     case 'image':
       return (
         <Upload
-          fileList={[]}
-          name={field.name}
-          showUploadList={false}
-          previewFile={undefined}
-          onChange={(response) => {
-            if (response.file.status !== 'uploading') {
-              console.log(response.file, response.fileList);
-            }
-            if (response.file.status === 'done') {
-              message.success(tProduct('Файл загружен!', { fileName: response.file.name }));
-            } else if (response.file.status === 'error') {
-              message.error(tErr('Ошибка загрузки файла!', { fileName: response.file.name }));
-            }
-          }}
+          onChange={(info) => onChangeFile(info, field.type)}
+          showUploadList={{ showRemoveIcon: true }}
+          maxCount={1}
+          listType="picture-card"
+          accept=".jpg,.png"
+          defaultFileList={[
+            {
+              uid: '-1',
+              name: field.value?.split('/').pop()?.split('.')[0] || '',
+              status: 'done',
+              url: field.value,
+            },
+          ]}
         >
-          <Flex wrap gap="middle">
-            {Array.isArray(field.values) &&
-            field.values.every((field) => typeof field === 'string') ? (
-              field.values.map((file) => <StyledImg key={file} src={file} />)
-            ) : (
-              <StyledImg src={field.value?.toString()} />
-            )}
-          </Flex>
+          <Button icon={<UploadOutlined />} />
         </Upload>
       );
+
+    case 'images':
+      if (field.values && field.values.every((value) => typeof value === 'string')) {
+        return (
+          <Upload
+            onChange={(info) => onChangeFile(info, field.type)}
+            showUploadList={{ showRemoveIcon: true }}
+            maxCount={2}
+            listType="picture-card"
+            accept=".jpg,.png"
+            multiple
+            defaultFileList={field.values.map((value, index) => ({
+              uid: `-${index}`,
+              name: value.split('/').pop()?.split('.')[0] || '',
+              status: 'done',
+              url: value.toString(),
+            }))}
+          >
+            <Button icon={<UploadOutlined />} />
+          </Upload>
+        );
+      } else {
+        return null;
+      }
     case 'select':
       if (field.values && field.values.length) {
         return (
-          <Select onChange={onChangeSelect}>
+          <Select onChange={onChangeCategory} value={field.value}>
             {Object.values(field.values).map((category: ICategory) => (
               <Select.Option key={category.id} value={category.id}>
                 {category.text}
@@ -103,9 +123,36 @@ export const ProductsVendorPage = () => {
     }
   };
 
-  const handleSelectChange = (value: string) => {
+  const handleSelectChange = (category: string) => {
     if (editableProduct) {
-      setEditableProduct({ ...editableProduct, category: value });
+      setEditableProduct({ ...editableProduct, category });
+    }
+  };
+
+  const onChangeFile = (info: UploadChangeParam<UploadFile>, type: TypeProductField) => {
+    const { name, status } = info.file;
+
+    if (editableProduct) {
+      if (type === 'image') {
+        setEditableProduct({
+          ...editableProduct,
+          thumbnail: info.fileList[0].url || '',
+        });
+      } else if (type === 'images') {
+        setEditableProduct({
+          ...editableProduct,
+          images: info.fileList.map((file) => file.url || ''),
+        });
+      }
+
+      if (status !== 'uploading') {
+        // console.log(info.file, info.fileList);
+      }
+      if (status === 'done') {
+        message.success(tProduct('Файл загружен!', { fileName: name }));
+      } else if (status === 'error') {
+        message.error(tErr('Ошибка загрузки файла!', { fileName: name }));
+      }
     }
   };
 
@@ -194,7 +241,7 @@ export const ProductsVendorPage = () => {
                       name={field.name}
                       rules={field.rules}
                     >
-                      {renderFields(field, handleInputChange, handleSelectChange, tProduct, tErr)}
+                      {renderFields(field, handleInputChange, handleSelectChange, onChangeFile)}
                     </Form.Item>
                   ))}
                 </StyledModalContent>

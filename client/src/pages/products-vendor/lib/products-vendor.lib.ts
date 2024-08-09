@@ -1,6 +1,6 @@
 import { IProduct } from 'entities/product';
 import { TFunction } from 'i18next';
-import { IEditableProductField } from '../model/products-vendor.types';
+import { FileType, IEditableProductField } from '../model/products-vendor.types';
 import { categoriesData } from 'entities/category';
 
 export const getProductsVendorFields = (
@@ -53,7 +53,7 @@ export const getProductsVendorFields = (
     {
       label: tProduct('Цена'),
       name: 'price',
-      value: editableProduct?.price || 0,
+      value: editableProduct?.price.toString() || '',
       type: 'number',
       rules: [
         {
@@ -73,7 +73,7 @@ export const getProductsVendorFields = (
     {
       label: tProduct('Цена со скидкой'),
       name: 'discountPrice',
-      value: editableProduct?.discountPrice || 0,
+      value: editableProduct?.discountPrice?.toString() || '',
       type: 'number',
       rules: [
         {
@@ -109,8 +109,8 @@ export const getProductsVendorFields = (
     {
       label: tProduct('Картинки'),
       name: 'images',
-      values: editableProduct?.images || [''],
-      type: 'image',
+      values: editableProduct?.images || [],
+      type: 'images',
       rules: [
         {
           required: true,
@@ -122,3 +122,11 @@ export const getProductsVendorFields = (
     },
   ];
 };
+
+export const getBase64 = (file: FileType): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
