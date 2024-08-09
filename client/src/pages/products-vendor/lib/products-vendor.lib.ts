@@ -1,19 +1,19 @@
 import { IProduct } from 'entities/product';
 import { TFunction } from 'i18next';
-import { FileType, IEditableProductField } from '../model/products-vendor.types';
+import { IProductField } from '../model/products-vendor.types';
 import { categoriesData } from 'entities/category';
 
 export const getProductsVendorFields = (
   tErr: TFunction,
   tProduct: TFunction,
   tCategories: TFunction,
-  editableProduct: IProduct | null,
-): IEditableProductField[] => {
+  product: IProduct | null,
+): IProductField[] => {
   return [
     {
       label: tProduct('Название'),
       name: 'name',
-      value: editableProduct?.name || '',
+      value: product?.name || '',
       type: 'text',
       rules: [
         {
@@ -27,7 +27,7 @@ export const getProductsVendorFields = (
       label: tProduct('Описание'),
       name: 'description',
       type: 'text',
-      value: editableProduct?.description || '',
+      value: product?.description || '',
       rules: [
         {
           type: 'string',
@@ -39,7 +39,7 @@ export const getProductsVendorFields = (
     {
       label: tProduct('Категория'),
       name: 'category',
-      value: editableProduct?.category || '',
+      value: product?.category || '',
       type: 'select',
       values: categoriesData(tCategories),
       rules: [
@@ -53,7 +53,7 @@ export const getProductsVendorFields = (
     {
       label: tProduct('Цена'),
       name: 'price',
-      value: editableProduct?.price.toString() || '',
+      value: product?.price.toString() || '',
       type: 'number',
       rules: [
         {
@@ -73,7 +73,7 @@ export const getProductsVendorFields = (
     {
       label: tProduct('Цена со скидкой'),
       name: 'discountPrice',
-      value: editableProduct?.discountPrice?.toString() || '',
+      value: product?.discountPrice?.toString() || '',
       type: 'number',
       rules: [
         {
@@ -95,7 +95,7 @@ export const getProductsVendorFields = (
     {
       label: tProduct('Эскиз'),
       name: 'thumbnail',
-      value: editableProduct?.thumbnail || '',
+      value: product?.thumbnail || '',
       type: 'image',
       rules: [
         {
@@ -109,7 +109,7 @@ export const getProductsVendorFields = (
     {
       label: tProduct('Картинки'),
       name: 'images',
-      values: editableProduct?.images || [],
+      values: product?.images || [],
       type: 'images',
       rules: [
         {
@@ -123,10 +123,14 @@ export const getProductsVendorFields = (
   ];
 };
 
-export const getBase64 = (file: FileType): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
+export const getInitialEditableValues = (editableProduct: IProduct | null, t: TFunction) => {
+  return {
+    name: editableProduct?.name,
+    description: editableProduct?.description,
+    category: editableProduct?.category && t(editableProduct.category),
+    price: editableProduct?.price,
+    discountPrice: editableProduct?.discountPrice,
+    thumbnail: editableProduct?.thumbnail,
+    images: editableProduct?.images,
+  };
+};

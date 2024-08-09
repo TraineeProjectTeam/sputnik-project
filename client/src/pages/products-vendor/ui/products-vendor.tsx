@@ -1,22 +1,50 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Button, Form, Input, List, message, Modal, Select, Upload } from 'antd';
+import { Button, Form, FormInstance, Input, List, message, Modal, Select, Upload } from 'antd';
 import { IProduct, useProductsStore } from 'entities/product';
 import { useTranslation } from 'react-i18next';
 import { GlobalSpin } from 'shared/ui/global-spin';
 import { ProductCard } from 'shared/ui/product-card';
 import { UploadOutlined } from '@ant-design/icons';
 import { StyledList, StyledModalContent } from './products-vendor.styles';
-import { getProductsVendorFields } from '../lib/products-vendor.lib';
-import {
-  IEditableProductField,
-  IInitialValuesFields,
-  TypeProductField,
-} from '../model/products-vendor.types';
+import { getInitialEditableValues, getProductsVendorFields } from '../lib/products-vendor.lib';
+import { IProductField, TypeProductField } from '../model/products-vendor.types';
 import { ICategory } from 'entities/category';
 import { UploadChangeParam, UploadFile } from 'antd/es/upload';
+import { initialValuesAdding } from '../model/products-vendor.constant';
+
+const currentForm = (
+  type: 'add' | 'edit',
+  form: FormInstance,
+  fields: IProductField[],
+  initialValues:
+    | IProduct
+    | {
+        name: string | undefined;
+        description: string | undefined;
+        category: string | undefined;
+        price: number | undefined;
+        discountPrice: number | undefined;
+        thumbnail: string | undefined;
+        images: string[] | undefined;
+      },
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void,
+  handleSelectChange: (category: string) => void,
+  onChangeFile: (info: UploadChangeParam<UploadFile>, type: TypeProductField) => void,
+) => (
+  <Form autoComplete="off" form={form} layout="vertical" initialValues={initialValues}>
+    <StyledModalContent>
+      {fields.map((field) => (
+        <Form.Item label={field.label} key={field.name} name={field.name} rules={field.rules}>
+          {renderFields(type, field, handleInputChange, handleSelectChange, onChangeFile)}
+        </Form.Item>
+      ))}
+    </StyledModalContent>
+  </Form>
+);
 
 const renderFields = (
-  field: IEditableProductField,
+  type: 'add' | 'edit',
+  field: IProductField,
   onChangeInput: (e: ChangeEvent<HTMLInputElement>) => void,
   onChangeCategory: (category: string) => void,
   onChangeFile: (info: UploadChangeParam<UploadFile>, type: TypeProductField) => void,
@@ -35,14 +63,18 @@ const renderFields = (
           maxCount={1}
           listType="picture-card"
           accept=".jpg,.png"
-          defaultFileList={[
-            {
-              uid: '-1',
-              name: field.value?.split('/').pop()?.split('.')[0] || '',
-              status: 'done',
-              url: field.value,
-            },
-          ]}
+          defaultFileList={
+            type === 'edit'
+              ? [
+                  {
+                    uid: '-1',
+                    name: field.value?.split('/').pop()?.split('.')[0] || '',
+                    status: 'done',
+                    url: field.value,
+                  },
+                ]
+              : []
+          }
         >
           <Button icon={<UploadOutlined />} />
         </Upload>
@@ -58,12 +90,16 @@ const renderFields = (
             listType="picture-card"
             accept=".jpg,.png"
             multiple
-            defaultFileList={field.values.map((value, index) => ({
-              uid: `-${index}`,
-              name: value.split('/').pop()?.split('.')[0] || '',
-              status: 'done',
-              url: value.toString(),
-            }))}
+            defaultFileList={
+              type === 'edit'
+                ? field.values.map((value, index) => ({
+                    uid: `-${index}`,
+                    name: value.split('/').pop()?.split('.')[0] || '',
+                    status: 'done',
+                    url: value,
+                  }))
+                : []
+            }
           >
             <Button icon={<UploadOutlined />} />
           </Upload>
@@ -91,111 +127,153 @@ const renderFields = (
 };
 
 export const ProductsVendorPage = () => {
-  const { productsForVendor, isLoadingForVendor, updateProduct } = useProductsStore();
+  const { productsForVendor, isLoadingForVendor, updateProduct, addProduct } = useProductsStore();
   const { t: tProduct } = useTranslation('product');
   const { t: tErr } = useTranslation('errors');
   const { t: tCategories } = useTranslation('categories');
   const [editableProduct, setEditableProduct] = useState<IProduct | null>(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [form] = Form.useForm();
-  const productsVendorFields = getProductsVendorFields(
+  const [addedProduct, setAddedProduct] = useState<IProduct | null>(null);
+  const [isModalEditableVisible, setModalEditableVisible] = useState(false);
+  const [isModalAddedVisible, setModalAddedVisible] = useState(false);
+  const [editForm] = Form.useForm();
+  const [addForm] = Form.useForm();
+  const fields = getProductsVendorFields(
     tErr,
     tProduct,
     tCategories,
-    editableProduct,
+    editableProduct || addedProduct,
   );
-
-  const initialValues: IInitialValuesFields = {
-    name: editableProduct?.name,
-    description: editableProduct?.description,
-    category: editableProduct?.category && tCategories(editableProduct.category),
-    price: editableProduct?.price,
-    discountPrice: editableProduct?.discountPrice,
-    thumbnail: editableProduct?.thumbnail,
-    images: editableProduct?.images,
-  };
+  const initialEditableValues = getInitialEditableValues(editableProduct, tProduct);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (editableProduct) {
-      setEditableProduct({ ...editableProduct, [name]: value });
+      setEditableProduct({
+        ...editableProduct,
+        [name]: value,
+      });
+    } else if (addedProduct) {
+      setAddedProduct({
+        ...addedProduct,
+        [name]: value,
+      });
     }
   };
 
   const handleSelectChange = (category: string) => {
     if (editableProduct) {
-      setEditableProduct({ ...editableProduct, category });
+      setEditableProduct({
+        ...editableProduct,
+        category,
+      });
+    } else if (addedProduct) {
+      setAddedProduct({
+        ...addedProduct,
+        category,
+      });
     }
   };
 
   const onChangeFile = (info: UploadChangeParam<UploadFile>, type: TypeProductField) => {
     const { name, status } = info.file;
 
-    if (editableProduct) {
-      if (type === 'image') {
+    if (type === 'image') {
+      if (editableProduct) {
         setEditableProduct({
           ...editableProduct,
           thumbnail: info.fileList[0].url || '',
         });
-      } else if (type === 'images') {
+      } else if (addedProduct) {
+        setAddedProduct({
+          ...addedProduct,
+          thumbnail: info.fileList[0].url || '',
+        });
+      }
+    } else if (type === 'images') {
+      if (editableProduct) {
         setEditableProduct({
           ...editableProduct,
           images: info.fileList.map((file) => file.url || ''),
         });
+      } else if (addedProduct) {
+        setAddedProduct({
+          ...addedProduct,
+          images: info.fileList.map((file) => file.url || ''),
+        });
       }
+    }
 
-      if (status !== 'uploading') {
-        // console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        message.success(tProduct('Файл загружен!', { fileName: name }));
-      } else if (status === 'error') {
-        message.error(tErr('Ошибка загрузки файла!', { fileName: name }));
-      }
+    if (status !== 'uploading') {
+      // console.log(info.file, info.fileList);
+    }
+    if (status === 'done') {
+      message.success(tProduct('Файл загружен!', { fileName: name }));
+    } else if (status === 'error') {
+      message.error(tErr('Ошибка загрузки файла!', { fileName: name }));
     }
   };
 
-  const showModal = (product: IProduct) => {
-    setEditableProduct(product);
-    setIsModalVisible(true);
-  };
-
   const closeModal = () => {
-    setEditableProduct(null);
-    setIsModalVisible(false);
-  };
-
-  const handleOk = () => {
-    saveChanges();
+    if (editableProduct) {
+      setEditableProduct(null);
+      setModalEditableVisible(false);
+    } else if (addedProduct) {
+      setAddedProduct(null);
+      setModalAddedVisible(false);
+    }
   };
 
   const handleCancel = () => {
-    form.resetFields();
+    if (editableProduct) {
+      editForm.resetFields();
+    } else if (addedProduct) {
+      addForm.resetFields();
+    }
     closeModal();
   };
 
   const handleClickCard = (product: IProduct) => {
-    showModal(product);
+    setEditableProduct(product);
+    setModalEditableVisible(true);
   };
 
-  const saveChanges = () => {
-    form
-      .validateFields()
-      .then(() => {
-        if (editableProduct) {
-          updateProduct(editableProduct);
-          closeModal();
-        }
-      })
-      .catch((errorInfo) => {
-        console.log('Validation Failed:', errorInfo);
-      });
+  const handleButtonAddingModal = (product: IProduct) => {
+    setAddedProduct(product);
+    setModalAddedVisible(true);
+  };
+
+  const saveForm = () => {
+    if (editableProduct) {
+      editForm
+        .validateFields()
+        .then(() => {
+          if (editableProduct) {
+            updateProduct(editableProduct);
+            closeModal();
+          }
+        })
+        .catch((errorInfo) => {
+          console.log('Validation Failed:', errorInfo);
+        });
+    } else if (addedProduct) {
+      addForm
+        .validateFields()
+        .then(() => {
+          if (addedProduct) {
+            addProduct(addedProduct);
+            handleCancel();
+          }
+        })
+        .catch((errorInfo) => {
+          console.log('Validation Failed:', errorInfo);
+        });
+    }
   };
 
   useEffect(() => {
     if (editableProduct) {
-      form.setFieldsValue({
+      editForm.setFieldsValue({
         name: editableProduct.name,
         description: editableProduct.description,
         category: tCategories(editableProduct.category),
@@ -205,7 +283,7 @@ export const ProductsVendorPage = () => {
         images: editableProduct.images,
       });
     }
-  }, [editableProduct, form, tCategories]);
+  }, [editableProduct, editForm, tCategories]);
 
   if (isLoadingForVendor) {
     return <GlobalSpin size={'large'} />;
@@ -214,6 +292,7 @@ export const ProductsVendorPage = () => {
   return (
     <>
       <h1>{tProduct('Список ваших продуктов')}</h1>
+      <Button onClick={() => handleButtonAddingModal(initialValuesAdding)}>Показать</Button>
       {!productsForVendor.length ? (
         <h1>{tProduct('У вас пока нет продуктов')}</h1>
       ) : (
@@ -228,26 +307,37 @@ export const ProductsVendorPage = () => {
           {editableProduct && (
             <Modal
               title={`${tProduct('ID Продукта')} ${editableProduct._id}`}
-              open={isModalVisible}
-              onOk={handleOk}
+              open={isModalEditableVisible}
+              onOk={saveForm}
               onCancel={handleCancel}
             >
-              <Form autoComplete="off" form={form} layout="vertical" initialValues={initialValues}>
-                <StyledModalContent>
-                  {productsVendorFields.map((field) => (
-                    <Form.Item
-                      label={field.label}
-                      key={field.name}
-                      name={field.name}
-                      rules={field.rules}
-                    >
-                      {renderFields(field, handleInputChange, handleSelectChange, onChangeFile)}
-                    </Form.Item>
-                  ))}
-                </StyledModalContent>
-              </Form>
+              {currentForm(
+                'edit',
+                editForm,
+                fields,
+                initialEditableValues,
+                handleInputChange,
+                handleSelectChange,
+                onChangeFile,
+              )}
             </Modal>
           )}
+          <Modal
+            open={isModalAddedVisible}
+            onOk={saveForm}
+            title={`${tProduct('Добавление продукта')}`}
+            onCancel={handleCancel}
+          >
+            {currentForm(
+              'add',
+              addForm,
+              fields,
+              initialValuesAdding,
+              handleInputChange,
+              handleSelectChange,
+              onChangeFile,
+            )}
+          </Modal>
         </>
       )}
     </>

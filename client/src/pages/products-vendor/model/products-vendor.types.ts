@@ -4,7 +4,7 @@ import { ICategory } from 'entities/category';
 
 export type TypeProductField = 'select' | 'number' | 'text' | 'image' | 'images';
 
-export interface IEditableProductField {
+export interface IProductField {
   label: string;
   name: string;
   type: TypeProductField;
