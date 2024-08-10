@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Spinner } from '@ui-kitten/components';
+import Toast from 'react-native-toast-message';
 
 import { IProduct } from '@/shared/libs/types';
 import { NoItems } from '@/shared/ui/NoItems';
@@ -22,6 +24,7 @@ export const ProductList: React.FC<ProductListProps> = ({
   NoItemsText = 'Список продуктов пуст',
 }) => {
   const [refreshing, setIsRefreshing] = useState(false);
+  const { t } = useTranslation();
 
   const keyExtractor = (item: IProduct) => item._id;
   const renderItem = ({ item }: { item: IProduct }) => <ProductCard product={item} />;
@@ -38,6 +41,10 @@ export const ProductList: React.FC<ProductListProps> = ({
       setIsRefreshing(true);
       refreshProducts();
     } catch {
+      Toast.show({
+        type: 'error',
+        text1: t('Произошла ошибка при загрузке данных...'),
+      });
     } finally {
       setIsRefreshing(false);
     }

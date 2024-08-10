@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GestureResponderEvent, Image, ScrollView, StyleSheet, Text } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -53,10 +53,6 @@ export const UpdateReviewForm: React.FC<UpdateReviewFormProps> = ({ review }) =>
         text1: t('Review.Что-то пошло не так...'),
       });
     }
-  };
-  const handleClick = (event: GestureResponderEvent) => {
-    // const { id } = event.target;
-    console.log(event.target);
   };
 
   return (
