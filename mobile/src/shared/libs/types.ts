@@ -28,12 +28,15 @@ export interface IProduct {
 }
 
 export interface IOrder {
-  id: number;
-  status: string;
-  orderData: Date;
-  estimatedDeliveryDate: Date;
-  deliveryDate: Date;
+  readonly _id: string;
+  customer_id: IUser;
+  status: OrderStatus;
+  order_date: Date;
+  estimated_delivery_date: Date;
+  delivery_date: Date;
   price: number;
+  pickup_point: IPickupPoint;
+  products: IOrderProduct[];
 }
 
 export interface IReview {
@@ -51,12 +54,12 @@ export interface IReview {
 export interface IAddress {
   region: string;
   city: string;
-  streetName: string;
-  streetNumber: string;
+  street_name: string;
+  street_number: string;
 }
 
 export interface IPickupPoint {
-  id: number;
+  _id: string;
   address: IAddress;
   longitude: string;
   latitude: string;
@@ -87,4 +90,12 @@ export interface IOrderProduct {
 export interface ICartProduct {
   product: string;
   quantity: number;
+}
+
+export enum OrderStatus {
+  ACTIVE = 'active',
+  ON_THE_WAY = 'on the way',
+  DELIVERED = 'delivered',
+  RECEIVED = 'received',
+  CANCELLED = 'cancelled',
 }

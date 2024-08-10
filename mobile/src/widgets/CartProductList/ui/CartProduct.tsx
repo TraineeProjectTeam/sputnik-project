@@ -82,7 +82,7 @@ export const CartProduct: React.FC<CartProduct> = memo(
             <Text style={TextStyles.c2}>{product.name}</Text>
             {productQuantity > 1 && (
               <Text style={TextStyles.c2.changeColor(Colors.Basic600)}>
-                {product.discountPrice} ₽ / {t('Product.шт')}
+                {product.discountPrice} ₽ / {t('Cart.шт')}
               </Text>
             )}
           </View>
