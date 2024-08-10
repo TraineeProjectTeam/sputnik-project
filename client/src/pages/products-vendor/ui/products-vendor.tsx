@@ -11,7 +11,7 @@ import { IProductField } from '../model/products-vendor.types';
 import { ICategory } from 'entities/category';
 import { UploadChangeParam, UploadFile } from 'antd/es/upload';
 import { initialValuesAdding } from '../model/products-vendor.constant';
-import { addMultyFileRequest, addSingleFileRequest } from 'entities/file';
+import { addSingleFileRequest } from 'entities/file';
 
 const currentForm = (
   form: FormInstance,
@@ -31,8 +31,8 @@ const currentForm = (
   fileListMulty: UploadFile[],
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void,
   handleSelectChange: (category: string) => void,
-  onChangeFile: (info: UploadChangeParam<UploadFile>) => void,
-  uploadFile: () => void,
+  onChangeSingleFile: (info: UploadChangeParam<UploadFile>) => void,
+  onChangeMultyFile: (info: UploadChangeParam<UploadFile>) => void,
 ) => (
   <Form autoComplete="off" form={form} layout="vertical" initialValues={initialValues}>
     <StyledModalContent>
@@ -44,8 +44,8 @@ const currentForm = (
             field,
             handleInputChange,
             handleSelectChange,
-            onChangeFile,
-            uploadFile,
+            onChangeSingleFile,
+            onChangeMultyFile,
           )}
         </Form.Item>
       ))}
@@ -59,8 +59,8 @@ const renderFields = (
   field: IProductField,
   onChangeInput: (e: ChangeEvent<HTMLInputElement>) => void,
   onChangeCategory: (category: string) => void,
-  onChangeFile: (info: UploadChangeParam<UploadFile>) => void,
-  uploadFile: () => void,
+  onChangeSingleFile: (info: UploadChangeParam<UploadFile>) => void,
+  onChangeMultyFile: (info: UploadChangeParam<UploadFile>) => void,
 ) => {
   switch (field.type) {
     case 'text':
@@ -71,9 +71,8 @@ const renderFields = (
     case 'image':
       return (
         <Upload
-          customRequest={uploadFile}
           fileList={fileListSingle}
-          onChange={onChangeFile}
+          onChange={onChangeSingleFile}
           showUploadList={{ showRemoveIcon: true }}
           maxCount={1}
           listType="picture-card"
@@ -87,9 +86,8 @@ const renderFields = (
       if (field.values && field.values.every((value) => typeof value === 'string')) {
         return (
           <Upload
-            customRequest={uploadFile}
             fileList={fileListMulty}
-            onChange={onChangeFile}
+            onChange={onChangeMultyFile}
             showUploadList={{ showRemoveIcon: true }}
             maxCount={2}
             listType="picture-card"
@@ -173,11 +171,9 @@ export const ProductsVendorPage = () => {
   };
 
   const onChangeSingleFile = (info: UploadChangeParam<UploadFile>) => {
+    const { status, name } = info.file;
     setFileListSignle(info.fileList);
 
-    if (status !== 'uploading') {
-      // console.log(info.file, info.fileList);
-    }
     if (status === 'done') {
       message.success(tProduct('Файл загружен!', { fileName: name }));
     } else if (status === 'error') {
@@ -186,11 +182,9 @@ export const ProductsVendorPage = () => {
   };
 
   const onChangeMultyFile = (info: UploadChangeParam<UploadFile>) => {
+    const { status, name } = info.file;
     setFileListMulty(info.fileList);
 
-    if (status !== 'uploading') {
-      // console.log(info.file, info.fileList);
-    }
     if (status === 'done') {
       message.success(tProduct('Файл загружен!', { fileName: name }));
     } else if (status === 'error') {
@@ -198,25 +192,18 @@ export const ProductsVendorPage = () => {
     }
   };
 
-  const closeModal = () => {
+  const handleCancel = () => {
     if (editableProduct) {
+      editForm.resetFields();
       setEditableProduct(null);
       setModalEditableVisible(false);
     } else if (addedProduct) {
+      addForm.resetFields();
       setAddedProduct(null);
       setModalAddedVisible(false);
     }
     setFileListSignle([]);
     setFileListMulty([]);
-  };
-
-  const handleCancel = () => {
-    if (editableProduct) {
-      editForm.resetFields();
-    } else if (addedProduct) {
-      addForm.resetFields();
-    }
-    closeModal();
   };
 
   const handleClickCard = (product: IProduct) => {
@@ -248,25 +235,13 @@ export const ProductsVendorPage = () => {
     setModalAddedVisible(true);
   };
 
-  const uploadFile = () => {
-    if (fileListMulty && fileListMulty[0].url && fileListMulty[1].url) {
-      addMultyFileRequest(fileListMulty[0].url, fileListMulty[1].url);
-    }
-    if (fileListSingle && fileListSingle[0].url) {
-      addSingleFileRequest(fileListSingle[0].url);
-    }
-  };
-
   const saveForm = () => {
     if (editableProduct) {
       editForm
         .validateFields()
         .then(() => {
-          if (editableProduct) {
-            uploadFile();
-            updateProduct(editableProduct);
-            closeModal();
-          }
+          updateProduct(editableProduct);
+          handleCancel();
         })
         .catch((errorInfo) => {
           console.log('Validation Failed:', errorInfo);
@@ -275,11 +250,8 @@ export const ProductsVendorPage = () => {
       addForm
         .validateFields()
         .then(() => {
-          if (addedProduct) {
-            uploadFile();
-            addProduct(addedProduct);
-            handleCancel();
-          }
+          addProduct(addedProduct);
+          handleCancel();
         })
         .catch((errorInfo) => {
           console.log('Validation Failed:', errorInfo);
@@ -338,7 +310,7 @@ export const ProductsVendorPage = () => {
                 handleInputChange,
                 handleSelectChange,
                 onChangeSingleFile,
-                uploadFile,
+                onChangeMultyFile,
               )}
             </Modal>
           )}
@@ -357,8 +329,8 @@ export const ProductsVendorPage = () => {
                 fileListMulty,
                 handleInputChange,
                 handleSelectChange,
+                onChangeSingleFile,
                 onChangeMultyFile,
-                uploadFile,
               )}
             </Modal>
           )}
