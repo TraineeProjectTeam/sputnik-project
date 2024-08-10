@@ -83,23 +83,20 @@ const renderFields = (
       );
 
     case 'images':
-      if (field.values && field.values.every((value) => typeof value === 'string')) {
-        return (
-          <Upload
-            fileList={fileListMulty}
-            onChange={onChangeMultyFile}
-            showUploadList={{ showRemoveIcon: true }}
-            maxCount={2}
-            listType="picture-card"
-            accept=".jpg,.png"
-            multiple
-          >
-            <Button icon={<UploadOutlined />} />
-          </Upload>
-        );
-      } else {
-        return null;
-      }
+      return (
+        <Upload
+          fileList={fileListMulty}
+          onChange={onChangeMultyFile}
+          showUploadList={{ showRemoveIcon: true }}
+          maxCount={2}
+          listType="picture-card"
+          accept=".jpg,.png"
+          multiple
+        >
+          <Button icon={<UploadOutlined />} />
+        </Upload>
+      );
+
     case 'select':
       if (field.values && field.values.length) {
         return (
