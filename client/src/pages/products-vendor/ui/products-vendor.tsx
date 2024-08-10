@@ -7,13 +7,13 @@ import { ProductCard } from 'shared/ui/product-card';
 import { UploadOutlined } from '@ant-design/icons';
 import { StyledList, StyledModalContent } from './products-vendor.styles';
 import { getInitialEditableValues, getProductsVendorFields } from '../lib/products-vendor.lib';
-import { IProductField, TypeProductField } from '../model/products-vendor.types';
+import { IProductField } from '../model/products-vendor.types';
 import { ICategory } from 'entities/category';
 import { UploadChangeParam, UploadFile } from 'antd/es/upload';
 import { initialValuesAdding } from '../model/products-vendor.constant';
+import { addMultyFileRequest, addSingleFileRequest } from 'entities/file';
 
 const currentForm = (
-  type: 'add' | 'edit',
   form: FormInstance,
   fields: IProductField[],
   initialValues:
@@ -27,15 +27,26 @@ const currentForm = (
         thumbnail: string | undefined;
         images: string[] | undefined;
       },
+  fileListSingle: UploadFile[],
+  fileListMulty: UploadFile[],
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void,
   handleSelectChange: (category: string) => void,
-  onChangeFile: (info: UploadChangeParam<UploadFile>, type: TypeProductField) => void,
+  onChangeFile: (info: UploadChangeParam<UploadFile>) => void,
+  uploadFile: () => void,
 ) => (
   <Form autoComplete="off" form={form} layout="vertical" initialValues={initialValues}>
     <StyledModalContent>
       {fields.map((field) => (
         <Form.Item label={field.label} key={field.name} name={field.name} rules={field.rules}>
-          {renderFields(type, field, handleInputChange, handleSelectChange, onChangeFile)}
+          {renderFields(
+            fileListSingle,
+            fileListMulty,
+            field,
+            handleInputChange,
+            handleSelectChange,
+            onChangeFile,
+            uploadFile,
+          )}
         </Form.Item>
       ))}
     </StyledModalContent>
@@ -43,11 +54,13 @@ const currentForm = (
 );
 
 const renderFields = (
-  type: 'add' | 'edit',
+  fileListSingle: UploadFile[],
+  fileListMulty: UploadFile[],
   field: IProductField,
   onChangeInput: (e: ChangeEvent<HTMLInputElement>) => void,
   onChangeCategory: (category: string) => void,
-  onChangeFile: (info: UploadChangeParam<UploadFile>, type: TypeProductField) => void,
+  onChangeFile: (info: UploadChangeParam<UploadFile>) => void,
+  uploadFile: () => void,
 ) => {
   switch (field.type) {
     case 'text':
@@ -58,23 +71,13 @@ const renderFields = (
     case 'image':
       return (
         <Upload
-          onChange={(info) => onChangeFile(info, field.type)}
+          customRequest={uploadFile}
+          fileList={fileListSingle}
+          onChange={onChangeFile}
           showUploadList={{ showRemoveIcon: true }}
           maxCount={1}
           listType="picture-card"
           accept=".jpg,.png"
-          defaultFileList={
-            type === 'edit'
-              ? [
-                  {
-                    uid: '-1',
-                    name: field.value?.split('/').pop()?.split('.')[0] || '',
-                    status: 'done',
-                    url: field.value,
-                  },
-                ]
-              : []
-          }
         >
           <Button icon={<UploadOutlined />} />
         </Upload>
@@ -84,22 +87,14 @@ const renderFields = (
       if (field.values && field.values.every((value) => typeof value === 'string')) {
         return (
           <Upload
-            onChange={(info) => onChangeFile(info, field.type)}
+            customRequest={uploadFile}
+            fileList={fileListMulty}
+            onChange={onChangeFile}
             showUploadList={{ showRemoveIcon: true }}
             maxCount={2}
             listType="picture-card"
             accept=".jpg,.png"
             multiple
-            defaultFileList={
-              type === 'edit'
-                ? field.values.map((value, index) => ({
-                    uid: `-${index}`,
-                    name: value.split('/').pop()?.split('.')[0] || '',
-                    status: 'done',
-                    url: value,
-                  }))
-                : []
-            }
           >
             <Button icon={<UploadOutlined />} />
           </Upload>
@@ -144,6 +139,8 @@ export const ProductsVendorPage = () => {
     editableProduct || addedProduct,
   );
   const initialEditableValues = getInitialEditableValues(editableProduct, tProduct);
+  const [fileListSingle, setFileListSignle] = useState<UploadFile[]>([]);
+  const [fileListMulty, setFileListMulty] = useState<UploadFile[]>([]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -175,34 +172,21 @@ export const ProductsVendorPage = () => {
     }
   };
 
-  const onChangeFile = (info: UploadChangeParam<UploadFile>, type: TypeProductField) => {
-    const { name, status } = info.file;
+  const onChangeSingleFile = (info: UploadChangeParam<UploadFile>) => {
+    setFileListSignle(info.fileList);
 
-    if (type === 'image') {
-      if (editableProduct) {
-        setEditableProduct({
-          ...editableProduct,
-          thumbnail: info.fileList[0].url || '',
-        });
-      } else if (addedProduct) {
-        setAddedProduct({
-          ...addedProduct,
-          thumbnail: info.fileList[0].url || '',
-        });
-      }
-    } else if (type === 'images') {
-      if (editableProduct) {
-        setEditableProduct({
-          ...editableProduct,
-          images: info.fileList.map((file) => file.url || ''),
-        });
-      } else if (addedProduct) {
-        setAddedProduct({
-          ...addedProduct,
-          images: info.fileList.map((file) => file.url || ''),
-        });
-      }
+    if (status !== 'uploading') {
+      // console.log(info.file, info.fileList);
     }
+    if (status === 'done') {
+      message.success(tProduct('Файл загружен!', { fileName: name }));
+    } else if (status === 'error') {
+      message.error(tErr('Ошибка загрузки файла!', { fileName: name }));
+    }
+  };
+
+  const onChangeMultyFile = (info: UploadChangeParam<UploadFile>) => {
+    setFileListMulty(info.fileList);
 
     if (status !== 'uploading') {
       // console.log(info.file, info.fileList);
@@ -222,6 +206,8 @@ export const ProductsVendorPage = () => {
       setAddedProduct(null);
       setModalAddedVisible(false);
     }
+    setFileListSignle([]);
+    setFileListMulty([]);
   };
 
   const handleCancel = () => {
@@ -235,6 +221,25 @@ export const ProductsVendorPage = () => {
 
   const handleClickCard = (product: IProduct) => {
     setEditableProduct(product);
+
+    setFileListSignle([
+      {
+        uid: '-1',
+        name: product.thumbnail.split('/').pop()?.split('.')[0] || '',
+        status: 'done',
+        url: product.thumbnail,
+      },
+    ]);
+
+    setFileListMulty(
+      product.images.map((value, index) => ({
+        uid: `-${index}`,
+        name: value.split('/').pop()?.split('.')[0] || '',
+        status: 'done',
+        url: value,
+      })),
+    );
+
     setModalEditableVisible(true);
   };
 
@@ -243,12 +248,22 @@ export const ProductsVendorPage = () => {
     setModalAddedVisible(true);
   };
 
+  const uploadFile = () => {
+    if (fileListMulty && fileListMulty[0].url && fileListMulty[1].url) {
+      addMultyFileRequest(fileListMulty[0].url, fileListMulty[1].url);
+    }
+    if (fileListSingle && fileListSingle[0].url) {
+      addSingleFileRequest(fileListSingle[0].url);
+    }
+  };
+
   const saveForm = () => {
     if (editableProduct) {
       editForm
         .validateFields()
         .then(() => {
           if (editableProduct) {
+            uploadFile();
             updateProduct(editableProduct);
             closeModal();
           }
@@ -261,6 +276,7 @@ export const ProductsVendorPage = () => {
         .validateFields()
         .then(() => {
           if (addedProduct) {
+            uploadFile();
             addProduct(addedProduct);
             handleCancel();
           }
@@ -292,7 +308,9 @@ export const ProductsVendorPage = () => {
   return (
     <>
       <h1>{tProduct('Список ваших продуктов')}</h1>
-      <Button onClick={() => handleButtonAddingModal(initialValuesAdding)}>Показать</Button>
+      <Button onClick={() => handleButtonAddingModal(initialValuesAdding)}>
+        {tProduct('Добавление продукта')}
+      </Button>
       {!productsForVendor.length ? (
         <h1>{tProduct('У вас пока нет продуктов')}</h1>
       ) : (
@@ -312,32 +330,38 @@ export const ProductsVendorPage = () => {
               onCancel={handleCancel}
             >
               {currentForm(
-                'edit',
                 editForm,
                 fields,
                 initialEditableValues,
+                fileListSingle,
+                fileListMulty,
                 handleInputChange,
                 handleSelectChange,
-                onChangeFile,
+                onChangeSingleFile,
+                uploadFile,
               )}
             </Modal>
           )}
-          <Modal
-            open={isModalAddedVisible}
-            onOk={saveForm}
-            title={`${tProduct('Добавление продукта')}`}
-            onCancel={handleCancel}
-          >
-            {currentForm(
-              'add',
-              addForm,
-              fields,
-              initialValuesAdding,
-              handleInputChange,
-              handleSelectChange,
-              onChangeFile,
-            )}
-          </Modal>
+          {addedProduct && (
+            <Modal
+              open={isModalAddedVisible}
+              onOk={saveForm}
+              title={`${tProduct('Добавление продукта')}`}
+              onCancel={handleCancel}
+            >
+              {currentForm(
+                addForm,
+                fields,
+                initialValuesAdding,
+                fileListSingle,
+                fileListMulty,
+                handleInputChange,
+                handleSelectChange,
+                onChangeMultyFile,
+                uploadFile,
+              )}
+            </Modal>
+          )}
         </>
       )}
     </>
