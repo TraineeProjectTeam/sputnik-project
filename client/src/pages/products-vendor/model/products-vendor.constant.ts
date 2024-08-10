@@ -5,6 +5,7 @@ export const initialValuesAdding: IProduct = {
   name: '',
   description: '',
   price: 0,
+  discountPrice: 0,
   thumbnail: '',
   images: [],
   category: '',

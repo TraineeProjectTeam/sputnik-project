@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Button, Form, FormInstance, Input, List, message, Modal, Select, Upload } from 'antd';
+import { Button, Form, FormInstance, Input, List, Modal, Select, Upload } from 'antd';
 import { IProduct, useProductsStore } from 'entities/product';
 import { useTranslation } from 'react-i18next';
 import { GlobalSpin } from 'shared/ui/global-spin';
@@ -168,25 +168,11 @@ export const ProductsVendorPage = () => {
   };
 
   const onChangeSingleFile = (info: UploadChangeParam<UploadFile>) => {
-    const { status, name } = info.file;
     setFileListSignle(info.fileList);
-
-    if (status === 'done') {
-      message.success(tProduct('Файл загружен!', { fileName: name }));
-    } else if (status === 'error') {
-      message.error(tErr('Ошибка загрузки файла!', { fileName: name }));
-    }
   };
 
   const onChangeMultyFile = (info: UploadChangeParam<UploadFile>) => {
-    const { status, name } = info.file;
     setFileListMulty(info.fileList);
-
-    if (status === 'done') {
-      message.success(tProduct('Файл загружен!', { fileName: name }));
-    } else if (status === 'error') {
-      message.error(tErr('Ошибка загрузки файла!', { fileName: name }));
-    }
   };
 
   const handleCancel = () => {
