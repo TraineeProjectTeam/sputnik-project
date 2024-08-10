@@ -1,10 +1,9 @@
 import { api } from '@/shared/api';
-import { IProduct } from '@/shared/libs/types';
-import { Pagination } from '../model/UseFavoriteStore';
+import { IPagination, IProduct } from '@/shared/libs/types';
 
 export const getFavorites = async (
   page: number,
-): Promise<{ products: IProduct[]; pagination: Pagination }> => {
+): Promise<{ products: IProduct[]; pagination: IPagination }> => {
   const response = await api.get('/favorites', {
     params: {
       page: page,
