@@ -1,5 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useTranslation } from 'react-i18next';
 
 import {
   AuthByEmailPage,
@@ -16,6 +17,8 @@ import { CreateReviewScreen } from '@/screens/CreateReviewScreen';
 import { FavoriteProductsScreen } from '@/screens/FavoriteProductsScreen';
 import { ProductReviewsScreen } from '@/screens/ProductReviewsScreen';
 import { ProductDetailedScreen } from '@/screens/ProductDetailedScreen';
+import { OrdersScreen } from '@/screens/OrdersScreen';
+import { OrderDetaildedScreen } from '@/screens/OrderDetailedScreen';
 
 import { HeaderProduct } from '@/widgets/HeaderProduct';
 
@@ -29,6 +32,7 @@ export const ProfileStackNavigator = () => {
   const ProfileStack = createNativeStackNavigator<AccountStackParams>();
 
   const isAuth = storage.contains('access_token');
+  const { t } = useTranslation();
 
   return (
     <ProfileStack.Navigator
@@ -42,29 +46,32 @@ export const ProfileStackNavigator = () => {
       <ProfileStack.Screen
         name={Screens.PROFILE}
         component={ProfilePage}
-        options={{ headerShown: true, header: () => <HeaderBack title={'Профиль'} /> }}
+        options={{ headerShown: true, header: () => <HeaderBack title={t('Профиль')} /> }}
       />
       <ProfileStack.Screen
         name={Screens.LANGUAGE}
         component={LanguagesPage}
-        options={{ headerShown: true, header: () => <HeaderBack title={'Язык'} /> }}
+        options={{ headerShown: true, header: () => <HeaderBack title={t('Язык')} /> }}
       />
       <ProfileStack.Screen
         name={Screens.CUSTOMER_REVIEWS}
         component={CustomerReviewsScreen}
-        options={{ headerShown: true, header: () => <HeaderBack title={'Review.Мои отзывы'} /> }}
+        options={{ headerShown: true, header: () => <HeaderBack title={t('Review.Мои отзывы')} /> }}
       />
       <ProfileStack.Screen
         name={Screens.CREATE_REVIEW}
         component={CreateReviewScreen}
-        options={{ headerShown: true, header: () => <HeaderBack title={'Review.Новый отзыв'} /> }}
+        options={{
+          headerShown: true,
+          header: () => <HeaderBack title={t('Review.Новый отзыв')} />,
+        }}
       />
       <ProfileStack.Screen
         name={Screens.EDIT_REVIEW}
         component={UpdateReviewScreen}
         options={{
           headerShown: true,
-          header: () => <HeaderBack title={'Review.Ваш отзыв о товаре'} />,
+          header: () => <HeaderBack title={t('Review.Ваш отзыв о товаре')} />,
         }}
       />
       <ProfileStack.Screen
@@ -72,7 +79,7 @@ export const ProfileStackNavigator = () => {
         component={FavoriteProductsScreen}
         options={{
           headerShown: true,
-          header: () => <HeaderBack title={'Избранное'} />,
+          header: () => <HeaderBack title={t('Избранное')} />,
         }}
       />
       <ProfileStack.Screen
@@ -89,9 +96,34 @@ export const ProfileStackNavigator = () => {
         name={Screens.PRODUCT_REVIEWS}
         options={{
           headerShown: true,
-          header: () => <HeaderBack title={'Отзывы'} />,
+          header: () => <HeaderBack title={t('Отзывы')} />,
         }}
         component={ProductReviewsScreen}
+      />
+      <ProfileStack.Screen
+        name={Screens.ORDERS}
+        options={{
+          headerShown: true,
+          header: () => <HeaderBack title={t('Заказы')} />,
+        }}
+        component={OrdersScreen}
+      />
+      <ProfileStack.Screen
+        name={Screens.ORDER}
+        options={({ route }) => ({
+          headerShown: true,
+          header: () => (
+            <HeaderBack
+              title={t('Order.Заказ от', {
+                val: new Date(route.params.order.order_date),
+                formatParams: {
+                  val: { day: 'numeric', month: 'long' },
+                },
+              })}
+            />
+          ),
+        })}
+        component={OrderDetaildedScreen}
       />
       <ProfileStack.Screen name={Screens.LOGIN_BY_PHONE} component={AuthByPhonePage} />
       <ProfileStack.Screen name={Screens.LOGIN_BY_EMAIL} component={AuthByEmailPage} />

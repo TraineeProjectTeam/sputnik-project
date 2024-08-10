@@ -26,12 +26,17 @@ export const AccountPage = () => {
     navigation.navigate(Stacks.ACCOUNT, { screen: Screens.FAVORITES });
   };
 
+  const navigateToOrders = () => {
+    navigation.navigate(Stacks.ACCOUNT, { screen: Screens.ORDERS });
+  };
+
   return (
     <Layout level="2">
       <Menu style={styles.menu}>
         <MenuItem onPress={navigateToProfile} title="Профиль" />
         <MenuItem onPress={navigateToLanguages} title="Язык" />
         <MenuItem onPress={navigateToReviews} title="Отзывы" />
+        <MenuItem onPress={navigateToOrders} title="Заказы" />
         <MenuItem onPress={navigateToFavorites} title="Избранное" />
         <LogoutButton />
       </Menu>

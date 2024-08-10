@@ -1,5 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useTranslation } from 'react-i18next';
 
 import { ProductReviewsScreen } from '@/screens/ProductReviewsScreen';
 import { ProductsScreen } from '@/screens/ProductsScreen';
@@ -14,6 +15,7 @@ import { CatalogStackParams } from '../navigationTypes';
 
 export const CatalogStackNavigator = () => {
   const CatalogStack = createNativeStackNavigator<CatalogStackParams>();
+  const { t } = useTranslation();
 
   return (
     <CatalogStack.Navigator
@@ -35,7 +37,7 @@ export const CatalogStackNavigator = () => {
         name={Screens.PRODUCT_REVIEWS}
         options={{
           headerShown: true,
-          header: () => <HeaderBack title={'Отзывы'} />,
+          header: () => <HeaderBack title={t('Отзывы')} />,
         }}
         component={ProductReviewsScreen}
       />
