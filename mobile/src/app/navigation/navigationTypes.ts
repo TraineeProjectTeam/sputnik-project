@@ -1,5 +1,5 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
-import { IProduct, IReview } from '@/shared/libs/types';
+import { IOrder, IProduct, IReview } from '@/shared/libs/types';
 
 export type RootStackParamList = {
   Loading: undefined;
@@ -22,6 +22,7 @@ export type AccountStackParams = {
   Registration: undefined;
   Profile: undefined;
   Orders: undefined;
+  Order: IOrderPageParams;
   CustomerReviews: undefined;
   CreateReview: ICreateReviewPageParams;
   EditReview: IEditReviewPageParams;
@@ -35,6 +36,10 @@ export type CatalogStackParams = {
   CatalogScreen: undefined;
   Product: IProductPageParams;
   ProductReviews: IProductReviewPageParams;
+};
+
+export type IOrderPageParams = {
+  order: IOrder;
 };
 
 export type IProductPageParams = {

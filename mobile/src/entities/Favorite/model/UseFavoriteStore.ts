@@ -1,5 +1,5 @@
 import { createWithEqualityFn } from 'zustand/traditional';
-import { IProduct, Pagination } from '@/shared/libs/types';
+import { IProduct, IPagination } from '@/shared/libs/types';
 import { addToFavorite, deleteFavorite, getFavorites } from '../api/api';
 
 interface IUseFavoriteStore {
@@ -7,7 +7,7 @@ interface IUseFavoriteStore {
   favorites: IProduct[];
   favoriteIds: string[];
   currentPage: number;
-  pagination: Pagination;
+  pagination: IPagination;
   setFavoriteIds: (ids: string[]) => void;
   getFavorites: () => Promise<IProduct[]>;
   refreshFavorites: () => Promise<IProduct[]>;
@@ -22,7 +22,7 @@ export const useFavoriteStore = createWithEqualityFn<IUseFavoriteStore>((set, ge
   favorites: [],
   favoriteIds: [],
   currentPage: 0,
-  pagination: {} as Pagination,
+  pagination: {} as IPagination,
   setFavoriteIds: (ids) => {
     set({ favoriteIds: ids });
   },

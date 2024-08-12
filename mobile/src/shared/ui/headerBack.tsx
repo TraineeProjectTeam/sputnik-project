@@ -1,7 +1,6 @@
 import React from 'react';
 import { Layout, Text, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import { TouchableWebElement } from '@ui-kitten/components/devsupport';
-import { useTranslation } from 'react-i18next';
 
 import { ArrowLeft } from '../libs/icons';
 import { Colors } from '../libs/colors';
@@ -10,7 +9,6 @@ import { useAppNavigation } from '../libs/useAppNavigation';
 
 export const HeaderBack = ({ title }: { title: string }) => {
   const navigation = useAppNavigation();
-  const { t } = useTranslation();
 
   const navigateBack = () => {
     navigation.goBack();
@@ -29,7 +27,7 @@ export const HeaderBack = ({ title }: { title: string }) => {
         alignment="center"
         title={(evaProps) => (
           <Text {...evaProps} style={TextStyles.h6}>
-            {t(title)}
+            {title}
           </Text>
         )}
         accessoryLeft={renderBackAction}

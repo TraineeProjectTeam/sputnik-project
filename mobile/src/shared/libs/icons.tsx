@@ -25,6 +25,10 @@ export const ArrowLeft = ({ size, color }: IconProps) => (
   <Icon name="chevron-left" size={size} color={color} />
 );
 
+export const ArrowBottom = ({ size, color }: IconProps) => (
+  <Icon name="keyboard-arrow-down" size={size} color={color} />
+);
+
 export const Star = ({ size, color }: IconProps) => <Icon name="star" size={size} color={color} />;
 
 export const ChatBubble = ({ size, color }: IconProps) => (
@@ -53,4 +57,24 @@ export const AddIcon = ({ size, color }: IconProps) => (
 
 export const RemoveIcon = ({ size, color }: IconProps) => (
   <Icon name="remove" size={size} color={color} />
+);
+
+export const CloseIcon = ({ size, color }: IconProps) => (
+  <Icon name="close" size={size} color={color} />
+);
+
+export const CreditCardIcon = ({ size, color }: IconProps) => (
+  <Icon name="credit-card" size={size} color={color} />
+);
+
+export const NumbersIcon = ({ size, color }: IconProps) => (
+  <Icon name="numbers" size={size} color={color} />
+);
+
+export const EmojiIcon = ({ size, color }: IconProps) => (
+  <Icon name="emoji-emotions" size={size} color={color} />
+);
+
+export const LocationIcon = ({ size, color }: IconProps) => (
+  <Icon name="location-on" size={size} color={color} />
 );
