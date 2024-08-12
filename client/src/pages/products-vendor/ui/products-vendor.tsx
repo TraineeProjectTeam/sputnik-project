@@ -1,5 +1,5 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import { Button, Form, FormInstance, Input, List, Modal, Select, Upload } from 'antd';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { Button, Form, FormInstance, Input, List, message, Modal, Select, Upload } from 'antd';
 import { IProduct, useProductsStore } from 'entities/product';
 import { useTranslation } from 'react-i18next';
 import { GlobalSpin } from 'shared/ui/global-spin';
@@ -11,7 +11,8 @@ import { IProductField } from '../model/products-vendor.types';
 import { ICategory } from 'entities/category';
 import { UploadChangeParam, UploadFile } from 'antd/es/upload';
 import { initialValuesAdding } from '../model/products-vendor.constant';
-import { addSingleFileRequest } from 'entities/file';
+import { UploadRequestOption } from 'rc-upload/lib/interface';
+import { addSingleFileRequest, deleteFileRequest } from 'entities/file';
 
 const currentForm = (
   form: FormInstance,
@@ -33,6 +34,10 @@ const currentForm = (
   handleSelectChange: (category: string) => void,
   onChangeSingleFile: (info: UploadChangeParam<UploadFile>) => void,
   onChangeMultyFile: (info: UploadChangeParam<UploadFile>) => void,
+  removeSingleFile: (file: UploadFile) => void,
+  removeMultyFile: (file: UploadFile) => void,
+  uploadSingleFile: ({ file, onError, onSuccess }: UploadRequestOption) => void,
+  uploadMultyFile: ({ file, onError, onSuccess }: UploadRequestOption) => void,
 ) => (
   <Form autoComplete="off" form={form} layout="vertical" initialValues={initialValues}>
     <StyledModalContent>
@@ -46,6 +51,10 @@ const currentForm = (
             handleSelectChange,
             onChangeSingleFile,
             onChangeMultyFile,
+            removeSingleFile,
+            removeMultyFile,
+            uploadSingleFile,
+            uploadMultyFile,
           )}
         </Form.Item>
       ))}
@@ -61,6 +70,10 @@ const renderFields = (
   onChangeCategory: (category: string) => void,
   onChangeSingleFile: (info: UploadChangeParam<UploadFile>) => void,
   onChangeMultyFile: (info: UploadChangeParam<UploadFile>) => void,
+  removeSingleFile: (file: UploadFile) => void,
+  removeMultyFile: (file: UploadFile) => void,
+  uploadSingleFile: ({ file, onError, onSuccess }: UploadRequestOption) => void,
+  uploadMultyFile: ({ file, onError, onSuccess }: UploadRequestOption) => void,
 ) => {
   switch (field.type) {
     case 'text':
@@ -71,6 +84,8 @@ const renderFields = (
     case 'image':
       return (
         <Upload
+          onRemove={removeSingleFile}
+          customRequest={uploadSingleFile}
           fileList={fileListSingle}
           onChange={onChangeSingleFile}
           showUploadList={{ showRemoveIcon: true }}
@@ -85,6 +100,8 @@ const renderFields = (
     case 'images':
       return (
         <Upload
+          onRemove={removeMultyFile}
+          customRequest={uploadMultyFile}
           fileList={fileListMulty}
           onChange={onChangeMultyFile}
           showUploadList={{ showRemoveIcon: true }}
@@ -96,7 +113,6 @@ const renderFields = (
           <Button icon={<UploadOutlined />} />
         </Upload>
       );
-
     case 'select':
       if (field.values && field.values.length) {
         return (
@@ -111,8 +127,6 @@ const renderFields = (
       } else {
         return null;
       }
-    default:
-      return null;
   }
 };
 
@@ -194,7 +208,7 @@ export const ProductsVendorPage = () => {
 
     setFileListSignle([
       {
-        uid: '-1',
+        uid: product._id,
         name: product.thumbnail.split('/').pop()?.split('.')[0] || '',
         status: 'done',
         url: product.thumbnail,
@@ -202,8 +216,8 @@ export const ProductsVendorPage = () => {
     ]);
 
     setFileListMulty(
-      product.images.map((value, index) => ({
-        uid: `-${index}`,
+      product.images.map((value) => ({
+        uid: value,
         name: value.split('/').pop()?.split('.')[0] || '',
         status: 'done',
         url: value,
@@ -211,6 +225,96 @@ export const ProductsVendorPage = () => {
     );
 
     setModalEditableVisible(true);
+  };
+
+  const removeMultyFile = (file: UploadFile) => {
+    deleteFileRequest(file.response.image_url.split('/').pop())
+      .then((res) => {
+        if (addedProduct) {
+          setAddedProduct({
+            ...addedProduct,
+            images: addedProduct.images.filter((url) => url !== res.data.image_url),
+          });
+        } else if (editableProduct) {
+          setEditableProduct({
+            ...editableProduct,
+            images: editableProduct.images.filter((url) => url !== res.data.image_url),
+          });
+        }
+        message.success(tProduct('Удалено фото продукта!'));
+      })
+      .catch(() => message.error(tErr('Не удалось удалить фото продукта!')));
+  };
+
+  const removeSingleFile = (file: UploadFile) => {
+    deleteFileRequest(file.response.image_url.split('/').pop())
+      .then(() => {
+        if (addedProduct) {
+          setAddedProduct({
+            ...addedProduct,
+            thumbnail: '',
+          });
+        } else if (editableProduct) {
+          setEditableProduct({
+            ...editableProduct,
+            thumbnail: '',
+          });
+        }
+        message.success(tProduct('Удалено фото продукта!'));
+      })
+      .catch(() => message.error(tErr('Не удалось удалить фото продукта!')));
+  };
+
+  const uploadSingleFile = ({ file, onError, onSuccess }: UploadRequestOption) => {
+    const formData = new FormData();
+
+    formData.append('image', file);
+
+    if (onSuccess && onError) {
+      addSingleFileRequest(formData)
+        .then((res) => {
+          if (addedProduct) {
+            setAddedProduct({ ...addedProduct, thumbnail: res.data.image_url });
+          } else if (editableProduct) {
+            setEditableProduct({ ...editableProduct, thumbnail: res.data.image_url });
+          }
+          onSuccess(res.data);
+          message.success(tProduct('Файл загружен!'));
+        })
+        .catch((error) => {
+          onError(error);
+          message.error(tErr('Ошибка загрузки файла!'));
+        });
+    }
+  };
+
+  const uploadMultyFile = ({ file, onError, onSuccess }: UploadRequestOption) => {
+    const formData = new FormData();
+
+    formData.append('image', file);
+
+    if (onSuccess && onError) {
+      addSingleFileRequest(formData)
+        .then((res) => {
+          if (addedProduct) {
+            setAddedProduct({
+              ...addedProduct,
+              images: [...addedProduct.images, res.data.image_url],
+            });
+          } else if (editableProduct) {
+            setEditableProduct({
+              ...editableProduct,
+              images: [...editableProduct.images, res.data.image_url],
+            });
+          }
+          onSuccess(res.data);
+          message.success(tProduct('Файл загружен!'));
+        })
+        .catch((error) => {
+          onError(error);
+          message.error(tErr('Ошибка загрузки файла!'));
+        });
+    }
   };
 
   const handleButtonAddingModal = (product: IProduct) => {
@@ -294,6 +398,10 @@ export const ProductsVendorPage = () => {
                 handleSelectChange,
                 onChangeSingleFile,
                 onChangeMultyFile,
+                removeSingleFile,
+                removeMultyFile,
+                uploadSingleFile,
+                uploadMultyFile,
               )}
             </Modal>
           )}
@@ -314,6 +422,10 @@ export const ProductsVendorPage = () => {
                 handleSelectChange,
                 onChangeSingleFile,
                 onChangeMultyFile,
+                removeSingleFile,
+                removeMultyFile,
+                uploadSingleFile,
+                uploadMultyFile,
               )}
             </Modal>
           )}

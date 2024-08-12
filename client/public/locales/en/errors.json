@@ -16,5 +16,6 @@
   "Ошибка копирования!": "Error with copying text: {{error}}!",
   "Пожалуйста, введите поле продукта!": "Please enter {{field}} of product!",
   "Цена должна быть больше нуля!": "The price must be more than zero!",
-  "Ошибка загрузки файла!": "File {{fileName}} upload error!"
+  "Ошибка загрузки файла!": "File upload error!",
+  "Не удалось удалить фото продукта!": "The product photo could not be deleted!"
 }

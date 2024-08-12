@@ -19,6 +19,7 @@
   "Цена со скидкой": "Discounted price",
   "Эскиз": "Thumbnail",
   "Картинки": "Images",
-  "Файл загружен!": "File {{fileName}} is uploaded",
-  "Добавление продукта": "Adding product"
+  "Файл загружен!": "File is uploaded",
+  "Добавление продукта": "Adding product",
+  "Удалено фото продукта!": "Deleted photo of product!"
 }
