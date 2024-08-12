@@ -5,27 +5,32 @@ import { Button, Divider, Layout, Spinner } from '@ui-kitten/components';
 import Toast from 'react-native-toast-message';
 
 import { useCartStore } from '@/entities/Cart';
+import { useOrderStore } from '@/entities/Order';
 
 import { TextStyles } from '@/shared/libs/textStyles';
 import { Colors } from '@/shared/libs/colors';
 import { storage } from '@/shared/libs/storage';
-import { IOrderProduct } from '@/shared/libs/types';
+import { IOrderProduct, OrderStatus } from '@/shared/libs/types';
 import { NoItems } from '@/shared/ui/NoItems';
 
 import { CartProduct } from './CartProduct';
 
-export const CartProductList = () => {
+export const CartProductList = ({ pickupPointId }: { pickupPointId: string }) => {
   const {
     cartProducts,
     getCartProducts,
+    cartProductsId,
+    isUpdating,
     pagination,
     isLoading,
     quantity,
     price,
     discount,
     refreshCart,
+    clearCart,
   } = useCartStore();
 
+  const { createOrder } = useOrderStore();
   const { t } = useTranslation();
 
   const hasMore = pagination.pageCount > pagination.page && pagination.total >= pagination.pageSize;
@@ -81,6 +86,31 @@ export const CartProductList = () => {
     }
   };
 
+  const createOrderRequest = () => {
+    try {
+      const order = {
+        order_date: new Date(),
+        estimated_delivery_date: new Date(),
+        delivery_date: new Date(),
+        status: OrderStatus.ACTIVE,
+        pickup_point: pickupPointId,
+        price: discount(),
+        products: cartProductsId,
+      };
+      createOrder(order);
+      clearCart();
+      Toast.show({
+        type: 'success',
+        text1: t('Заказа успешно создан!'),
+      });
+    } catch {
+      Toast.show({
+        type: 'error',
+        text1: t('Произошла ошибка при загрузке данных...'),
+      });
+    }
+  };
+
   return (
     <FlatList
       data={cartProducts}
@@ -123,7 +153,13 @@ export const CartProductList = () => {
                 <Text style={TextStyles.h5}>{t('Cart.Итого')}</Text>
                 <Text style={TextStyles.h5.changeColor(Colors.Success500)}>{discount()} ₽</Text>
               </View>
-              <Button style={styles.button}>{t('Cart.Оформить заказ')}</Button>
+              <Button
+                style={styles.button}
+                onPress={createOrderRequest}
+                disabled={isUpdating || isLoading}
+              >
+                {t('Cart.Оформить заказ')}
+              </Button>
             </Layout>
           )}
         </>

@@ -4,6 +4,7 @@ import { createWithEqualityFn } from 'zustand/traditional';
 
 interface IUseCartStore {
   isLoading: boolean;
+  isUpdating: boolean;
   cartProducts: IOrderProduct[];
   cartProductsId: ICartProduct[];
   currentPage: number;
@@ -19,11 +20,13 @@ interface IUseCartStore {
   price: () => number;
   discount: () => number;
   getProduct: (id: string) => ICartProduct;
+  clearCart: () => void;
   reset: () => void;
 }
 
 export const useCartStore = createWithEqualityFn<IUseCartStore>((set, get) => ({
   isLoading: false,
+  isUpdating: false,
   cartProducts: [],
   cartProductsId: [],
   currentPage: 0,
@@ -62,6 +65,7 @@ export const useCartStore = createWithEqualityFn<IUseCartStore>((set, get) => ({
   },
   addToCart: async (id) => {
     try {
+      set({ isUpdating: true });
       const data = await addToCart(id);
       set({ cartProducts: [data, ...get().cartProducts] });
       set({
@@ -73,10 +77,13 @@ export const useCartStore = createWithEqualityFn<IUseCartStore>((set, get) => ({
       return data;
     } catch {
       throw new Error();
+    } finally {
+      set({ isUpdating: false });
     }
   },
   deleteFavorite: async (id) => {
     try {
+      set({ isUpdating: true });
       const data = await deleteProductInCart(id);
       set({
         cartProducts: get().cartProducts.filter((productId) => productId.product._id !== data._id),
@@ -87,10 +94,13 @@ export const useCartStore = createWithEqualityFn<IUseCartStore>((set, get) => ({
       return data;
     } catch {
       throw new Error();
+    } finally {
+      set({ isUpdating: false });
     }
   },
   updateQuantity: async (id, quantity) => {
     try {
+      set({ isUpdating: true });
       const data = await updateQuantityProduct(id, quantity);
       set({
         cartProducts: get().cartProducts.map((item) =>
@@ -107,6 +117,8 @@ export const useCartStore = createWithEqualityFn<IUseCartStore>((set, get) => ({
       return data;
     } catch {
       throw new Error();
+    } finally {
+      set({ isUpdating: false });
     }
   },
   isInCart: (id) => get().cartProductsId?.some((item) => item.product === id),
@@ -119,6 +131,12 @@ export const useCartStore = createWithEqualityFn<IUseCartStore>((set, get) => ({
       0,
     ),
   getProduct: (id) => get().cartProductsId?.find((item) => item.product === id)!,
+  clearCart: () => {
+    get().cartProductsId.forEach(async (id) => {
+      await deleteProductInCart(id.product);
+    });
+    set({ cartProducts: [], cartProductsId: [] });
+  },
   reset: () => {
     set({ cartProducts: [], cartProductsId: [] });
   },
