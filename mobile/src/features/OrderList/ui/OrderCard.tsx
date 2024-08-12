@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +14,7 @@ interface OrderCardProps {
   order: IOrder;
 }
 
-export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
+export const OrderCard: React.FC<OrderCardProps> = memo(({ order }) => {
   const navigate = useAppNavigation();
   const { t } = useTranslation();
 
@@ -87,7 +87,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
       </View>
     </Pressable>
   );
-};
+});
 
 function getTextColor(status: OrderStatus) {
   switch (status) {

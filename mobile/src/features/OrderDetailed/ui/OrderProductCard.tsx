@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +14,7 @@ interface OrderProductCardProps {
   status: OrderStatus;
 }
 
-export const OrderProductCard: React.FC<OrderProductCardProps> = ({ item, status }) => {
+export const OrderProductCard: React.FC<OrderProductCardProps> = memo(({ item, status }) => {
   const navigate = useAppNavigation();
   const { t } = useTranslation();
 
@@ -46,7 +46,7 @@ export const OrderProductCard: React.FC<OrderProductCardProps> = ({ item, status
       )}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
