@@ -1,134 +1,16 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { Button, Form, FormInstance, Input, List, message, Modal, Select, Upload } from 'antd';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { Button, Form, List, message, Modal } from 'antd';
 import { IProduct, useProductsStore } from 'entities/product';
 import { useTranslation } from 'react-i18next';
 import { GlobalSpin } from 'shared/ui/global-spin';
 import { ProductCard } from 'shared/ui/product-card';
-import { UploadOutlined } from '@ant-design/icons';
-import { StyledList, StyledModalContent } from './products-vendor.styles';
+import { StyledList } from './products-vendor.styles';
 import { getInitialEditableValues, getProductsVendorFields } from '../lib/products-vendor.lib';
-import { IProductField } from '../model/products-vendor.types';
-import { ICategory } from 'entities/category';
 import { UploadChangeParam, UploadFile } from 'antd/es/upload';
 import { initialValuesAdding } from '../model/products-vendor.constant';
 import { UploadRequestOption } from 'rc-upload/lib/interface';
 import { addSingleFileRequest, deleteFileRequest } from 'entities/file';
-
-const currentForm = (
-  form: FormInstance,
-  fields: IProductField[],
-  initialValues:
-    | IProduct
-    | {
-        name: string | undefined;
-        description: string | undefined;
-        category: string | undefined;
-        price: number | undefined;
-        discountPrice: number | undefined;
-        thumbnail: string | undefined;
-        images: string[] | undefined;
-      },
-  fileListSingle: UploadFile[],
-  fileListMulty: UploadFile[],
-  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void,
-  handleSelectChange: (category: string) => void,
-  onChangeSingleFile: (info: UploadChangeParam<UploadFile>) => void,
-  onChangeMultyFile: (info: UploadChangeParam<UploadFile>) => void,
-  removeSingleFile: (file: UploadFile) => void,
-  removeMultyFile: (file: UploadFile) => void,
-  uploadSingleFile: ({ file, onError, onSuccess }: UploadRequestOption) => void,
-  uploadMultyFile: ({ file, onError, onSuccess }: UploadRequestOption) => void,
-) => (
-  <Form autoComplete="off" form={form} layout="vertical" initialValues={initialValues}>
-    <StyledModalContent>
-      {fields.map((field) => (
-        <Form.Item label={field.label} key={field.name} name={field.name} rules={field.rules}>
-          {renderFields(
-            fileListSingle,
-            fileListMulty,
-            field,
-            handleInputChange,
-            handleSelectChange,
-            onChangeSingleFile,
-            onChangeMultyFile,
-            removeSingleFile,
-            removeMultyFile,
-            uploadSingleFile,
-            uploadMultyFile,
-          )}
-        </Form.Item>
-      ))}
-    </StyledModalContent>
-  </Form>
-);
-
-const renderFields = (
-  fileListSingle: UploadFile[],
-  fileListMulty: UploadFile[],
-  field: IProductField,
-  onChangeInput: (e: ChangeEvent<HTMLInputElement>) => void,
-  onChangeCategory: (category: string) => void,
-  onChangeSingleFile: (info: UploadChangeParam<UploadFile>) => void,
-  onChangeMultyFile: (info: UploadChangeParam<UploadFile>) => void,
-  removeSingleFile: (file: UploadFile) => void,
-  removeMultyFile: (file: UploadFile) => void,
-  uploadSingleFile: ({ file, onError, onSuccess }: UploadRequestOption) => void,
-  uploadMultyFile: ({ file, onError, onSuccess }: UploadRequestOption) => void,
-) => {
-  switch (field.type) {
-    case 'text':
-    case 'number':
-      return (
-        <Input type={field.type} value={field.value} name={field.name} onChange={onChangeInput} />
-      );
-    case 'image':
-      return (
-        <Upload
-          onRemove={removeSingleFile}
-          customRequest={uploadSingleFile}
-          fileList={fileListSingle}
-          onChange={onChangeSingleFile}
-          showUploadList={{ showRemoveIcon: true }}
-          maxCount={1}
-          listType="picture-card"
-          accept=".jpg,.png"
-        >
-          <Button icon={<UploadOutlined />} />
-        </Upload>
-      );
-
-    case 'images':
-      return (
-        <Upload
-          onRemove={removeMultyFile}
-          customRequest={uploadMultyFile}
-          fileList={fileListMulty}
-          onChange={onChangeMultyFile}
-          showUploadList={{ showRemoveIcon: true }}
-          maxCount={2}
-          listType="picture-card"
-          accept=".jpg,.png"
-          multiple
-        >
-          <Button icon={<UploadOutlined />} />
-        </Upload>
-      );
-    case 'select':
-      if (field.values && field.values.length) {
-        return (
-          <Select onChange={onChangeCategory} value={field.value}>
-            {Object.values(field.values).map((category: ICategory) => (
-              <Select.Option key={category.id} value={category.id}>
-                {category.text}
-              </Select.Option>
-            ))}
-          </Select>
-        );
-      } else {
-        return null;
-      }
-  }
-};
+import { currentForm } from './customForm';
 
 export const ProductsVendorPage = () => {
   const { productsForVendor, isLoadingForVendor, updateProduct, addProduct } = useProductsStore();
@@ -337,6 +219,7 @@ export const ProductsVendorPage = () => {
       addForm
         .validateFields()
         .then(() => {
+          console.log(addedProduct);
           addProduct(addedProduct);
           handleCancel();
         })
