@@ -10,6 +10,7 @@ import { OrderPage } from './order';
 import { EnumRoutesName } from 'shared/config';
 import { CategoryPage } from './category';
 import { CatalogPage } from './catalog';
+import { ProductsVendorPage } from './products-vendor';
 
 export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
   [EnumRoutesName.MAIN]: {
@@ -63,5 +64,11 @@ export const pages: Record<EnumRoutesName, ICustomRouteProps> = {
     path: EnumRoutesName.CATEGORY,
     element: <CategoryPage />,
     isAuth: true,
+  },
+  [EnumRoutesName.PRODUCTS_VENDOR]: {
+    path: EnumRoutesName.PRODUCTS_VENDOR,
+    element: <ProductsVendorPage />,
+    isAuth: false,
+    role: 'Vendor',
   },
 };

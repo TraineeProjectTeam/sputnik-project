@@ -19,7 +19,7 @@ export interface ILoginStore {
   setRole: (role: 'Customer' | 'Vendor') => void;
 }
 
-const useLoginStore = create<ILoginStore>((set) => ({
+export const useLoginStore = create<ILoginStore>((set) => ({
   user: getCookiesUserData(),
   error: 'Не удалось совершить попытку входа! Пожалуйста, попробуйте еще раз.',
   loading: false,
@@ -88,5 +88,3 @@ const useLoginStore = create<ILoginStore>((set) => ({
     }
   },
 }));
-
-export default useLoginStore;

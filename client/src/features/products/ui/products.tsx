@@ -8,23 +8,23 @@ import { GlobalSpin } from 'shared/ui/global-spin';
 import { Message } from 'shared/ui/message';
 
 export const Products = () => {
-  const { products, getProducts, loading } = useProductsStore();
+  const { productsByCategory, getProductsByCategory, isLoadingByCategory } = useProductsStore();
   const { selectedCategory } = useCategoriesStore();
 
   useEffect(() => {
     if (selectedCategory) {
-      getProducts(selectedCategory.name);
+      getProductsByCategory(selectedCategory.name);
     }
   }, [selectedCategory]);
 
-  return loading ? (
+  return isLoadingByCategory ? (
     <GlobalSpin size={'large'} />
-  ) : products.length === 0 ? (
+  ) : productsByCategory.length === 0 ? (
     <Message text="В данной категории пока нет товаров." locales="categories" />
   ) : (
     <ContainerStyled>
       <ListStyled>
-        {products.map((product) => (
+        {productsByCategory.map((product) => (
           <List.Item key={product._id}>
             <ProductCard product={product} />
           </List.Item>

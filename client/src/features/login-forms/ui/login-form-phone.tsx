@@ -2,7 +2,7 @@ import { Button, Input, Radio, Spin, message } from 'antd';
 import Form from 'antd/es/form';
 import { ILoginPhoneDetails } from 'features/login-forms/model/login.types';
 import { rulesForFormItems } from 'shared/ui/forms/model/form-rules';
-import useLoginStore from '../model/login.store';
+import { useLoginStore } from '../model/login.store';
 import { useNavigate } from 'react-router-dom';
 import { ButtonLinkStyled, ButtonWrapperStyled } from 'shared/ui/forms/ui/form.styles';
 import { useTranslation } from 'react-i18next';

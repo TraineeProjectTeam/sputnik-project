@@ -1,4 +1,4 @@
-import { Card } from 'antd';
+import { Button, Card, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useOrdersStore } from 'entities/order';
 import { useEffect } from 'react';
@@ -29,11 +29,11 @@ import {
 import { IMarker, useMapStore } from 'features/map';
 import { TFunction } from 'i18next';
 import { ICustomer, useCustomerStore } from 'entities/customer';
-import { CopyButton } from 'shared/ui/buttons';
+import { StyledCopyOutlined } from './order.styles';
 import { EnumStatus, StatusButton } from 'shared/ui/buttons';
 import { useProductsStore } from 'entities/product';
 import { getCountProducts } from '../lib/order.lib';
-import { BasketButton } from 'shared/ui/buttons';
+import { useLoginStore } from 'features/login-forms';
 
 const renderPickupPointInfo = (t: TFunction<'order', undefined>, currPickupPoint: IMarker) => (
   <StyledColumnContainer>
@@ -88,7 +88,8 @@ const renderPriceInfo = (t: TFunction<'price', undefined>, price: number) => (
 export const OrderPage = () => {
   const { order, getOrder, isLoadingOrder } = useOrdersStore();
   const { user } = useCustomerStore();
-  const { productsForOrder, loadingProductsForOrder } = useProductsStore();
+  const { productsForOrder, isLoadingProductsForOrder } = useProductsStore();
+  const { role } = useLoginStore();
   const { pickupPoint, isLoading: isLoadingPickupPoint } = useMapStore();
   const { t: tOrder } = useTranslation('order');
   const { t: tCommon } = useTranslation('common');
@@ -97,13 +98,32 @@ export const OrderPage = () => {
   const id = pathname.split('/').pop();
   const lang = useCurrentLanguage();
 
+  const onClickButtonCopy = () => {
+    if (order?._id) {
+      const trimmedText = order._id.trim();
+
+      navigator.clipboard
+        .writeText(trimmedText)
+        .then(() => {
+          message.success(tCommon(`Текст скопирован!`, { text: trimmedText }));
+        })
+        .catch((errorInfo) => {
+          console.log('Validation Failed:', errorInfo);
+        });
+    }
+  };
+
+  const handleAddToCart = () => {
+    console.log('Item added to cart');
+  };
+
   useEffect(() => {
     if (id) {
       getOrder(id);
     }
   }, [getOrder, id]);
 
-  if (isLoadingOrder || isLoadingPickupPoint || loadingProductsForOrder) {
+  if (isLoadingOrder || isLoadingPickupPoint || isLoadingProductsForOrder) {
     return <GlobalSpin size={'large'} />;
   }
 
@@ -123,7 +143,10 @@ export const OrderPage = () => {
           title={
             <>
               <h2>
-                {tOrder('Заказ №', { number: order._id })} <CopyButton text={order._id} />
+                {tOrder('Заказ №', { number: order._id })}
+                <Button onClick={onClickButtonCopy}>
+                  <StyledCopyOutlined />
+                </Button>
               </h2>
               <p>
                 {tOrder(`Заказ от`, {
@@ -159,7 +182,11 @@ export const OrderPage = () => {
                     <p>{product.name}</p>
                   </StyledProductName>
                   <StyledPrice>{product.price} ₽</StyledPrice>
-                  <BasketButton />
+                  {role === 'Customer' ? (
+                    <Button type="primary" onClick={handleAddToCart}>
+                      {tProducts('В корзину')}
+                    </Button>
+                  ) : null}
                 </StyledCardOrder>
               ))}
             </StyledCardsOrder>

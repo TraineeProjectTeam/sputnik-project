@@ -13,5 +13,9 @@
   "Фамилия может содержать только буквы!": "Last name can only contain letters!",
   "Не удалось совершить попытку регистрации! Пожалуйста, попробуйте еще раз.": "Registration attempt failed! Please try again.",
   "Пожалуйста, выберите роль!": "Please choose a role!",
-  "Ошибка копирования!": "Error with copying text: {{error}}!"
+  "Ошибка копирования!": "Error with copying text: {{error}}!",
+  "Пожалуйста, введите поле продукта!": "Please enter {{field}} of product!",
+  "Цена должна быть больше нуля!": "The price must be more than zero!",
+  "Ошибка загрузки файла!": "File upload error!",
+  "Не удалось удалить фото продукта!": "The product photo could not be deleted!"
 }

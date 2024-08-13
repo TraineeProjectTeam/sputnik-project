@@ -10,7 +10,7 @@ import { ButtonLinkStyled, ButtonWrapperStyled } from 'shared/ui/forms/ui/form.s
 import { WrapperStyled } from './register-form.styles';
 import { useTranslation } from 'react-i18next';
 import { saveAccessToken, saveRole, saveUserData } from 'shared/lib';
-import useLoginStore from 'features/login-forms/model/login.store';
+import { useLoginStore } from 'features/login-forms';
 
 export const RegisterForm = () => {
   const [form] = Form.useForm();
@@ -124,7 +124,11 @@ export const RegisterForm = () => {
         >
           <Input.Password autoComplete="on" />
         </Form.Item>
-        <Form.Item name="role" label={tForm('Зарегистрироваться как')} rules={rulesForFormItems(tErrors).role}>
+        <Form.Item
+          name="role"
+          label={tForm('Зарегистрироваться как')}
+          rules={rulesForFormItems(tErrors).role}
+        >
           <Radio.Group>
             <Radio value="Customer">{tCommon('Покупатель')}</Radio>
             <Radio value="Vendor">{tCommon('Продавец')}</Radio>
