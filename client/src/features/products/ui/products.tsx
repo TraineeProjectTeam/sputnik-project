@@ -1,4 +1,4 @@
-import { ProductCard } from 'shared/ui/product-card/ui/product-card';
+import { ProductCard } from 'shared/ui/product-card';
 import { ContainerStyled, ListStyled } from './products.styles';
 import { List } from 'antd';
 import { useProductsStore } from 'entities/product';
@@ -20,7 +20,7 @@ export const Products = () => {
   return isLoadingByCategory ? (
     <GlobalSpin size={'large'} />
   ) : productsByCategory.length === 0 ? (
-    <Message text="В данной категории пока нет товаров." locales="categories" />
+    <Message text="В данной категории пока нет товаров." />
   ) : (
     <ContainerStyled>
       <ListStyled>

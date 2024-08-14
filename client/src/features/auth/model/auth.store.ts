@@ -1,10 +1,11 @@
 import { create } from 'zustand';
-import { ILoginEmailDetails, ILoginPhoneDetails, IResponseLogin } from './login.types';
+
 import { api } from 'shared/api';
 import { ICustomer, useCustomerStore } from 'entities/customer';
 import { useVendorStore } from 'entities/vendor';
 import { getCookiesUserData, saveAccessToken, saveRole, saveUserData } from 'shared/lib';
 import Cookies from 'js-cookie';
+import { ILoginEmailDetails, ILoginPhoneDetails, IResponseLogin } from './auth.types';
 
 export interface ILoginStore {
   loginPhone: (loginDetails: ILoginPhoneDetails) => Promise<IResponseLogin>;
@@ -13,7 +14,7 @@ export interface ILoginStore {
   user: ICustomer | null;
   error: string;
   loading: boolean;
-  isLogin: Boolean;
+  isLogin: boolean;
   role: string | null;
   setIsLogin: (isLogin: boolean) => void;
   setRole: (role: 'Customer' | 'Vendor') => void;

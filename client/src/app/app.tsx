@@ -1,5 +1,5 @@
-import 'antd/dist/reset.css'; // сброс стилей с помощью antd
-import 'shared/styles/styles.scss'; // общие стили для всего приложения
+import 'antd/dist/reset.css';
+import 'shared/styles/styles.scss';
 import './i18n';
 import { Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';

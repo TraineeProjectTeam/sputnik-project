@@ -1,8 +1,8 @@
 import { Typography } from 'antd';
 import { Tabs } from 'antd';
-import { LoginFormEmail, LoginFormPhone } from 'features/login-forms';
 import { LoginStyled } from './login.styles';
 import { useTranslation } from 'react-i18next';
+import { LoginFormEmail, LoginFormPhone } from './login-forms';
 
 interface ITab {
   key: string;
@@ -11,7 +11,7 @@ interface ITab {
 }
 
 export const Login = () => {
-  const { t } = useTranslation(['common']);
+  const { t } = useTranslation();
   const tabs: ITab[] = [
     {
       key: 'phone',

@@ -10,26 +10,19 @@ import { UploadChangeParam, UploadFile } from 'antd/es/upload';
 import { initialValuesAdding } from '../model/products-vendor.constant';
 import { UploadRequestOption } from 'rc-upload/lib/interface';
 import { addSingleFileRequest, deleteFileRequest } from 'entities/file';
-import { currentForm } from './customForm';
+import { currentForm } from './custom-form';
 
 export const ProductsVendorPage = () => {
   const { productsForVendor, isLoadingForVendor, updateProduct, addProduct } = useProductsStore();
-  const { t: tProduct } = useTranslation('product');
-  const { t: tErr } = useTranslation('errors');
-  const { t: tCategories } = useTranslation('categories');
+  const { t } = useTranslation();
   const [editableProduct, setEditableProduct] = useState<IProduct | null>(null);
   const [addedProduct, setAddedProduct] = useState<IProduct | null>(null);
   const [isModalEditableVisible, setModalEditableVisible] = useState(false);
   const [isModalAddedVisible, setModalAddedVisible] = useState(false);
   const [editForm] = Form.useForm();
   const [addForm] = Form.useForm();
-  const fields = getProductsVendorFields(
-    tErr,
-    tProduct,
-    tCategories,
-    editableProduct || addedProduct,
-  );
-  const initialEditableValues = getInitialEditableValues(editableProduct, tProduct);
+  const fields = getProductsVendorFields(t, editableProduct || addedProduct);
+  const initialEditableValues = getInitialEditableValues(editableProduct, t);
   const [fileListSingle, setFileListSignle] = useState<UploadFile[]>([]);
   const [fileListMulty, setFileListMulty] = useState<UploadFile[]>([]);
 
@@ -123,9 +116,9 @@ export const ProductsVendorPage = () => {
             images: editableProduct.images.filter((url) => url !== res.data.image_url),
           });
         }
-        message.success(tProduct('Удалено фото продукта!'));
+        message.success(t('Удалено фото продукта!'));
       })
-      .catch(() => message.error(tErr('Не удалось удалить фото продукта!')));
+      .catch(() => message.error(t('Не удалось удалить фото продукта!')));
   };
 
   const removeSingleFile = (file: UploadFile) => {
@@ -142,9 +135,9 @@ export const ProductsVendorPage = () => {
             thumbnail: '',
           });
         }
-        message.success(tProduct('Удалено фото продукта!'));
+        message.success(t('Удалено фото продукта!'));
       })
-      .catch(() => message.error(tErr('Не удалось удалить фото продукта!')));
+      .catch(() => message.error(t('Не удалось удалить фото продукта!')));
   };
 
   const uploadSingleFile = ({ file, onError, onSuccess }: UploadRequestOption) => {
@@ -161,11 +154,11 @@ export const ProductsVendorPage = () => {
             setEditableProduct({ ...editableProduct, thumbnail: res.data.image_url });
           }
           onSuccess(res.data);
-          message.success(tProduct('Файл загружен!'));
+          message.success(t('Файл загружен!'));
         })
         .catch((error) => {
           onError(error);
-          message.error(tErr('Ошибка загрузки файла!'));
+          message.error(t('Ошибка загрузки файла!'));
         });
     }
   };
@@ -190,11 +183,11 @@ export const ProductsVendorPage = () => {
             });
           }
           onSuccess(res.data);
-          message.success(tProduct('Файл загружен!'));
+          message.success(t('Файл загружен!'));
         })
         .catch((error) => {
           onError(error);
-          message.error(tErr('Ошибка загрузки файла!'));
+          message.error(t('Ошибка загрузки файла!'));
         });
     }
   };
@@ -234,14 +227,14 @@ export const ProductsVendorPage = () => {
       editForm.setFieldsValue({
         name: editableProduct.name,
         description: editableProduct.description,
-        category: tCategories(editableProduct.category),
+        category: t(editableProduct.category),
         price: editableProduct.price,
         discountPrice: editableProduct.discountPrice,
         thumbnail: editableProduct.thumbnail,
         images: editableProduct.images,
       });
     }
-  }, [editableProduct, editForm, tCategories]);
+  }, [editableProduct, editForm, t]);
 
   if (isLoadingForVendor) {
     return <GlobalSpin size={'large'} />;
@@ -249,12 +242,12 @@ export const ProductsVendorPage = () => {
 
   return (
     <>
-      <h1>{tProduct('Список ваших продуктов')}</h1>
+      <h1>{t('Список ваших продуктов')}</h1>
       <Button onClick={() => handleButtonAddingModal(initialValuesAdding)}>
-        {tProduct('Добавление продукта')}
+        {t('Добавление продукта')}
       </Button>
       {!productsForVendor.length ? (
-        <h1>{tProduct('У вас пока нет продуктов')}</h1>
+        <h1>{t('У вас пока нет продуктов')}</h1>
       ) : (
         <>
           <StyledList>
@@ -266,7 +259,7 @@ export const ProductsVendorPage = () => {
           </StyledList>
           {editableProduct && (
             <Modal
-              title={`${tProduct('ID Продукта')} ${editableProduct._id}`}
+              title={`${t('ID Продукта')} ${editableProduct._id}`}
               open={isModalEditableVisible}
               onOk={saveForm}
               onCancel={handleCancel}
@@ -292,7 +285,7 @@ export const ProductsVendorPage = () => {
             <Modal
               open={isModalAddedVisible}
               onOk={saveForm}
-              title={`${tProduct('Добавление продукта')}`}
+              title={`${t('Добавление продукта')}`}
               onCancel={handleCancel}
             >
               {currentForm(

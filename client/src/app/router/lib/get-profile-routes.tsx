@@ -1,5 +1,4 @@
-import { EnumRoutesName } from "shared/config";
+import { EnumRoutesName } from 'shared/config';
 
 export const getProfileRoutes = () =>
-  Object.values(EnumRoutesName)
-    .filter((route) => route === EnumRoutesName.ORDERS);
+  Object.values(EnumRoutesName).filter((route) => route === EnumRoutesName.ORDERS);

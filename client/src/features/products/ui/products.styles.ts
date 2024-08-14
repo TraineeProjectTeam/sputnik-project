@@ -14,6 +14,7 @@ export const ListStyled = styled.ul`
   gap: 1rem;
   list-style-type: none;
   padding: 0;
+
   @media (max-width: 1300px) {
     justify-content: center;
   }

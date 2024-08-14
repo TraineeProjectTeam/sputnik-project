@@ -5,8 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 export const CopyButton = (props: ICopyProps) => {
   const { text } = props;
-  const { t: tComm } = useTranslation('common');
-  const { t: tErr } = useTranslation('error');
+  const { t } = useTranslation();
 
   const onClickButtonCopy = () => {
     const trimmedText = text.trim();
@@ -14,10 +13,10 @@ export const CopyButton = (props: ICopyProps) => {
     navigator.clipboard
       .writeText(trimmedText)
       .then(() => {
-        message.success(tComm(`Текст скопирован!`, { text: trimmedText }));
+        message.success(t(`Текст скопирован!`, { text: trimmedText }));
       })
       .catch((err) => {
-        message.error(tErr('Ошибка копирования!', { error: err }));
+        message.error(t('Ошибка копирования!', { error: err }));
       });
   };
 

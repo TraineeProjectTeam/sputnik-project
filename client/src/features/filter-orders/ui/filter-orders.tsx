@@ -6,7 +6,7 @@ import cls from './filter-orders.module.scss';
 
 export const FilterOrders = () => {
   const { isLoading, setOrdredStatus } = useOrdersStore();
-  const { t } = useTranslation('order');
+  const { t } = useTranslation();
 
   const handleChange = (value: EnumStatus) => {
     setOrdredStatus(value);

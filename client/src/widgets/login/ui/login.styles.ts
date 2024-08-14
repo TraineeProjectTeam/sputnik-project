@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const LoginStyled = styled.article`
-  padding: 50px 20px;
+  padding: 3.125rem 1.25rem;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -13,16 +13,16 @@ export const LoginStyled = styled.article`
   }
   .ant-tabs {
     width: 100%;
-    max-width: 400px;
+    max-width: 25rem;
     .ant-tabs-nav {
       margin-bottom: 0;
     }
     .ant-tabs-content-holder {
-      padding: 15px 15px 0;
+      padding: 0.9375rem 0.9375rem 0;
       border-top: none;
-      border-radius: 0 0 8px 8px;
+      border-radius: 0 0 0.5rem 0.5rem;
       background: #ffffff;
-      border: 1px solid #f0f0f0;
+      border: 0.0625rem solid #f0f0f0;
       border-top-color: transparent;
     }
     .ant-tabs-tab {

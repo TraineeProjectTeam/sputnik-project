@@ -4,13 +4,13 @@ import { useVendorStore } from 'entities/vendor';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from 'shared/api';
-import { rulesForFormItems } from 'shared/ui/forms/model/form-rules';
 import { IRegisterDetails, IResponseRegister } from '../model/register.types';
-import { ButtonLinkStyled, ButtonWrapperStyled } from 'shared/ui/forms/ui/form.styles';
+import { ButtonLinkStyled, ButtonWrapperStyled, rulesForFormItems } from 'shared/ui/forms';
 import { WrapperStyled } from './register-form.styles';
 import { useTranslation } from 'react-i18next';
 import { saveAccessToken, saveRole, saveUserData } from 'shared/lib';
-import { useLoginStore } from 'features/login-forms';
+import { EnumRoutesName } from 'shared/config';
+import { useLoginStore } from 'features/auth';
 
 export const RegisterForm = () => {
   const [form] = Form.useForm();
@@ -18,9 +18,7 @@ export const RegisterForm = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const [tErrors] = useTranslation('errors');
-  const [tForm] = useTranslation('form');
-  const [tCommon] = useTranslation('common');
+  const { t } = useTranslation();
 
   const setCustomer = useCustomerStore((state) => state.setCustomer);
   const setVendor = useVendorStore((state) => state.setVendor);
@@ -34,11 +32,11 @@ export const RegisterForm = () => {
       switch (values.role) {
         case 'Customer':
           setCustomer(data.user, false);
-          setTimeout(() => navigate('/profile-customer'), 1000);
+          setTimeout(() => navigate(EnumRoutesName.PROFILE_CUSTOMER), 1000);
           break;
         case 'Vendor':
           setVendor(data.user, false);
-          setTimeout(() => navigate('/profile-vendor'), 1000);
+          setTimeout(() => navigate(EnumRoutesName.PROFILE_VENDOR), 1000);
           break;
       }
       saveAccessToken(data.access_token);
@@ -48,12 +46,10 @@ export const RegisterForm = () => {
       setRole(values.role);
       messageApi.open({
         type: 'success',
-        content: tForm('Регистрация прошла успешна! Вы будете перенаправлены на страницу входа.'),
+        content: t('Регистрация прошла успешна! Вы будете перенаправлены на страницу входа.'),
       });
     } catch (error) {
-      showError(
-        tErrors('Не удалось совершить попытку регистрации! Пожалуйста, попробуйте еще раз.'),
-      );
+      showError(t('Не удалось совершить попытку регистрации! Пожалуйста, попробуйте еще раз.'));
     } finally {
       setLoading(false);
     }
@@ -67,12 +63,12 @@ export const RegisterForm = () => {
   };
 
   const handleLinkClick = () => {
-    navigate('/login');
+    navigate(EnumRoutesName.LOGIN);
   };
 
   return (
     <WrapperStyled>
-      <Typography.Title>{tCommon('Зарегистрироваться')}</Typography.Title>
+      <Typography.Title>{t('Зарегистрироваться')}</Typography.Title>
       <Form
         form={form}
         name="register-form"
@@ -82,63 +78,63 @@ export const RegisterForm = () => {
       >
         {contextHolder}
         <ButtonLinkStyled type="link" onClick={handleLinkClick}>
-          {tForm('Уже есть аккаунт? Войдите!')}
+          {t('Уже есть аккаунт? Войдите!')}
         </ButtonLinkStyled>
         <Form.Item
-          label={tForm('Имя')}
+          label={t('Имя')}
           name="first_name"
-          rules={rulesForFormItems(tErrors).firstName}
+          rules={rulesForFormItems(t).firstName}
           validateTrigger="onBlur"
         >
           <Input placeholder="Иван" />
         </Form.Item>
         <Form.Item
-          label={tForm('Фамилия')}
+          label={t('Фамилия')}
           name="last_name"
-          rules={rulesForFormItems(tErrors).lastName}
+          rules={rulesForFormItems(t).lastName}
           validateTrigger="onBlur"
         >
           <Input placeholder="Иванов" />
         </Form.Item>
         <Form.Item
-          label={tForm('Номер телефона')}
+          label={t('Номер телефона')}
           name="phone_number"
-          rules={rulesForFormItems(tErrors).phone}
+          rules={rulesForFormItems(t).phone}
           validateTrigger="onBlur"
         >
           <Input type="tel" placeholder="+12345678901" />
         </Form.Item>
         <Form.Item
-          label={tForm('Адрес электронной почты')}
+          label={t('Адрес электронной почты')}
           name="email"
-          rules={rulesForFormItems(tErrors).email}
+          rules={rulesForFormItems(t).email}
           validateTrigger="onBlur"
         >
           <Input type="email" placeholder="mail@mail.ru" />
         </Form.Item>
         <Form.Item
-          label={tForm('Пароль')}
+          label={t('Пароль')}
           name="password"
-          rules={rulesForFormItems(tErrors).password}
+          rules={rulesForFormItems(t).password}
           validateTrigger="onBlur"
         >
           <Input.Password autoComplete="on" />
         </Form.Item>
         <Form.Item
           name="role"
-          label={tForm('Зарегистрироваться как')}
-          rules={rulesForFormItems(tErrors).role}
+          label={t('Зарегистрироваться как')}
+          rules={rulesForFormItems(t).role}
         >
           <Radio.Group>
-            <Radio value="Customer">{tCommon('Покупатель')}</Radio>
-            <Radio value="Vendor">{tCommon('Продавец')}</Radio>
+            <Radio value="Customer">{t('Покупатель')}</Radio>
+            <Radio value="Vendor">{t('Продавец')}</Radio>
           </Radio.Group>
         </Form.Item>
         <Form.Item>
           <ButtonWrapperStyled>
             {loading && <Spin />}
             <Button type="primary" htmlType="submit" disabled={loading}>
-              {tCommon('Зарегистрироваться')}
+              {t('Зарегистрироваться')}
             </Button>
           </ButtonWrapperStyled>
         </Form.Item>

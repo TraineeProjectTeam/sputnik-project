@@ -6,7 +6,7 @@ import { EnumStatus } from '../model/status-button.constants';
 
 export const StatusButton = (props: IStatusButtonProps) => {
   const { status } = props;
-  const { t } = useTranslation('order');
+  const { t } = useTranslation();
 
   return (
     <StyledButtonStatus size="small" disabled status={status}>

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { TitleStyled } from './catalog.styles';
 
 export const CatalogPage = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   return (
     <>

@@ -1,1 +1,1 @@
-export { LayoutComponent as Layout } from './ui/layout';
+export { Layoutponent as Layout } from './ui/layout';

@@ -1,4 +1,4 @@
-import { TFunction } from "i18next";
+import { TFunction } from 'i18next';
 
 export const getReviewWordForm = (count: number, t: TFunction): string => {
   const lastDigit: number = count % 10;

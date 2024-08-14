@@ -5,9 +5,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { LinkStyled, TitleStyled } from './category.styles';
 import { useEffect, useMemo } from 'react';
 import { ArrowLeftOutlined } from '@ant-design/icons';
+import { EnumRoutesName } from 'shared/config';
 
 export const CategoryPage = () => {
-  const { t } = useTranslation('categories');
+  const { t } = useTranslation();
   const { selectedCategory, setSelectedCategory } = useCategoriesStore();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -20,12 +21,12 @@ export const CategoryPage = () => {
     if (category) {
       setSelectedCategory(category);
     } else {
-      navigate('/catalog');
+      navigate(EnumRoutesName.CATALOG);
     }
   }, [category, selectedCategory]);
 
   const handleLinkClick = () => {
-    navigate('/catalog');
+    navigate(EnumRoutesName.CATALOG);
   };
 
   return (

@@ -10,13 +10,9 @@ export const ProfileCard = (props: IProfileCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editableUser, setEditableUser] = useState<IUserProfile>(user);
   const [form] = Form.useForm();
-  const { t: tErr } = useTranslation('errors');
-  const { t: tCom } = useTranslation('common');
-  const { t: tUsr } = useTranslation('user');
-  const profileCardFields = getProfileCardFields(tErr, tUsr, editableUser).filter(
-    (field) => field.value,
-  );
-  const profileCardAddressFields = getProfileCardAddressFields(tUsr, editableUser);
+  const { t } = useTranslation();
+  const profileCardFields = getProfileCardFields(t, editableUser).filter((field) => field.value);
+  const profileCardAddressFields = getProfileCardAddressFields(t, editableUser);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -87,7 +83,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
                   />
                 </Form.Item>
               ) : (
-                field.value || `${tUsr('Не указан', { field: field.label })}`
+                field.value || `${t('Не указан', { field: field.label })}`
               )}
             </Descriptions.Item>
           ))}
@@ -95,11 +91,11 @@ export const ProfileCard = (props: IProfileCardProps) => {
       </Form>
       <StyledButtons>
         <Button type={isEditing ? 'default' : 'primary'} onClick={toggleEditMode}>
-          {isEditing ? tCom('Отмена') : tCom('Редактировать')}
+          {isEditing ? t('Отмена') : t('Редактировать')}
         </Button>
         {isEditing && (
           <Button type="primary" onClick={saveChanges}>
-            {tCom('Сохранить')}
+            {t('Сохранить')}
           </Button>
         )}
       </StyledButtons>
