@@ -1,5 +1,4 @@
 import { Card } from 'antd';
-import { IOrderCardProps, IRenderDeliveryDateProps } from '../model/order-card.types';
 import { useTranslation } from 'react-i18next';
 import { useCurrentLanguage } from 'shared/lib';
 import { Link } from 'react-router-dom';
@@ -16,14 +15,15 @@ import {
   StyledTitle,
 } from './order-card.styles';
 import { EnumStatus, StatusButton } from 'shared/ui/buttons';
+import { IOrderCardProps, IRenderDeliveryDateProps } from '../model/order-card.types';
 
 const renderDeliveryDate = (props: IRenderDeliveryDateProps) => {
-  const { delivery_date, estimated_delivery_date, lang, tOrder } = props;
+  const { delivery_date, estimated_delivery_date, lang, t } = props;
 
   if (delivery_date) {
     return (
       <p>
-        {tOrder('Дата доставки:', {
+        {t('Дата доставки:', {
           date: convertDeliveryDate({ date: delivery_date, lang }),
         })}
       </p>
@@ -31,7 +31,7 @@ const renderDeliveryDate = (props: IRenderDeliveryDateProps) => {
   } else if (estimated_delivery_date) {
     return (
       <p>
-        {tOrder('Предполагаемая дата доставки:', {
+        {t('Предполагаемая дата доставки:', {
           date: convertEstimatedDeliveryDate({ date: estimated_delivery_date, lang }),
         })}
       </p>
@@ -40,7 +40,7 @@ const renderDeliveryDate = (props: IRenderDeliveryDateProps) => {
 };
 
 export const OrderCard = (props: IOrderCardProps) => {
-  const { t: tOrder } = useTranslation('order');
+  const { t } = useTranslation();
   const { order } = props;
   const lang = useCurrentLanguage();
 
@@ -52,7 +52,7 @@ export const OrderCard = (props: IOrderCardProps) => {
             <StyledTitle>
               <div>
                 <div>
-                  {tOrder(`Заказ от`, {
+                  {t(`Заказ от`, {
                     date: convertOrderDate({ date: order.order_date, lang }),
                   })}
                 </div>
@@ -60,7 +60,7 @@ export const OrderCard = (props: IOrderCardProps) => {
               </div>
               <p>
                 {order.status !== EnumStatus.cancelled && (
-                  <StyledPaidSpan>{tOrder('Оплачено')}</StyledPaidSpan>
+                  <StyledPaidSpan>{t('Оплачено')}</StyledPaidSpan>
                 )}{' '}
                 <StyledPrice> {`${order.price} ₽`}</StyledPrice>
               </p>
@@ -69,14 +69,14 @@ export const OrderCard = (props: IOrderCardProps) => {
         />
         <StyledContent>
           <StyledStatus>
-            {tOrder('Доставка в пункт выдачи')}
+            {t('Доставка в пункт выдачи')}
             <StatusButton status={EnumStatus[order.status as keyof typeof EnumStatus]} />
           </StyledStatus>
           {renderDeliveryDate({
             delivery_date: order.delivery_date,
             estimated_delivery_date: order.estimated_delivery_date,
             lang,
-            tOrder,
+            t,
             status: order.status,
           })}
         </StyledContent>

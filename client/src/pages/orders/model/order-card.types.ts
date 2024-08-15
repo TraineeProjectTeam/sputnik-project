@@ -9,6 +9,6 @@ export interface IRenderDeliveryDateProps {
   delivery_date: Date | null;
   estimated_delivery_date: Date | null;
   lang: string;
-  tOrder: TFunction<'order', undefined>;
+  t: TFunction;
   status: string;
 }

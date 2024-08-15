@@ -1,4 +1,4 @@
-import { RegisterForm } from "features/register-form";
+import { RegisterForm } from 'widgets/register';
 
 export const RegisterPage = () => {
   return <RegisterForm />;

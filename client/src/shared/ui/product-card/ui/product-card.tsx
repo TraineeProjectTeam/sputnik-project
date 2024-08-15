@@ -18,8 +18,8 @@ import {
   ReviewsCountStyled,
   StyledEditButton,
 } from './product-card.style';
-import { getReviewWordForm } from '../utils/getReviewWordForm';
-import { getDiscount } from '../utils/getDiscount';
+import { getReviewWordForm } from '../utils/get-review-word-form';
+import { getDiscount } from '../utils/get-discount';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { EnumRoutesName } from 'shared/config';
@@ -29,7 +29,7 @@ export const ProductCard = (props: IProductCardProps) => {
   const discount = product.discountPrice ? getDiscount(product.discountPrice, product.price) : 0;
   const { pathname } = useLocation();
   const isEditingProduct = pathname === EnumRoutesName.PRODUCTS_VENDOR;
-  const { t } = useTranslation('product');
+  const { t } = useTranslation();
 
   return (
     <CardStyled

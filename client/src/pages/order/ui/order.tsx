@@ -33,9 +33,9 @@ import { StyledCopyOutlined } from './order.styles';
 import { EnumStatus, StatusButton } from 'shared/ui/buttons';
 import { useProductsStore } from 'entities/product';
 import { getCountProducts } from '../lib/order.lib';
-import { useLoginStore } from 'features/login-forms';
+import { useLoginStore } from 'features/auth';
 
-const renderPickupPointInfo = (t: TFunction<'order', undefined>, currPickupPoint: IMarker) => (
+const renderPickupPointInfo = (t: TFunction, currPickupPoint: IMarker) => (
   <StyledColumnContainer>
     <div>
       <span>
@@ -53,7 +53,7 @@ const renderPickupPointInfo = (t: TFunction<'order', undefined>, currPickupPoint
   </StyledColumnContainer>
 );
 
-const renderUserInfo = (t: TFunction<'common', undefined>, user: ICustomer) => (
+const renderUserInfo = (t: TFunction, user: ICustomer) => (
   <StyledColumnContainer>
     <div>
       <span>
@@ -71,7 +71,7 @@ const renderUserInfo = (t: TFunction<'common', undefined>, user: ICustomer) => (
   </StyledColumnContainer>
 );
 
-const renderPriceInfo = (t: TFunction<'price', undefined>, price: number) => (
+const renderPriceInfo = (t: TFunction, price: number) => (
   <StyledColumnContainer>
     <div>
       <span>
@@ -91,9 +91,7 @@ export const OrderPage = () => {
   const { productsForOrder, isLoadingProductsForOrder } = useProductsStore();
   const { role } = useLoginStore();
   const { pickupPoint, isLoading: isLoadingPickupPoint } = useMapStore();
-  const { t: tOrder } = useTranslation('order');
-  const { t: tCommon } = useTranslation('common');
-  const { t: tProducts } = useTranslation('product');
+  const { t } = useTranslation();
   const { pathname } = useLocation();
   const id = pathname.split('/').pop();
   const lang = useCurrentLanguage();
@@ -105,7 +103,7 @@ export const OrderPage = () => {
       navigator.clipboard
         .writeText(trimmedText)
         .then(() => {
-          message.success(tCommon(`Текст скопирован!`, { text: trimmedText }));
+          message.success(t(`Текст скопирован!`, { text: trimmedText }));
         })
         .catch((errorInfo) => {
           console.log('Validation Failed:', errorInfo);
@@ -128,7 +126,7 @@ export const OrderPage = () => {
   }
 
   if (!order) {
-    return <h2>{tOrder('Нет такого заказа')}</h2>;
+    return <h2>{t('Нет такого заказа')}</h2>;
   }
 
   if (!pickupPoint || !user || !productsForOrder) {
@@ -137,19 +135,19 @@ export const OrderPage = () => {
 
   return (
     <>
-      <Link to={EnumRoutesName.ORDERS}>{tOrder('К списку заказов')}</Link>
+      <Link to={EnumRoutesName.ORDERS}>{t('К списку заказов')}</Link>
       <StyledCard>
         <Card.Meta
           title={
             <>
               <h2>
-                {tOrder('Заказ №', { number: order._id })}
+                {t('Заказ №', { number: order._id })}
                 <Button onClick={onClickButtonCopy}>
                   <StyledCopyOutlined />
                 </Button>
               </h2>
               <p>
-                {tOrder(`Заказ от`, {
+                {t(`Заказ от`, {
                   date: convertOrderDate({ date: order.order_date, lang }),
                 })}
               </p>
@@ -158,14 +156,14 @@ export const OrderPage = () => {
         />
         <StyledContent>
           <StyledColumn>
-            {renderPickupPointInfo(tOrder, pickupPoint)}
-            {renderUserInfo(tCommon, user)}
+            {renderPickupPointInfo(t, pickupPoint)}
+            {renderUserInfo(t, user)}
           </StyledColumn>
-          <StyledColumn>{renderPriceInfo(tOrder, order.price)}</StyledColumn>
+          <StyledColumn>{renderPriceInfo(t, order.price)}</StyledColumn>
         </StyledContent>
         <StyledOrderBlock>
           <StyledPickupPointBlock>
-            <StyledColumnTitle>{tOrder('Доставка в пункт выдачи')}</StyledColumnTitle>
+            <StyledColumnTitle>{t('Доставка в пункт выдачи')}</StyledColumnTitle>
             <div>
               <StatusButton status={EnumStatus[order.status as keyof typeof EnumStatus]} />
             </div>
@@ -173,7 +171,7 @@ export const OrderPage = () => {
           {productsForOrder.length ? (
             <StyledCardsOrder>
               <StyledCardsOrderNums>
-                {productsForOrder.length} {getCountProducts(productsForOrder.length, tProducts)}
+                {productsForOrder.length} {getCountProducts(productsForOrder.length, t)}
               </StyledCardsOrderNums>
               {Object.values(productsForOrder).map((product) => (
                 <StyledCardOrder key={product._id}>
@@ -184,7 +182,7 @@ export const OrderPage = () => {
                   <StyledPrice>{product.price} ₽</StyledPrice>
                   {role === 'Customer' ? (
                     <Button type="primary" onClick={handleAddToCart}>
-                      {tProducts('В корзину')}
+                      {t('В корзину')}
                     </Button>
                   ) : null}
                 </StyledCardOrder>

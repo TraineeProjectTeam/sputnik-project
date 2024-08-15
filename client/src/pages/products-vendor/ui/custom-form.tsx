@@ -5,7 +5,7 @@ import { UploadChangeParam } from 'antd/es/upload';
 import { UploadRequestOption } from 'rc-upload/lib/interface';
 import { StyledModalContent } from './products-vendor.styles';
 import { ChangeEvent } from 'react';
-import { renderFields } from './renderFields';
+import { renderFields } from './render-fields';
 
 export const currentForm = (
   form: FormInstance,

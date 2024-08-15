@@ -3,8 +3,8 @@ import { useOrdersStore } from 'entities/order';
 import { FilterOrders } from 'features/filter-orders';
 import { useEffect } from 'react';
 import { EnumStatus } from 'shared/ui/buttons';
-import { OrderCard } from 'shared/ui/order-card';
 import { StyledListItem } from './orders.styles';
+import { OrderCard } from './order-card';
 
 export const OrdersPage = () => {
   const { orders, getOrders, isLoading, filtredStatus } = useOrdersStore();

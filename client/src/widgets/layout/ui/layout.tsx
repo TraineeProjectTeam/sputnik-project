@@ -4,7 +4,7 @@ import { Header } from './header';
 import { Footer } from './footer';
 import { StyledContainer, StyledContent } from './layout.styles';
 
-export const LayoutComponent = (props: ILayoutProps) => {
+export const LayoutСomponent = (props: ILayoutProps) => {
   const { children } = props;
 
   return (

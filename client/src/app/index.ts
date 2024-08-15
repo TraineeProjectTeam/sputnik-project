@@ -1,2 +1,2 @@
-export { Router, type ICustomRouteProps, getProfileRoutes } from './router';
+export { Router, type ICustomRouteProps } from './router';
 export { App } from './app';

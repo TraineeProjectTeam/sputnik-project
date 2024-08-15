@@ -1,91 +1,68 @@
 import { TFunction } from 'i18next';
 import { IProfileCard, IUserProfile } from '../model/profile-card.types';
-import { EnumRoutesName } from 'shared/config';
-import { getProfileRoutes } from 'app';
 
-const getTranslationProfileLink = (route: string, tCom: TFunction) => {
-  switch (route) {
-    case EnumRoutesName.ORDERS: {
-      return tCom('Заказы');
-    }
-  }
-};
-
-export const getProfileLinks = (tCom: TFunction) => {
-  return getProfileRoutes().map((route) => {
-    return {
-      url: route,
-      label: getTranslationProfileLink(route, tCom),
-    };
-  });
-};
-
-export const getProfileCardFields = (
-  tErr: TFunction,
-  tCom: TFunction,
-  editableUser: IUserProfile,
-): IProfileCard[] => {
+export const getProfileCardFields = (t: TFunction, editableUser: IUserProfile): IProfileCard[] => {
   return [
     {
-      label: tCom('Имя'),
+      label: t('Имя'),
       name: 'first_name',
       value: editableUser.first_name,
       rules: [
         {
           type: 'string',
           required: true,
-          message: tErr('Пожалуйста, введите имя!'),
+          message: t('Пожалуйста, введите имя!'),
         },
       ],
     },
     {
-      label: tCom('Фамилия'),
+      label: t('Фамилия'),
       name: 'last_name',
       value: editableUser.last_name,
       rules: [
         {
           type: 'string',
           required: true,
-          message: tErr('Пожалуйста, введите фамилию!'),
+          message: t('Пожалуйста, введите фамилию!'),
         },
       ],
     },
     {
-      label: tCom('Почта'),
+      label: t('Почта'),
       name: 'email',
       value: editableUser.email,
       rules: [
         {
           required: true,
           type: 'email',
-          message: tErr('Пожалуйста, введите валидную почту!'),
+          message: t('Пожалуйста, введите валидную почту!'),
         },
       ],
     },
     {
-      label: tCom('Номер телефона'),
+      label: t('Номер телефона'),
       name: 'phone_number',
       value: editableUser.phone_number,
       rules: [
         {
           required: true,
-          message: tErr('Пожалуйста, введите номер телефона!'),
+          message: t('Пожалуйста, введите номер телефона!'),
         },
         {
           pattern: /^\+\d{10,15}$/,
-          message: tErr('Номер телефона должен быть в формате +1234567890!'),
+          message: t('Номер телефона должен быть в формате +1234567890!'),
         },
       ],
     },
     {
-      label: tCom('Компания'),
+      label: t('Компания'),
       name: 'company_name',
       value: editableUser.company_name,
       rules: [
         {
           type: 'string',
           required: true,
-          message: tErr('Пожалуйста, введите компанию!'),
+          message: t('Пожалуйста, введите компанию!'),
         },
       ],
     },

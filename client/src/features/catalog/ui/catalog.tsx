@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ICategory, useCategoriesStore } from 'entities/category';
 import { CardStyled, ContainerStyled, ListStyled, NameStyled } from './catalog.styles';
+import { EnumRoutesName } from 'shared/config';
 
 export const Catalog = () => {
-  const [tCategories] = useTranslation(['categories']);
+  const { t } = useTranslation();
 
   const { categories, setSelectedCategory } = useCategoriesStore();
 
@@ -13,13 +14,13 @@ export const Catalog = () => {
 
   const handleCategoryClick = (category: ICategory) => {
     setSelectedCategory(category);
-    navigate(`/catalog/${category.id}`);
+    navigate(`${EnumRoutesName.CATALOG}/${category.id}`);
   };
 
   return (
     <ContainerStyled>
       <ListStyled>
-        {categories(tCategories).map((category) => {
+        {categories(t).map((category) => {
           const createClickHandler = () => {
             handleCategoryClick(category);
           };
