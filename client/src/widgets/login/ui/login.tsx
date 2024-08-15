@@ -2,7 +2,7 @@ import { Typography } from 'antd';
 import { Tabs } from 'antd';
 import { LoginStyled } from './login.styles';
 import { useTranslation } from 'react-i18next';
-import { LoginFormEmail, LoginFormPhone } from './login-forms';
+import { LoginForm } from './login-form';
 
 interface ITab {
   key: string;
@@ -12,16 +12,18 @@ interface ITab {
 
 export const Login = () => {
   const { t } = useTranslation();
+
   const tabs: ITab[] = [
     {
       key: 'phone',
       label: t('По номеру телефона'),
-      children: <LoginFormPhone />,
+
+      children: <LoginForm formType="phone" />,
     },
     {
       key: 'email',
       label: t('По почте'),
-      children: <LoginFormEmail />,
+      children: <LoginForm formType="email" />,
     },
   ];
 

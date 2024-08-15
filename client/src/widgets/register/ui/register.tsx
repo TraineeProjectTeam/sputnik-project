@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { api } from 'shared/api';
 import { IRegisterDetails, IResponseRegister } from '../model/register.types';
 import { ButtonLinkStyled, ButtonWrapperStyled, rulesForFormItems } from 'shared/ui/forms';
-import { WrapperStyled } from './register-form.styles';
+import { WrapperStyled } from './register.styles';
 import { useTranslation } from 'react-i18next';
 import { saveAccessToken, saveRole, saveUserData } from 'shared/lib';
 import { EnumRoutesName } from 'shared/config';

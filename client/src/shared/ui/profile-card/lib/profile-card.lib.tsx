@@ -1,24 +1,5 @@
 import { TFunction } from 'i18next';
 import { IProfileCard, IUserProfile } from '../model/profile-card.types';
-import { EnumRoutesName } from 'shared/config';
-import { getProfileRoutes } from 'app';
-
-const getTranslationProfileLink = (route: string, t: TFunction) => {
-  switch (route) {
-    case EnumRoutesName.ORDERS: {
-      return t('Заказы');
-    }
-  }
-};
-
-export const getProfileLinks = (t: TFunction) => {
-  return getProfileRoutes().map((route) => {
-    return {
-      url: route,
-      label: getTranslationProfileLink(route, t),
-    };
-  });
-};
 
 export const getProfileCardFields = (t: TFunction, editableUser: IUserProfile): IProfileCard[] => {
   return [

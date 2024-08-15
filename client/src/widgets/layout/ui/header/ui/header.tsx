@@ -2,7 +2,6 @@ import { Button, List } from 'antd';
 import { LanguageSelector } from 'entities/language-selector';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
-import { getProfileLinks } from 'shared/ui/profile-card';
 import Cookies from 'js-cookie';
 import { EnumRoutesName } from 'shared/config';
 import { StyledContent, StyledHeader } from './header.styles';
@@ -40,14 +39,9 @@ export const Header = () => {
                 <Link to={EnumRoutesName.PRODUCTS_VENDOR}>{t('Товары')}</Link>
               </>
             )}
-            <List
-              dataSource={getProfileLinks(t)}
-              renderItem={(route) => (
-                <List.Item>
-                  <Link to={route.url}>{route.label}</Link>
-                </List.Item>
-              )}
-            />
+            <List.Item>
+              <Link to={EnumRoutesName.ORDERS}>{t('Заказы')}</Link>
+            </List.Item>
           </>
         )}
       </StyledContent>

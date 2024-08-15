@@ -1,5 +1,4 @@
 import { Card } from 'antd';
-import { IOrderCardProps, IRenderDeliveryDateProps } from '../model/order-card.types';
 import { useTranslation } from 'react-i18next';
 import { useCurrentLanguage } from 'shared/lib';
 import { Link } from 'react-router-dom';
@@ -16,6 +15,7 @@ import {
   StyledTitle,
 } from './order-card.styles';
 import { EnumStatus, StatusButton } from 'shared/ui/buttons';
+import { IOrderCardProps, IRenderDeliveryDateProps } from '../model/order-card.types';
 
 const renderDeliveryDate = (props: IRenderDeliveryDateProps) => {
   const { delivery_date, estimated_delivery_date, lang, t } = props;

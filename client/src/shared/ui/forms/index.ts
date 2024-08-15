@@ -1,2 +1,2 @@
-export * from './ui/form.styles';
-export * from './model/form-rules';
+export * from './ui/forms.styles';
+export * from './model/forms.rules';
