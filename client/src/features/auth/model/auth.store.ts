@@ -1,15 +1,14 @@
 import { create } from 'zustand';
-
-import { api } from 'shared/api';
 import { ICustomer, useCustomerStore } from 'entities/customer';
 import { useVendorStore } from 'entities/vendor';
 import { getCookiesUserData, saveAccessToken, saveRole, saveUserData } from 'shared/lib';
 import Cookies from 'js-cookie';
-import { ILoginEmailDetails, ILoginPhoneDetails, IResponseLogin } from './auth.types';
+import { ILoginEmailDetails, ILoginPhoneDetails } from './auth.types';
+import { loginByEmailRequest, loginByPhoneRequest } from '../api/auth.api';
 
 export interface ILoginStore {
-  loginPhone: (loginDetails: ILoginPhoneDetails) => Promise<IResponseLogin>;
-  loginEmail: (loginDetails: ILoginEmailDetails) => Promise<IResponseLogin>;
+  loginPhone: (loginDetails: ILoginPhoneDetails) => void;
+  loginEmail: (loginDetails: ILoginEmailDetails) => void;
   clearUserStores: () => void;
   user: ICustomer | null;
   error: string;
@@ -39,7 +38,7 @@ export const useLoginStore = create<ILoginStore>((set) => ({
   loginPhone: async (loginDetails) => {
     try {
       set({ loading: true });
-      const { data } = await api.post<IResponseLogin>('/users/loginByPhone', loginDetails);
+      const data = (await loginByPhoneRequest(loginDetails)).data;
       set({ user: data.user });
       switch (loginDetails.role) {
         case 'Customer':
@@ -54,7 +53,6 @@ export const useLoginStore = create<ILoginStore>((set) => ({
       saveRole(loginDetails.role);
       set({ isLogin: true });
       set({ role: loginDetails.role });
-      return data;
     } catch (error: any) {
       set({ user: null });
       throw new Error(error.message);
@@ -62,10 +60,10 @@ export const useLoginStore = create<ILoginStore>((set) => ({
       set({ loading: false });
     }
   },
-  loginEmail: async (loginDetails: ILoginEmailDetails): Promise<IResponseLogin> => {
+  loginEmail: async (loginDetails: ILoginEmailDetails) => {
     try {
       set({ loading: true });
-      const { data } = await api.post<IResponseLogin>('/users/loginByEmail', loginDetails);
+      const data = (await loginByEmailRequest(loginDetails)).data;
       set({ user: data.user });
       switch (loginDetails.role) {
         case 'Customer':
@@ -80,7 +78,6 @@ export const useLoginStore = create<ILoginStore>((set) => ({
       saveRole(loginDetails.role);
       set({ isLogin: true });
       set({ role: loginDetails.role });
-      return data;
     } catch (error: any) {
       set({ user: null });
       throw new Error(error.message);

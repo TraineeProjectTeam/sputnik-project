@@ -3,14 +3,12 @@ import { useCustomerStore } from 'entities/customer';
 import { useVendorStore } from 'entities/vendor';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from 'shared/api';
-import { IRegisterDetails, IResponseRegister } from '../model/register.types';
 import { ButtonLinkStyled, ButtonWrapperStyled, rulesForFormItems } from 'shared/ui/forms';
 import { WrapperStyled } from './register.styles';
 import { useTranslation } from 'react-i18next';
 import { saveAccessToken, saveRole, saveUserData } from 'shared/lib';
 import { EnumRoutesName } from 'shared/config';
-import { useLoginStore } from 'features/auth';
+import { IRegisterDetails, registrationRequest, useLoginStore } from 'features/auth';
 import { initialRegisterFormValues } from '../model/register.constants';
 
 export const RegisterForm = () => {
@@ -34,7 +32,7 @@ export const RegisterForm = () => {
   const onSubmit = async (values: IRegisterDetails) => {
     try {
       setLoading(true);
-      const { data } = await api.post<IResponseRegister>('/users/registration', values);
+      const data = (await registrationRequest(values)).data;
       switch (values.role) {
         case 'Customer':
           setCustomer(data.user, false);

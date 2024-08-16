@@ -24,10 +24,11 @@ export const LoginForm = (props: ILoginForm) => {
   const onSubmit = async (values: ILoginEmailDetails | ILoginPhoneDetails) => {
     try {
       if ('email' in values) {
-        await loginEmail(values);
+        loginEmail(values);
       } else if ('phone_number' in values) {
         loginPhone(values);
       }
+
       switch (values.role) {
         case 'Customer':
           setTimeout(() => navigate(EnumRoutesName.PROFILE_CUSTOMER), 1000);
