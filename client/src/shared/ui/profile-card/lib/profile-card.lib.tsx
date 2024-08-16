@@ -90,7 +90,7 @@ export const getProfileCardAddressFields = (
       value: editableUser.address?.street_number,
       rules: [
         {
-          type: 'number',
+          type: 'string',
         },
       ],
     },

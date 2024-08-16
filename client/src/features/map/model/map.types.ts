@@ -1,12 +1,7 @@
+import { IAdress } from 'shared/ui/forms';
+
 export interface IMapProps {
   markers: IMarker[];
-}
-
-export interface IAdress {
-  region: string;
-  city: string;
-  street_name: string;
-  street_number: string;
 }
 
 export interface IMarker {

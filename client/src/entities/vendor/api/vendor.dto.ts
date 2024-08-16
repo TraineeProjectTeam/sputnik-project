@@ -1,9 +1,4 @@
-interface IAdress {
-  region: string;
-  city: string;
-  street_name: string;
-  street_number: string;
-}
+import { IAdress } from 'shared/ui/forms';
 
 export interface IVendor {
   readonly _id: string;

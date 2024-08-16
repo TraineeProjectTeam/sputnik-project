@@ -118,14 +118,48 @@ export const RegisterForm = () => {
           <Input type="email" placeholder="mail@mail.ru" />
         </Form.Item>
         {selectedRole === 'Vendor' && (
-          <Form.Item
-            label={t('Компания')}
-            name="company_name"
-            rules={rulesForFormItems(t).company_name}
-            validateTrigger="onBlur"
-          >
-            <Input placeholder="Google" />
-          </Form.Item>
+          <>
+            <Form.Item
+              label={t('Компания')}
+              name="company_name"
+              rules={rulesForFormItems(t).company_name}
+              validateTrigger="onBlur"
+            >
+              <Input placeholder="Google" />
+            </Form.Item>
+            <Form.Item
+              label={t('Регион')}
+              name="region"
+              rules={rulesForFormItems(t).region}
+              validateTrigger="onBlur"
+            >
+              <Input placeholder="Томская область" />
+            </Form.Item>
+            <Form.Item
+              label={t('Город')}
+              name="city"
+              rules={rulesForFormItems(t).city}
+              validateTrigger="onBlur"
+            >
+              <Input placeholder="Томск" />
+            </Form.Item>
+            <Form.Item
+              label={t('Улица')}
+              name="street_name"
+              rules={rulesForFormItems(t).street_name}
+              validateTrigger="onBlur"
+            >
+              <Input placeholder="ул.Ленина" />
+            </Form.Item>
+            <Form.Item
+              label={t('Номер дома')}
+              name="street_number"
+              rules={rulesForFormItems(t).street_number}
+              validateTrigger="onBlur"
+            >
+              <Input placeholder="2а" />
+            </Form.Item>
+          </>
         )}
         <Form.Item
           label={t('Пароль')}

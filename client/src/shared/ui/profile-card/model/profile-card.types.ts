@@ -1,11 +1,5 @@
 import { Rule } from 'antd/es/form';
-
-interface IAddress {
-  region: string;
-  city: string;
-  street_name: string;
-  street_number: string;
-}
+import { IAdress } from 'shared/ui/forms';
 
 export interface IProfileCard {
   label: string;
@@ -21,7 +15,7 @@ export interface IUserProfile {
   email: string;
   phone_number: string;
   company_name?: string;
-  address?: IAddress;
+  address?: IAdress;
 }
 
 export interface IProfileCardProps {
