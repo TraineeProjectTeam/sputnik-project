@@ -1,4 +1,4 @@
-import { Button, Form, Input, Radio, Spin, Typography, message } from 'antd';
+import { Button, Form, Input, Radio, RadioChangeEvent, Spin, Typography, message } from 'antd';
 import { useCustomerStore } from 'entities/customer';
 import { useVendorStore } from 'entities/vendor';
 import { useState } from 'react';
@@ -11,11 +11,13 @@ import { useTranslation } from 'react-i18next';
 import { saveAccessToken, saveRole, saveUserData } from 'shared/lib';
 import { EnumRoutesName } from 'shared/config';
 import { useLoginStore } from 'features/auth';
+import { initialRegisterFormValues } from '../model/register.constants';
 
 export const RegisterForm = () => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
+  const [selectedRole, setSelectedRole] = useState<'Customer' | 'Vendor'>('Customer');
 
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
@@ -24,6 +26,10 @@ export const RegisterForm = () => {
   const setVendor = useVendorStore((state) => state.setVendor);
   const setIsLogin = useLoginStore((state) => state.setIsLogin);
   const setRole = useLoginStore((state) => state.setRole);
+
+  const onChangeRole = (e: RadioChangeEvent) => {
+    setSelectedRole(e.target.value);
+  };
 
   const onSubmit = async (values: IRegisterDetails) => {
     try {
@@ -70,6 +76,7 @@ export const RegisterForm = () => {
     <WrapperStyled>
       <Typography.Title>{t('Зарегистрироваться')}</Typography.Title>
       <Form
+        initialValues={initialRegisterFormValues}
         form={form}
         name="register-form"
         onFinish={onSubmit}
@@ -112,6 +119,16 @@ export const RegisterForm = () => {
         >
           <Input type="email" placeholder="mail@mail.ru" />
         </Form.Item>
+        {selectedRole === 'Vendor' && (
+          <Form.Item
+            label={t('Компания')}
+            name="company_name"
+            rules={rulesForFormItems(t).company_name}
+            validateTrigger="onBlur"
+          >
+            <Input placeholder="Google" />
+          </Form.Item>
+        )}
         <Form.Item
           label={t('Пароль')}
           name="password"
@@ -125,7 +142,7 @@ export const RegisterForm = () => {
           label={t('Зарегистрироваться как')}
           rules={rulesForFormItems(t).role}
         >
-          <Radio.Group>
+          <Radio.Group onChange={onChangeRole}>
             <Radio value="Customer">{t('Покупатель')}</Radio>
             <Radio value="Vendor">{t('Продавец')}</Radio>
           </Radio.Group>

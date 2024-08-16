@@ -6,6 +6,7 @@ export interface IRegisterDetails {
   first_name: string;
   last_name: string;
   phone_number: string;
+  company_name?: string;
   email: string;
   password: string;
 }
