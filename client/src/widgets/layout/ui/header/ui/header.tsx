@@ -1,4 +1,4 @@
-import { Button, List } from 'antd';
+import { Button } from 'antd';
 import { LanguageSelector } from 'entities/language-selector';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
