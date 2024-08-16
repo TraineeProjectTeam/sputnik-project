@@ -39,9 +39,7 @@ export const Header = () => {
                 <Link to={EnumRoutesName.PRODUCTS_VENDOR}>{t('Товары')}</Link>
               </>
             )}
-            <List.Item>
-              <Link to={EnumRoutesName.ORDERS}>{t('Заказы')}</Link>
-            </List.Item>
+            <Link to={EnumRoutesName.ORDERS}>{t('Заказы')}</Link>
           </>
         )}
       </StyledContent>
