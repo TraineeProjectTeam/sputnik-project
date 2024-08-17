@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { Descriptions, Button, Input, Form, Avatar } from 'antd';
 import { IProfileCardProps, IUserProfile } from '../model/profile-card.types';
+import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { getProfileCardAddressFields, getProfileCardFields } from '../lib/profile-card.lib';
 import { StyledButtons, StyledCard } from './profile-card.styles';
@@ -13,6 +14,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
   const { t } = useTranslation();
   const profileCardFields = getProfileCardFields(t, editableUser).filter((field) => field.value);
   const profileCardAddressFields = getProfileCardAddressFields(t, editableUser);
+  const role = Cookies.get('role');
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -72,21 +74,22 @@ export const ProfileCard = (props: IProfileCardProps) => {
               )}
             </Descriptions.Item>
           ))}
-          {profileCardAddressFields.map((field) => (
-            <Descriptions.Item label={field.label} key={field.name} span={1}>
-              {isEditing ? (
-                <Form.Item name={field.name} initialValue={field.value}>
-                  <Input
-                    value={field.value}
-                    name={field.name}
-                    onChange={handleInputAddressChange}
-                  />
-                </Form.Item>
-              ) : (
-                field.value || `${t('Не указан', { field: field.label })}`
-              )}
-            </Descriptions.Item>
-          ))}
+          {role === 'Vendor' &&
+            profileCardAddressFields.map((field) => (
+              <Descriptions.Item label={field.label} key={field.name} span={1}>
+                {isEditing ? (
+                  <Form.Item name={field.name} initialValue={field.value}>
+                    <Input
+                      value={field.value}
+                      name={field.name}
+                      onChange={handleInputAddressChange}
+                    />
+                  </Form.Item>
+                ) : (
+                  field.value || `${t('Не указан', { field: field.label })}`
+                )}
+              </Descriptions.Item>
+            ))}
         </Descriptions>
       </Form>
       <StyledButtons>
