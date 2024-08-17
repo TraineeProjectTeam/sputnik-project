@@ -75,7 +75,7 @@ export const getProfileCardAddressFields = (
 ): IProfileCard[] => {
   return [
     {
-      label: t('Адрес.Улица'),
+      label: t('Улица'),
       name: 'street_name',
       value: editableUser.address?.street_name,
       rules: [
@@ -85,7 +85,7 @@ export const getProfileCardAddressFields = (
       ],
     },
     {
-      label: t('Адрес.Номер дома'),
+      label: t('Номер дома'),
       name: 'street_number',
       value: editableUser.address?.street_number,
       rules: [
@@ -95,7 +95,7 @@ export const getProfileCardAddressFields = (
       ],
     },
     {
-      label: t('Адрес.Город'),
+      label: t('Город'),
       name: 'city',
       value: editableUser.address?.city,
       rules: [
@@ -105,7 +105,7 @@ export const getProfileCardAddressFields = (
       ],
     },
     {
-      label: t('Адрес.Регион'),
+      label: t('Регион'),
       name: 'region',
       value: editableUser.address?.region,
       rules: [

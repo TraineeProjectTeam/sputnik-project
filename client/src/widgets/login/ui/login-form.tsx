@@ -24,9 +24,9 @@ export const LoginForm = (props: ILoginForm) => {
   const onSubmit = async (values: ILoginEmailDetails | ILoginPhoneDetails) => {
     try {
       if ('email' in values) {
-        loginEmail(values);
+        await loginEmail(values);
       } else if ('phone_number' in values) {
-        loginPhone(values);
+        await loginPhone(values);
       }
 
       switch (values.role) {
