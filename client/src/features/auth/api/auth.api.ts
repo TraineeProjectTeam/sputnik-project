@@ -14,7 +14,6 @@ export const registrationRequest = async (
   values: IRegisterDetails,
 ): AxiosPromise<IResponseRegister> => {
   const response = await api.post<IResponseRegister>(`${BASE_URL}/registration`, values);
-  console.log(values);
   return response;
 };
 

@@ -8,7 +8,12 @@ import { WrapperStyled } from './register.styles';
 import { useTranslation } from 'react-i18next';
 import { saveAccessToken, saveRole, saveUserData } from 'shared/lib';
 import { EnumRoutesName } from 'shared/config';
-import { IRegisterDetails, registrationRequest, useLoginStore } from 'features/auth';
+import {
+  IRegisterDetails,
+  IRegisterFormValues,
+  registrationRequest,
+  useLoginStore,
+} from 'features/auth';
 import { initialRegisterFormValues } from '../model/register.constants';
 
 export const RegisterForm = () => {
@@ -29,19 +34,39 @@ export const RegisterForm = () => {
     setSelectedRole(e.target.value);
   };
 
-  const onSubmit = async (values: IRegisterDetails) => {
+  const onSubmit = async (values: IRegisterFormValues) => {
     try {
+      const dataForRequest: IRegisterDetails =
+        values.role === 'Customer'
+          ? values
+          : {
+              first_name: values.first_name,
+              last_name: values.last_name,
+              phone_number: values.phone_number,
+              email: values.email,
+              role: values.role,
+              password: values.password,
+              address: {
+                region: values.region || '',
+                city: values.city || '',
+                street_name: values.street_name || '',
+                street_number: values.street_number || '',
+              },
+              company_name: values.company_name || '',
+            };
       setLoading(true);
-      const data = (await registrationRequest(values)).data;
+      const data = (await registrationRequest(dataForRequest)).data;
       switch (values.role) {
         case 'Customer':
           setCustomer(data.user, false);
           setTimeout(() => navigate(EnumRoutesName.PROFILE_CUSTOMER), 1000);
           break;
         case 'Vendor':
-          setVendor(data.user, false);
-          setTimeout(() => navigate(EnumRoutesName.PROFILE_VENDOR), 1000);
-          break;
+          if ('company_name' in data.user && 'address' in data.user) {
+            setVendor(data.user, false);
+            setTimeout(() => navigate(EnumRoutesName.PROFILE_VENDOR), 1000);
+            break;
+          }
       }
       saveAccessToken(data.access_token);
       saveUserData(data.user);

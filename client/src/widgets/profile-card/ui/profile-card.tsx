@@ -1,20 +1,25 @@
 import { ChangeEvent, useState } from 'react';
 import { Descriptions, Button, Input, Form, Avatar } from 'antd';
-import { IProfileCardProps, IUserProfile } from '../model/profile-card.types';
-import Cookies from 'js-cookie';
+import { IProfileCardProps } from '../model/profile-card.types';
 import { useTranslation } from 'react-i18next';
-import { getProfileCardAddressFields, getProfileCardFields } from '../lib/profile-card.lib';
+import { getProfileVendorFields, getProfileCardFields } from '../lib/profile-card.lib';
 import { StyledButtons, StyledCard } from './profile-card.styles';
+import { useLoginStore } from 'features/auth';
+import { IVendor } from 'entities/vendor';
+import { ICustomer } from 'entities/customer';
 
 export const ProfileCard = (props: IProfileCardProps) => {
   const { title, user, callback } = props;
   const [isEditing, setIsEditing] = useState(false);
-  const [editableUser, setEditableUser] = useState<IUserProfile>(user);
+  const [editableUser, setEditableUser] = useState<IVendor | ICustomer>(user);
   const [form] = Form.useForm();
+  const { role } = useLoginStore();
   const { t } = useTranslation();
-  const profileCardFields = getProfileCardFields(t, editableUser).filter((field) => field.value);
-  const profileCardAddressFields = getProfileCardAddressFields(t, editableUser);
-  const role = Cookies.get('role');
+  const profileCardFields = getProfileCardFields(t, editableUser).filter((field) => field.name);
+  const profileVendorFields = getProfileVendorFields(
+    t,
+    'company_name' in editableUser && 'address' in editableUser ? editableUser : null,
+  );
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -23,7 +28,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
 
   const handleInputAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (editableUser.address) {
+    if ('address' in editableUser) {
       setEditableUser({
         ...editableUser,
         address: {
@@ -75,7 +80,7 @@ export const ProfileCard = (props: IProfileCardProps) => {
             </Descriptions.Item>
           ))}
           {role === 'Vendor' &&
-            profileCardAddressFields.map((field) => (
+            profileVendorFields.map((field) => (
               <Descriptions.Item label={field.label} key={field.name} span={1}>
                 {isEditing ? (
                   <Form.Item name={field.name} initialValue={field.value}>

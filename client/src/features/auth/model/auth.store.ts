@@ -5,6 +5,7 @@ import { getCookiesUserData, saveAccessToken, saveRole, saveUserData } from 'sha
 import Cookies from 'js-cookie';
 import { ILoginEmailDetails, ILoginPhoneDetails } from './auth.types';
 import { loginByEmailRequest, loginByPhoneRequest } from '../api/auth.api';
+import { TypeRole } from 'shared/config';
 
 export interface ILoginStore {
   loginPhone: (loginDetails: ILoginPhoneDetails) => void;
@@ -14,9 +15,9 @@ export interface ILoginStore {
   error: string;
   loading: boolean;
   isLogin: boolean;
-  role: string | null;
+  role: TypeRole | null;
   setIsLogin: (isLogin: boolean) => void;
-  setRole: (role: 'Customer' | 'Vendor') => void;
+  setRole: (role: TypeRole) => void;
 }
 
 export const useLoginStore = create<ILoginStore>((set) => ({
@@ -24,7 +25,7 @@ export const useLoginStore = create<ILoginStore>((set) => ({
   error: 'Не удалось совершить попытку входа! Пожалуйста, попробуйте еще раз.',
   loading: false,
   isLogin: Cookies.get('access_token') ? true : false,
-  role: Cookies.get('role') || null,
+  role: (Cookies.get('role') as TypeRole) || null,
   setIsLogin: (isLogin) => {
     set({ isLogin });
   },

@@ -1,13 +1,16 @@
-import { useCustomerStore } from 'entities/customer';
+import { ICustomer, useCustomerStore } from 'entities/customer';
+import { IVendor } from 'entities/vendor';
 import { useTranslation } from 'react-i18next';
-import { IUserProfile, ProfileCard } from 'shared/ui/profile-card';
+import { ProfileCard } from 'widgets/profile-card';
 
 export const ProfileCustomerPage = () => {
   const { user, setCustomer } = useCustomerStore();
   const { t: t } = useTranslation('common');
 
-  const changeCustomerData = (newData: IUserProfile) => {
-    setCustomer(newData, true);
+  const changeCustomerData = (user: ICustomer | IVendor) => {
+    if (!('company_name' in user && 'address' in user)) {
+      setCustomer(user, true);
+    }
   };
 
   if (!user) {
