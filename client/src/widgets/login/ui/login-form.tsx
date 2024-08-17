@@ -85,10 +85,15 @@ export const LoginForm = (props: ILoginForm) => {
           <Input type="tel" placeholder="+12345678901" />
         </Form.Item>
       )}
-      <Form.Item label={t('Пароль')} name="password" rules={rulesForFormItems(t).password}>
+      <Form.Item
+        validateTrigger="onBlur"
+        label={t('Пароль')}
+        name="password"
+        rules={rulesForFormItems(t).password}
+      >
         <Input.Password autoComplete="on" />
       </Form.Item>
-      <Form.Item name="role" label={t('Войти как')}>
+      <Form.Item name="role" label={t('Войти как')} validateTrigger="onBlur">
         <Radio.Group>
           <Radio value="Customer">{t('Покупатель')}</Radio>
           <Radio value="Vendor">{t('Продавец')}</Radio>
