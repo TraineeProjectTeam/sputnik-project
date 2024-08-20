@@ -1,3 +1,4 @@
+import { IProduct } from 'entities/product';
 import { IAdress } from 'shared/ui/forms';
 
 export interface IVendor {
@@ -8,4 +9,5 @@ export interface IVendor {
   company_name: string;
   phone_number: string;
   address: IAdress;
+  catalogue: IProduct[];
 }

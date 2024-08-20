@@ -46,8 +46,10 @@ export const useLoginStore = create<ILoginStore>((set) => ({
           useCustomerStore.getState().setCustomer(data.user, false);
           break;
         case 'Vendor':
-          useVendorStore.getState().setVendor(data.user, false);
-          break;
+          if ('company_name' in data.user) {
+            useVendorStore.getState().setVendor(data.user, false);
+            break;
+          }
       }
       saveAccessToken(data.access_token);
       saveUserData(data.user);
@@ -71,8 +73,10 @@ export const useLoginStore = create<ILoginStore>((set) => ({
           useCustomerStore.getState().setCustomer(data.user, false);
           break;
         case 'Vendor':
-          useVendorStore.getState().setVendor(data.user, false);
-          break;
+          if ('company_name' in data.user) {
+            useVendorStore.getState().setVendor(data.user, false);
+            break;
+          }
       }
       saveAccessToken(data.access_token);
       saveUserData(data.user);
