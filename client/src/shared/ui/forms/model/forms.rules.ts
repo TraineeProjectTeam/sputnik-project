@@ -69,5 +69,35 @@ export const rulesForFormItems = (t: TFunction): IRulesForFormItems => {
         message: t('Пожалуйста, выберите роль!'),
       },
     ],
+    company_name: [
+      {
+        required: true,
+        message: t('Пожалуйста, введите компанию!'),
+      },
+    ],
+    region: [
+      {
+        required: true,
+        message: t('Пожалуйста, введите регион!'),
+      },
+    ],
+    city: [
+      {
+        required: true,
+        message: t('Пожалуйста, введите город!'),
+      },
+    ],
+    street_name: [
+      {
+        required: true,
+        message: t('Пожалуйста, введите улицу!'),
+      },
+    ],
+    street_number: [
+      {
+        required: true,
+        message: t('Пожалуйста, введите номер дома!'),
+      },
+    ],
   };
 };

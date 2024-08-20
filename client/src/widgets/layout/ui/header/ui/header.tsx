@@ -1,4 +1,4 @@
-import { Button, List } from 'antd';
+import { Button } from 'antd';
 import { LanguageSelector } from 'entities/language-selector';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
@@ -39,9 +39,7 @@ export const Header = () => {
                 <Link to={EnumRoutesName.PRODUCTS_VENDOR}>{t('Товары')}</Link>
               </>
             )}
-            <List.Item>
-              <Link to={EnumRoutesName.ORDERS}>{t('Заказы')}</Link>
-            </List.Item>
+            <Link to={EnumRoutesName.ORDERS}>{t('Заказы')}</Link>
           </>
         )}
       </StyledContent>

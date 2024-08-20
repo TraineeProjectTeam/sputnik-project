@@ -1,21 +1,26 @@
-import { Button, Form, Input, Radio, Spin, Typography, message } from 'antd';
+import { Button, Form, Input, Radio, RadioChangeEvent, Spin, Typography, message } from 'antd';
 import { useCustomerStore } from 'entities/customer';
 import { useVendorStore } from 'entities/vendor';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from 'shared/api';
-import { IRegisterDetails, IResponseRegister } from '../model/register.types';
 import { ButtonLinkStyled, ButtonWrapperStyled, rulesForFormItems } from 'shared/ui/forms';
 import { WrapperStyled } from './register.styles';
 import { useTranslation } from 'react-i18next';
 import { saveAccessToken, saveRole, saveUserData } from 'shared/lib';
 import { EnumRoutesName } from 'shared/config';
-import { useLoginStore } from 'features/auth';
+import {
+  IRegisterDetails,
+  IRegisterFormValues,
+  registrationRequest,
+  useLoginStore,
+} from 'features/auth';
+import { initialRegisterFormValues } from '../model/register.constants';
 
 export const RegisterForm = () => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
+  const [selectedRole, setSelectedRole] = useState<'Customer' | 'Vendor'>('Customer');
 
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
@@ -25,19 +30,43 @@ export const RegisterForm = () => {
   const setIsLogin = useLoginStore((state) => state.setIsLogin);
   const setRole = useLoginStore((state) => state.setRole);
 
-  const onSubmit = async (values: IRegisterDetails) => {
+  const onChangeRole = (e: RadioChangeEvent) => {
+    setSelectedRole(e.target.value);
+  };
+
+  const onSubmit = async (values: IRegisterFormValues) => {
     try {
+      const dataForRequest: IRegisterDetails =
+        values.role === 'Customer'
+          ? values
+          : {
+              first_name: values.first_name,
+              last_name: values.last_name,
+              phone_number: values.phone_number,
+              email: values.email,
+              role: values.role,
+              password: values.password,
+              address: {
+                region: values.region || '',
+                city: values.city || '',
+                street_name: values.street_name || '',
+                street_number: values.street_number || '',
+              },
+              company_name: values.company_name || '',
+            };
       setLoading(true);
-      const { data } = await api.post<IResponseRegister>('/users/registration', values);
+      const data = (await registrationRequest(dataForRequest)).data;
       switch (values.role) {
         case 'Customer':
           setCustomer(data.user, false);
           setTimeout(() => navigate(EnumRoutesName.PROFILE_CUSTOMER), 1000);
           break;
         case 'Vendor':
-          setVendor(data.user, false);
-          setTimeout(() => navigate(EnumRoutesName.PROFILE_VENDOR), 1000);
-          break;
+          if ('company_name' in data.user && 'address' in data.user) {
+            setVendor(data.user, false);
+            setTimeout(() => navigate(EnumRoutesName.PROFILE_VENDOR), 1000);
+            break;
+          }
       }
       saveAccessToken(data.access_token);
       saveUserData(data.user);
@@ -70,6 +99,7 @@ export const RegisterForm = () => {
     <WrapperStyled>
       <Typography.Title>{t('Зарегистрироваться')}</Typography.Title>
       <Form
+        initialValues={initialRegisterFormValues}
         form={form}
         name="register-form"
         onFinish={onSubmit}
@@ -112,6 +142,50 @@ export const RegisterForm = () => {
         >
           <Input type="email" placeholder="mail@mail.ru" />
         </Form.Item>
+        {selectedRole === 'Vendor' && (
+          <>
+            <Form.Item
+              label={t('Компания')}
+              name="company_name"
+              rules={rulesForFormItems(t).company_name}
+              validateTrigger="onBlur"
+            >
+              <Input placeholder="Google" />
+            </Form.Item>
+            <Form.Item
+              label={t('Регион')}
+              name="region"
+              rules={rulesForFormItems(t).region}
+              validateTrigger="onBlur"
+            >
+              <Input placeholder="Томская область" />
+            </Form.Item>
+            <Form.Item
+              label={t('Город')}
+              name="city"
+              rules={rulesForFormItems(t).city}
+              validateTrigger="onBlur"
+            >
+              <Input placeholder="Томск" />
+            </Form.Item>
+            <Form.Item
+              label={t('Улица')}
+              name="street_name"
+              rules={rulesForFormItems(t).street_name}
+              validateTrigger="onBlur"
+            >
+              <Input placeholder="ул.Ленина" />
+            </Form.Item>
+            <Form.Item
+              label={t('Номер дома')}
+              name="street_number"
+              rules={rulesForFormItems(t).street_number}
+              validateTrigger="onBlur"
+            >
+              <Input placeholder="2а" />
+            </Form.Item>
+          </>
+        )}
         <Form.Item
           label={t('Пароль')}
           name="password"
@@ -125,7 +199,7 @@ export const RegisterForm = () => {
           label={t('Зарегистрироваться как')}
           rules={rulesForFormItems(t).role}
         >
-          <Radio.Group>
+          <Radio.Group onChange={onChangeRole}>
             <Radio value="Customer">{t('Покупатель')}</Radio>
             <Radio value="Vendor">{t('Продавец')}</Radio>
           </Radio.Group>

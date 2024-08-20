@@ -1,7 +1,12 @@
 import { TFunction } from 'i18next';
-import { IProfileCard, IUserProfile } from '../model/profile-card.types';
+import { IProfileCard } from '../model/profile-card.types';
+import { IVendor } from 'entities/vendor';
+import { ICustomer } from 'entities/customer';
 
-export const getProfileCardFields = (t: TFunction, editableUser: IUserProfile): IProfileCard[] => {
+export const getProfileCardFields = (
+  t: TFunction,
+  editableUser: IVendor | ICustomer,
+): IProfileCard[] => {
   return [
     {
       label: t('Имя'),
@@ -54,10 +59,18 @@ export const getProfileCardFields = (t: TFunction, editableUser: IUserProfile): 
         },
       ],
     },
+  ];
+};
+
+export const getProfileVendorFields = (
+  t: TFunction,
+  editableUser: IVendor | null,
+): IProfileCard[] => {
+  return [
     {
       label: t('Компания'),
       name: 'company_name',
-      value: editableUser.company_name,
+      value: editableUser?.company_name,
       rules: [
         {
           type: 'string',
@@ -66,18 +79,10 @@ export const getProfileCardFields = (t: TFunction, editableUser: IUserProfile): 
         },
       ],
     },
-  ];
-};
-
-export const getProfileCardAddressFields = (
-  t: TFunction,
-  editableUser: IUserProfile,
-): IProfileCard[] => {
-  return [
     {
-      label: t('Адрес.Улица'),
+      label: t('Улица'),
       name: 'street_name',
-      value: editableUser.address?.street_name,
+      value: editableUser?.address.street_name,
       rules: [
         {
           type: 'string',
@@ -85,19 +90,9 @@ export const getProfileCardAddressFields = (
       ],
     },
     {
-      label: t('Адрес.Номер дома'),
+      label: t('Номер дома'),
       name: 'street_number',
-      value: editableUser.address?.street_number,
-      rules: [
-        {
-          type: 'number',
-        },
-      ],
-    },
-    {
-      label: t('Адрес.Город'),
-      name: 'city',
-      value: editableUser.address?.city,
+      value: editableUser?.address.street_number,
       rules: [
         {
           type: 'string',
@@ -105,9 +100,19 @@ export const getProfileCardAddressFields = (
       ],
     },
     {
-      label: t('Адрес.Регион'),
+      label: t('Город'),
+      name: 'city',
+      value: editableUser?.address.city,
+      rules: [
+        {
+          type: 'string',
+        },
+      ],
+    },
+    {
+      label: t('Регион'),
       name: 'region',
-      value: editableUser.address?.region,
+      value: editableUser?.address.region,
       rules: [
         {
           type: 'string',

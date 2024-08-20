@@ -1,11 +1,9 @@
 import Cookies from 'js-cookie';
-import { setToken } from 'shared/api/base';
 import { ICustomer } from 'entities/customer';
 import { IVendor } from 'entities/vendor';
 
 export const saveAccessToken = (token: string) => {
   Cookies.set('access_token', token, { expires: 1 });
-  setToken();
 };
 
 export const saveUserData = (user: ICustomer | IVendor) => {

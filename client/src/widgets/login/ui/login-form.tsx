@@ -26,8 +26,9 @@ export const LoginForm = (props: ILoginForm) => {
       if ('email' in values) {
         await loginEmail(values);
       } else if ('phone_number' in values) {
-        loginPhone(values);
+        await loginPhone(values);
       }
+
       switch (values.role) {
         case 'Customer':
           setTimeout(() => navigate(EnumRoutesName.PROFILE_CUSTOMER), 1000);
@@ -84,10 +85,15 @@ export const LoginForm = (props: ILoginForm) => {
           <Input type="tel" placeholder="+12345678901" />
         </Form.Item>
       )}
-      <Form.Item label={t('Пароль')} name="password">
+      <Form.Item
+        validateTrigger="onBlur"
+        label={t('Пароль')}
+        name="password"
+        rules={rulesForFormItems(t).password}
+      >
         <Input.Password autoComplete="on" />
       </Form.Item>
-      <Form.Item name="role" label={t('Войти как')}>
+      <Form.Item name="role" label={t('Войти как')} validateTrigger="onBlur">
         <Radio.Group>
           <Radio value="Customer">{t('Покупатель')}</Radio>
           <Radio value="Vendor">{t('Продавец')}</Radio>

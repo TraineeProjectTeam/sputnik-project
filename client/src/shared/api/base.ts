@@ -5,17 +5,15 @@ const apiInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-export const setToken = () => {
-  apiInstance.interceptors.request.use(
-    (config) => {
-      const token = Cookies.get('access_token');
-      config.headers.Authorization = token ? `Bearer ${token}` : '';
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    },
-  );
-};
+apiInstance.interceptors.request.use(
+  (config) => {
+    const token = Cookies.get('access_token');
+    config.headers.Authorization = token ? `Bearer ${token}` : undefined;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
 export default apiInstance;

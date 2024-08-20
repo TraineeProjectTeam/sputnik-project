@@ -1,23 +1,28 @@
-import { useVendorStore } from 'entities/vendor';
+import { ICustomer } from 'entities/customer';
+import { IVendor, useVendorStore } from 'entities/vendor';
 import { useTranslation } from 'react-i18next';
-import { IUserProfile, ProfileCard } from 'shared/ui/profile-card';
+import { ProfileCard } from 'widgets/profile-card';
 
 export const ProfileVendorPage = () => {
   const { t: t } = useTranslation();
   const { user, setVendor } = useVendorStore();
 
-  const changeVendorData = (newData: IUserProfile) => {
-    const vendorData = {
-      ...newData,
-      company_name: newData.company_name || '',
-      address: {
-        region: newData.address?.region || '',
-        city: newData.address?.city || '',
-        street_name: newData.address?.street_name || '',
-        street_number: newData.address?.street_number || '',
-      },
-    };
-    setVendor(vendorData, true);
+  const changeVendorData = (user: IVendor | ICustomer) => {
+    if ('company_name' in user && 'address' in user) {
+      setVendor(
+        {
+          ...user,
+          company_name: user.company_name,
+          address: {
+            region: user.address?.region,
+            city: user.address?.city,
+            street_name: user.address?.street_name,
+            street_number: user.address?.street_number,
+          },
+        },
+        true,
+      );
+    }
   };
 
   if (!user) {
