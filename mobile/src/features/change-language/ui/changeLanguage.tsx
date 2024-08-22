@@ -24,20 +24,15 @@ const languageList = [
 ];
 
 export const ChangeLanguageButton = () => {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const languageCode = storage.getString('language');
+  const index = languageList.findIndex((x) => x.languageCode === languageCode);
+  const [selectedIndex, setSelectedIndex] = React.useState(index);
   const { i18n } = useTranslation();
 
   const changeLanguageHandler = (language: LanguageList) => {
     i18n.changeLanguage(language);
     storage.set('language', language);
   };
-
-  useEffect(() => {
-    const languageCode = storage.getString('language');
-    i18n.changeLanguage(languageCode);
-    const index = languageList.findIndex((x) => x.languageCode === languageCode);
-    setSelectedIndex(index);
-  }, []);
 
   return (
     <RadioGroup
