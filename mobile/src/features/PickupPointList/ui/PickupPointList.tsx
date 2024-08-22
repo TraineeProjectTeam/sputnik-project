@@ -1,34 +1,21 @@
-import React from 'react';
-import {
-  Dimensions,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-
+import React, { RefObject } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Radio, RadioGroup } from '@ui-kitten/components';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import { usePickupPointStore } from '@/entities/PickupPoint';
-import { Colors } from '@/shared/libs/colors';
-import { CloseIcon } from '@/shared/libs/icons';
 import { TextStyles } from '@/shared/libs/textStyles';
-
-const windowHeight = Dimensions.get('window').height;
+import { CustomModal } from '@/shared/ui/CustomModal';
 
 interface PickupPointListProps {
-  isVisible: boolean;
-  close: () => void;
+  refer: RefObject<BottomSheetModal>;
   selectedIndex: number;
   handleChangeRadio: (index: number) => void;
 }
 
 export const PickupPointList: React.FC<PickupPointListProps> = ({
-  isVisible,
-  close,
+  refer,
   selectedIndex,
   handleChangeRadio,
 }) => {
@@ -36,39 +23,21 @@ export const PickupPointList: React.FC<PickupPointListProps> = ({
   const { t } = useTranslation();
 
   return (
-    <Modal
-      animationType="slide"
-      transparent
-      visible={isVisible}
-      onRequestClose={close}
-      style={styles.modal}
-    >
-      <View style={{ ...styles.transparentBg, height: windowHeight }}>
-        <View style={{ ...styles.bottomSheet, height: windowHeight * 0.4 }}>
-          <View style={styles.header}>
-            <Text style={TextStyles.h6}>{t('Выберите адрес доставки')}</Text>
-            <TouchableOpacity onPress={close}>
-              <CloseIcon size={24} color={Colors.Basic700} />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <ScrollView>
-              <RadioGroup selectedIndex={selectedIndex} onChange={handleChangeRadio}>
-                {pickupPoints.map((pickupPoint) => (
-                  <Radio key={pickupPoint._id} style={styles.radio}>
-                    <View>
-                      <Text style={TextStyles.p1}>
-                        {`${pickupPoint.address.city}, ${pickupPoint.address.street_name}, ${pickupPoint.address.street_number}`}
-                      </Text>
-                    </View>
-                  </Radio>
-                ))}
-              </RadioGroup>
-            </ScrollView>
-          </View>
-        </View>
-      </View>
-    </Modal>
+    <CustomModal refer={refer} title={t('Выберите адрес доставки')}>
+      <ScrollView>
+        <RadioGroup selectedIndex={selectedIndex} onChange={handleChangeRadio}>
+          {pickupPoints.map((pickupPoint) => (
+            <Radio key={pickupPoint._id} style={styles.radio}>
+              <View>
+                <Text style={TextStyles.p1}>
+                  {`${pickupPoint.address.city}, ${pickupPoint.address.street_name}, ${pickupPoint.address.street_number}`}
+                </Text>
+              </View>
+            </Radio>
+          ))}
+        </RadioGroup>
+      </ScrollView>
+    </CustomModal>
   );
 };
 
