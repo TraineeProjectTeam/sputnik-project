@@ -7,7 +7,7 @@ import { Colors } from '../libs/colors';
 import { TextStyles } from '../libs/textStyles';
 import { useAppNavigation } from '../libs/useAppNavigation';
 
-export const HeaderBack = ({ title }: { title: string }) => {
+export const HeaderBack = ({ title }: { title?: string }) => {
   const navigation = useAppNavigation();
 
   const navigateBack = () => {

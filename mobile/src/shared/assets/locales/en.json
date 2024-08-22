@@ -11,6 +11,12 @@
   "Выберите адрес доставки": "Select delivery address",
   "Пункт выдачи:": "Pick-up point:",
   "Загрузка...": "Loading...",
+  "Сортировка": "Sorting",
+  "Фильтры": "Filters",
+  "Категории": "Category",
+  "Цена": "Price",
+  "Товары рейтингом выше": "Items rated above",
+  "Применить": "Submit",
   "Order": {
     "Оценить товар": "Rate the product",
     "Получатель": "Recipient",
