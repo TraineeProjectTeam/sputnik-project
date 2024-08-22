@@ -11,6 +11,7 @@ export enum Screens {
   REGISTRATION = 'Registration',
   CATALOG_SCREEN = 'CatalogScreen',
   CART = 'Cart',
+  PRODUCTS = 'Products',
   PRODUCT = 'Product',
   ACCOUNT_SCREEN = 'AccountScreen',
   LANGUAGE = 'Language',
@@ -22,4 +23,5 @@ export enum Screens {
   CREATE_REVIEW = 'CreateReview',
   EDIT_REVIEW = 'EditReview',
   FAVORITES = 'Favorites',
+  FILTERS = 'Filters',
 }
