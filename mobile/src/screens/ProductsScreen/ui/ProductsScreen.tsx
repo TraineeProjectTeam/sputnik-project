@@ -1,39 +1,105 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Layout } from '@ui-kitten/components';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
+import { CatalogStackParams } from '@/app/navigation/navigationTypes';
 import { ProductList } from '@/widgets/ProductList';
-
-import { useUserFormStore } from '@/features/user-form';
-
-import { useCartStore } from '@/entities/Cart';
+import { SortList } from '@/features/SortList';
+import { FilterList } from '@/features/FilterList';
 import { useProductStore } from '@/entities/Product';
-import { useFavoriteStore } from '@/entities/Favorite';
 
-import { PageSpinner } from '@/shared/ui/PageSpinner';
-import { storage } from '@/shared/libs/storage';
+import { TextStyles } from '@/shared/libs/textStyles';
+import { FilterIcon, SortIcon } from '@/shared/libs/icons';
+import { Colors } from '@/shared/libs/colors';
+import { useAppNavigation } from '@/shared/libs/useAppNavigation';
+import { Screens } from '@/app/navigation/navigationEnum';
+import { useTranslation } from 'react-i18next';
 
-export const ProductsScreen = () => {
-  const { products, getProducts, isLoading } = useProductStore();
-  const { getUser } = useUserFormStore();
-  const { setFavoriteIds } = useFavoriteStore();
-  const { setProductsIds } = useCartStore();
+type Props = NativeStackScreenProps<CatalogStackParams, 'Products'>;
 
-  const isAuth = storage.contains('access_token');
+export const ProductsScreen: React.FC<Props> = ({ route }) => {
+  const { category } = route.params;
+  const {
+    products,
+    isLoading,
+    getProducts,
+    totalPages,
+    currentPage,
+    refreshProducts,
+    onEndReached,
+    reset,
+    filters,
+  } = useProductStore();
+
+  const navigation = useAppNavigation();
+  const { t } = useTranslation();
 
   useEffect(() => {
-    if (isAuth) {
-      const getData = async () => {
-        const data = await getUser();
-        setFavoriteIds(data.featured);
-        setProductsIds(data.cart);
-      };
-      getData();
-    }
-    getProducts();
+    getProducts({ ...filters, category, sortBy: 'reviews_count', order: 'desc' });
+
+    const onLeave = navigation.addListener('beforeRemove', () => {
+      reset();
+    });
+    return onLeave;
   }, []);
 
-  if (isLoading) {
-    return <PageSpinner />;
-  }
+  const getMoreData = () => {
+    const hasMore = totalPages > currentPage;
+    if (!isLoading && hasMore) {
+      onEndReached();
+    }
+  };
 
-  return <ProductList products={products} isLoading={isLoading} refreshProducts={getProducts} />;
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+
+  const navigateToFilters = () => {
+    navigation.navigate(Screens.FILTERS);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Layout style={styles.buttonsLayout}>
+        <Pressable onPress={handlePresentModalPress} style={styles.pressable}>
+          <SortIcon size={24} color={Colors.Primary600} />
+          <Text style={TextStyles.s2}>{t('Сортировка')}</Text>
+        </Pressable>
+        <Pressable onPress={navigateToFilters} style={styles.pressable}>
+          <FilterIcon size={24} color={Colors.Primary600} />
+          <Text style={TextStyles.s2}>{t('Фильтры')}</Text>
+        </Pressable>
+      </Layout>
+      <ProductList
+        products={products}
+        isLoading={isLoading}
+        refreshProducts={refreshProducts}
+        onEndReached={getMoreData}
+      />
+      <SortList refer={bottomSheetModalRef} />
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  buttonsLayout: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+  },
+  pressable: {
+    paddingBottom: 5,
+    paddingHorizontal: 15,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});

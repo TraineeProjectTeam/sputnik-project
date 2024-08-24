@@ -92,6 +92,21 @@ export interface ICartProduct {
   quantity: number;
 }
 
+export interface IFilters {
+  category?: string;
+  characteristics: ICharacteristic[];
+  rating?: number;
+  min: number;
+  max: number;
+  order?: string;
+  sortBy?: string;
+}
+
+export interface ICharacteristic {
+  values: string[];
+  characteristic: string;
+}
+
 export enum OrderStatus {
   ACTIVE = 'active',
   ON_THE_WAY = 'on the way',

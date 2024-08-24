@@ -7,6 +7,7 @@ export type RootStackParamList = {
   Catalog: NavigatorScreenParams<CatalogStackParams>;
   Account: NavigatorScreenParams<AccountStackParams>;
   Cart: undefined;
+  Filters: undefined;
 };
 
 export type MainTabsStackParams = {
@@ -34,8 +35,13 @@ export type AccountStackParams = {
 
 export type CatalogStackParams = {
   CatalogScreen: undefined;
+  Products: IProductsPageParams;
   Product: IProductPageParams;
   ProductReviews: IProductReviewPageParams;
+};
+
+export type IProductsPageParams = {
+  category: string;
 };
 
 export type IOrderPageParams = {

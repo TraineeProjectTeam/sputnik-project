@@ -78,3 +78,11 @@ export const EmojiIcon = ({ size, color }: IconProps) => (
 export const LocationIcon = ({ size, color }: IconProps) => (
   <Icon name="location-on" size={size} color={color} />
 );
+
+export const SortIcon = ({ size, color }: IconProps) => (
+  <Icon name="swap-vert" size={size} color={color} />
+);
+
+export const FilterIcon = ({ size, color }: IconProps) => (
+  <Icon name="filter-alt" size={size} color={color} />
+);

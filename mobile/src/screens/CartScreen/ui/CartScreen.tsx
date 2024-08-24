@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import { CartProductList } from '@/widgets/CartProductList';
 import { usePickupPointStore } from '@/entities/PickupPoint';
@@ -12,13 +13,19 @@ import { TextStyles } from '@/shared/libs/textStyles';
 
 export const CartScreen = () => {
   const { isLoading, getPickupPoints, pickupPoints } = usePickupPointStore();
-  const [isVisible, setIsVisible] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { t } = useTranslation();
 
-  const handleOpenBottomSheet = () => setIsVisible(true);
-  const handleCloseBottomSheet = () => setIsVisible(false);
-  const handleChangeRadio = (index: number) => setSelectedIndex(index);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  const handleChangeRadio = (index: number) => {
+    setSelectedIndex(index);
+    bottomSheetModalRef.current?.dismiss();
+  };
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
 
   useEffect(() => {
     getPickupPoints();
@@ -26,7 +33,7 @@ export const CartScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={handleOpenBottomSheet} style={styles.pressable}>
+      <Pressable onPress={handlePresentModalPress} style={styles.pressable}>
         <Text style={TextStyles.s2}>
           {t('Пункт выдачи:')}
           {isLoading
@@ -37,8 +44,7 @@ export const CartScreen = () => {
       </Pressable>
       <CartProductList pickupPointId={pickupPoints[selectedIndex]?._id} />
       <PickupPointList
-        isVisible={isVisible}
-        close={handleCloseBottomSheet}
+        refer={bottomSheetModalRef}
         selectedIndex={selectedIndex}
         handleChangeRadio={handleChangeRadio}
       />
